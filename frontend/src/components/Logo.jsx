@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
 /**
- * PAGI mark — the letter "b" with a play button in its bowl (video creators).
+ * PAGI mark — the letter "P" with a play button in its bowl (video creators).
  * Same geometry as the Flutter app's BrandLogo (flutter_app/lib/widgets/brand_logo.dart).
  */
 export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden className={className}>
-    <rect x="7" y="2" width="19" height="58" rx="9.5" fill={color} />
-    <circle cx="56" cy="60" r="30" fill="none" stroke={color} strokeWidth="19" />
-    <path d="M48.2 49.2 L67.5 60 L48.2 70.8 Z" fill={color} />
+    <rect x="10" y="4" width="19" height="92" rx="9.5" fill={color} />
+    <circle cx="53" cy="37.5" r="27.5" fill="none" stroke={color} strokeWidth="19" />
+    <path d="M45.6 27.3 L64.2 37.5 L45.6 47.7 Z" fill={color} />
   </svg>
 );
 

@@ -52,7 +52,7 @@
     "login": "/masuk: panel gradasi + headline 'Posting video, cairkan cuan.', 3 manfaat dengan icon-tile, satu tombol besar 'Masuk dengan Google'. Tidak ada form email/password."
   },
   "shared_components": {
-    "Logo": "components/Logo.jsx — huruf 'b' dengan tombol putar (geometri sama dengan BrandLogo Flutter) + wordmark PAGI",
+    "Logo": "components/Logo.jsx — huruf 'P' dengan tombol putar (geometri sama dengan BrandLogo Flutter) + wordmark PAGI",
     "favicon": "public/favicon.svg",
     "Shared.jsx": "PageHeader, HeaderAvatar, StatCard (big = gradasi), StatusBadge (pill), Chips (pill), Tabs (pill tersegmentasi), Empty, Field, inputCls, panelCls, useRouteTab"
   },
