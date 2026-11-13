@@ -1,0 +1,119 @@
+{
+  "project_overview": {
+    "app_name": "jkwEffect",
+    "description": "Platform creator & clipping marketing berbasis performa (Bahasa Indonesia). Brand membuat campaign dengan rate Rp per 1K views, min views, total budget, dan aturan. Kreator submit link video (TikTok, IG Reels, Threads, YouTube Shorts), dibayar per views, membangun streak harian, dan menarik saldo (min Rp 50.000) ke bank/e-wallet.",
+    "app_type": "hybrid_fullstack_saas_marketplace",
+    "language": "Indonesian UI (Bahasa Indonesia)"
+  },
+  "design_concept": {
+    "name": "Premium Red (sama dengan aplikasi Flutter)",
+    "description": "Merah premium dengan gradasi halus, kartu putih bersudut lembut dan bayangan tipis di atas latar abu kebiruan. Sumber acuan: ourbuzzer-mobile-app/flutter_app/lib/core/theme.dart. Tidak ada gaya neo-brutalis (garis tebal, bayangan offset keras, sudut tajam)."
+  },
+  "color_palette": {
+    "source_of_truth": "frontend/src/index.css (:root & .dark). Pakai token Tailwind, jangan hex langsung.",
+    "primary": "#C8102E Primary Red (--primary)",
+    "primary_dark": "#A50021 Deep Red (--primary-dark)",
+    "primary_accent": "#F21D43 Accent Red (--primary-accent)",
+    "soft": "#FCE5EA (--soft / bg-soft): latar ikon, pill tab aktif, badge",
+    "background": "#F8F9FC",
+    "card": "#FFFFFF",
+    "foreground": "#171B2B",
+    "muted_foreground": "#777B86",
+    "border": "#E9E9EF",
+    "success": "#10B981 (uang masuk)",
+    "gradients": {
+      "bg-brand-gradient / .hero-gradient": "header & hero: Deep Red → Primary → Accent → #F7A1B1",
+      "bg-card-gradient": "kartu saldo utama",
+      "bg-button-gradient": "tombol utama"
+    }
+  },
+  "typography": {
+    "font": "Inter (400–900) untuk semua teks",
+    "h1_hero": "text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight",
+    "h1_page": "text-3xl sm:text-4xl font-extrabold tracking-tight",
+    "h2_section": "text-3xl font-extrabold tracking-tight",
+    "eyebrow": "text-sm font-semibold text-primary (tanpa huruf kapital semua)",
+    "button_label": "text-[15px] font-semibold, huruf biasa"
+  },
+  "buttons": {
+    "classes_defined_in": "frontend/src/index.css @layer components",
+    ".btn-primary": "gradasi merah + glow; aksi utama (Masuk dengan Google, Submit, Klaim, Tarik saldo, Bayar)",
+    ".btn-outline": "putih, garis merah 1.5px, teks merah (Keluar, Cek status, Jelajah campaign)",
+    ".btn-light": "putih, teks merah — aksi di atas header/hero merah",
+    ".btn-ghost": "tanpa latar, untuk aksi sekunder di navbar",
+    "interaction": "hover sedikit naik (-1px) + glow lebih kuat; active scale .98"
+  },
+  "layout_and_spacing": {
+    "container": "max-w-7xl (marketing/bounty) atau max-w-6xl (dashboard) mx-auto px-4 sm:px-6 lg:px-8",
+    "landing": "Hero gradasi melengkung + kartu kalkulator putih, ticker kartu, 3 kartu langkah, trending, FAQ dalam kartu, CTA gradasi",
+    "bounty": "Halaman Jelajah: header gradasi berisi search putih + tab pill Public/Exclusive; sidebar kategori di kartu putih (chip di HP)",
+    "dashboards": "PageHeader gradasi merah bersudut bawah membulat + avatar bulat; kartu saldo gradasi (col-span-2 di HP); tab pill; list di kartu putih",
+    "mobile": "Tidak boleh ada scroll horizontal halaman; grid item berisi overflow-x-auto wajib min-w-0.",
+    "login": "/masuk: panel gradasi + headline 'Posting video, cairkan cuan.', 3 manfaat dengan icon-tile, satu tombol besar 'Masuk dengan Google'. Tidak ada form email/password."
+  },
+  "shared_components": {
+    "Logo": "components/Logo.jsx — huruf 'b' dengan tombol putar (geometri sama dengan BrandLogo Flutter) + wordmark jkwEffect",
+    "favicon": "public/favicon.svg",
+    "Shared.jsx": "PageHeader, HeaderAvatar, StatCard (big = gradasi), StatusBadge (pill), Chips (pill), Tabs (pill tersegmentasi), Empty, Field, inputCls, panelCls, useRouteTab"
+  },
+  "icons": "lucide-react, stroke default; ikon dalam kotak border-2 untuk langkah/fitur.",
+  "image_urls": {
+    "hero_creators": [
+      {
+        "url": "https://images.unsplash.com/photo-1758273239210-59fea02475eb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzl8MHwxfHNlYXJjaHwzfHxpbmRvbmVzaWFuJTIwY29udGVudCUyMGNyZWF0b3IlMjB2aWRlb3xlbnwwfHx8fDE3OTM2ODEzNzZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Young woman filming content with camera on tripod",
+        "category": "hero_creator"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1622107906469-632c870f19e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzl8MHwxfHNlYXJjaHw0fHxpbmRvbmVzaWFuJTIwY29udGVudCUyMGNyZWF0b3IlMjB2aWRlb3xlbnwwfHx8fDE3OTM2ODEzNzZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Creator team holding video camera and clapboard",
+        "category": "hero_creator_2"
+      }
+    ],
+    "social_media_platforms": [
+      {
+        "url": "https://images.unsplash.com/photo-1642141325625-f76034e4ad2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHw0fHx0aWt0b2slMjBpbnN0YWdyYW0lMjB2aWRlb3UyMGNyZWF0b3J8ZW58MHx8fHwxNzkzNjgxMzc2fDA&ixlib=rb-4.1.0&q=85",
+        "description": "TikTok platform screen",
+        "category": "tiktok_preview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1724754608903-79368ccef14a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwyfHx0aWt0b2slMjBpbnN0YWdyYW0lMjB2aWRlb3UyMGNyZWF0b3J8ZW58MHx8fHwxNzkzNjgxMzc2fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Person scrolling Instagram Reels & TikTok feed on smartphone",
+        "category": "mobile_creator_feed"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1611926653458-09294b3142bf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjA1NTJ8MHwxfHNlYXJjaHw0fHxicmFuZCUyMHZpcmFsJTIwc29jaWFsJTIwbWVkaWElMjBwcm9kdWN0fGVufDB8fHx8MTc5MzY4MTM3Nnww&ixlib=rb-4.1.0&q=85",
+        "description": "Social media apps grid on smartphone",
+        "category": "platform_icons_bg"
+      }
+    ],
+    "brand_products": [
+      {
+        "url": "https://images.unsplash.com/photo-1789954677001-713601a78ebc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjA1NTJ8MHwxfHNlYXJjaHwzfHxicmFuZCUyMHZpcmFsJTIwc29jaWFsJTIwbWVkaWElMjBwcm9kdWN0fGVufDB8fHx8MTc5MzY4MTM3Nnww&ixlib=rb-4.1.0&q=85",
+        "description": "Skincare product billboard advertisement campaign",
+        "category": "beauty_brand_campaign"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1789996488962-839a1422ea5c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjA1NTJ8MHwxfHNlYXJjaHwyfHxicmFuZCUyMHZpcmFsJTIwc29jaWFsJTIwbWVkaWElMjBwcm9kdWN0fGVufDB8fHx8MTc5MzY4MTM3Nnww&ixlib=rb-4.1.0&q=85",
+        "description": "Cosmetic jar product for UGC review campaign",
+        "category": "skincare_campaign_thumbnail"
+      }
+    ]
+  },
+  "testing": "Pertahankan semua data-testid yang ada saat mengubah tata letak.",
+  "shape_and_depth": {
+    "radius": "kontrol 12–14px (rounded-xl), kartu 16px (rounded-2xl), kartu hero 24px (rounded-3xl), header merah sudut bawah 28–32px, pill = rounded-full",
+    "shadows": {
+      "shadow-soft": "0 8px 24px -4px rgb(23 27 43 / .07) — kartu",
+      "shadow-soft-lg": "popover, dialog, kalkulator",
+      "shadow-glow": "pendar merah di bawah elemen merah"
+    },
+    "borders": "Kartu tanpa garis tepi; pemisah list pakai divide-border/70"
+  },
+  "navigation": {
+    "labels": "Beranda (/dashboard, admin: /admin) · Jelajah (/jelajah, dulu Cari Cuan / /bounty) · Dompet (/dompet) · Profil (/profil)",
+    "desktop": "navbar putih dengan pill aktif bg-soft text-primary",
+    "mobile": "tab bar bawah tetap (ikon + label) saat sudah login; sama dengan aplikasi",
+    "tabs": "Tab dashboard tersimpan di URL (useRouteTab di components/Shared.jsx) agar sinkron dengan navbar"
+  }
+}

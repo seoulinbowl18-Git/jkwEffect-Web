@@ -1,0 +1,40 @@
+{
+  "summary": "Iteration 2 retest. Backend: 30 pytest tests (23 regression + 7 new): 29/30 pass. Fixes verified: (1) Closing a campaign auto-rejects direview/menunggu_views/diproses submissions with note 'Campaign ditutup', notifies creators, refunds the full budget, and blocks later verify/claim/review (400). Refund + payout <= budget, so no over-payout. (2) Verify returns 409 and reverts the lock to 'diproses' when the campaign is closed (simulated race). It also reverts when the campaign doc is missing. (3) URL normalization rejects query/trailing-slash/www/m/host-case/http/fragment variants and stores 'https://tiktok.com/@u/video/ID'. (4) Bearer logout deletes the session (/auth/me returns 401 afterwards). (5) Komerce callback: 401 without a header or with a bad header, 200 with HMAC(body) or the raw callback_key, 404 for an unknown payment. It re-confirms with the sandbox (still pending), so nothing is credited. (6) Full submission and withdrawal flows plus sandbox QRIS/VA topups regressed OK. NEW BUG: the URL normalization strips the query string, so every youtube.com/watch?v=ID becomes 'https://youtube.com/watch'. The second distinct YouTube watch video is rejected as a duplicate. UI checks (Playwright): calculator slider track is white/20 with an orange range (rgb 255,85,0) and the value updates. At 390px the hero role toggle labels are one line each (48px height) with no horizontal overflow. In the topup result (VA BNI, desktop and 390px), the payment link and status badge are stacked with a 16px gap. 'Cek status' toast says 'Pembayaran belum diterima'. All test data cleaned up (public payouts now []).",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/submissions (normalize_url)", "issue": "Stripping the whole query string collapses all YouTube watch URLs (https://www.youtube.com/watch?v=XXX) to 'https://youtube.com/watch'. After the first one, every other YouTube watch video is rejected with 'Video ini sudah pernah didaftarkan'. The unique index on video_url enforces this too. Fix: keep the 'v' param for youtube.com/watch (or map it to youtu.be/ID / youtube.com/shorts/ID canonical form). Consider unifying youtu.be/ID with youtube.com/watch?v=ID. Test: TestUrlNormalization::test_youtube_watch_distinct_videos", "priority": "HIGH"}
+    ],
+    "minor": [
+      {"endpoint": "POST /api/submissions/{sid}/verify (auto-close when spent >= budget)", "issue": "When the budget is exhausted, the campaign is set to 'closed', but other direview/menunggu_views/diproses submissions on it are NOT auto-rejected. They get stuck forever: claim returns 400, verify returns 409, review can still approve, and brand stats show 'Perlu direview' permanently. Reproduced: the TEST_Campaign submission stayed 'direview' after auto-close. Reuse the close auto-reject logic here."},
+      {"endpoint": "POST /api/submissions/{sid}/review", "issue": "Doesn't check the campaign status, so a brand/admin can approve content on a closed campaign. The submission then moves to menunggu_views, which can never be claimed."},
+      {"endpoint": "PATCH /api/campaigns/{cid}/status closed", "issue": "A submission that is mid-verify ('verifying') at close time is not included in the auto-reject. Verify then fails with 409 and reverts to 'diproses' on a closed campaign, so it's stuck. Edge race; include 'verifying' or reject on 409 when the campaign is closed."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Brand dashboard mobile 390px", "issues": ["The 'Saldo brand' stat value 'Rp 700.000' wraps onto 2 lines in the half-width card. Reduce the font size on mobile or use a 1-column layout for the balance card.", "The tabs row 'Riwayat top up' is clipped at the right edge. It's scrollable but has no visual affordance."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_trybuzzer_api.py", "/app/test_reports/pytest/pytest_results_iter2.xml"],
+  "action_items": [
+    "HIGH: Fix normalize_url for YouTube watch?v= URLs (keep the video id). Optionally canonicalize youtu.be and shorts.",
+    "Auto-reject pending submissions when a campaign auto-closes on budget exhaustion in verify_views (extract a shared close_pending() helper).",
+    "Block review_content when the campaign is closed.",
+    "Optional: include 'verifying' in the close auto-reject, and polish the mobile brand stat card."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 806 lines (>700). Split it into routers.",
+    "The close auto-reject logic should be a shared helper, reused by the budget-exhaustion auto-close (DRY + correctness).",
+    "creator_stats 'pending' still ignores the remaining budget cap (minor UX, from iteration 1)."
+  ],
+  "updated_files": ["/app/backend/tests/test_trybuzzer_api.py"],
+  "success_rate": {"backend": "97% (29/30)", "frontend": "100% of requested UI checks"},
+  "test_credentials": "Created temporarily in Mongo (now deleted): user_tadmin/test_session_user_tadmin, user_tcreator/test_session_user_tcreator, user_tcreator2/test_session_user_tcreator2, user_tbrand/test_session_brand, user_tbrand2/test_session_user_tbrand2, user_tnorole/test_session_user_tnorole, user_tlogout/test_session_logout.",
+  "seed_data_creation": "All test users, sessions, submissions, TEST_ campaigns, withdrawals, topups, ledger and notifications were deleted after testing. Seeded campaigns' submission_count was decremented for the 2 test submissions made on them. DB is now: 1 user (user_demobrand), 0 submissions, 12 campaigns.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Recreate the users/sessions listed in test_credentials (roles admin, creator, creator, brand, brand, null, creator) via mongosh before running: cd /app/backend && REACT_APP_BACKEND_URL=<url> pytest tests/test_trybuzzer_api.py -n 0. Withdrawal tests depend on earlier flow tests in the same run. Clean up afterwards (the user asked that the payout ticker show no test data). The browser tool rewrites f-string screenshot paths, so use static paths.",
+  "rca of the issue": "YouTube duplicate: normalize_url regex r'^(https?)://([^/?#]+)([^?#]*)' discards everything after '?'. For YouTube the video identity lives in the query (?v=ID), so all watch URLs normalize to the same string. Repro: submit https://www.youtube.com/watch?v=aaa then https://www.youtube.com/watch?v=bbb to a youtube campaign. The second returns 400 'Video ini sudah pernah didaftarkan'. Mitigation: if host is youtube.com and path == '/watch', append '?v=<id>' (or canonicalize to youtu.be/<id>)."
+}
