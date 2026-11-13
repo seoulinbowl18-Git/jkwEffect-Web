@@ -8,7 +8,7 @@
    upserts the user by email, and sets an httpOnly `session_token` cookie (7 days).
 4. Everything else uses that cookie (or `Authorization: Bearer <token>`), exactly as before.
 
-Firebase project: `ourbuzzer-951b4`. Add every domain you serve the app from
+Firebase project: `jkweffect`. Add every domain you serve the app from
 (e.g. your production domain) under Firebase console > Authentication > Settings > Authorized domains.
 
 ## Owner (Admin Pusat) login

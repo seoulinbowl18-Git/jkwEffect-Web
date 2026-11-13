@@ -4,7 +4,7 @@
 jkwEffect adalah platform creator marketing berbasis performa (pay-per-views) berbahasa Indonesia. Brand membuat campaign dengan rate per 1.000 views; kreator memposting video, submit link, dan dibayar sesuai views yang terverifikasi.
 
 ## Keputusan produk
-- Login: Google via Firebase Authentication (project `ourbuzzer-951b4`); backend memverifikasi ID token lalu membuat sesi cookie sendiri. Admin = ADMIN_EMAIL
+- Login: Google via Firebase Authentication (project `jkweffect`); backend memverifikasi ID token lalu membuat sesi cookie sendiri. Admin = ADMIN_EMAIL
 - Views: kreator klaim, brand/admin verifikasi manual
 - Pembayaran: Komerce (top up brand via QRIS / Virtual Account), sandbox key di KOMERCE_API_KEY
 - Payout: kreator ajukan penarikan (min Rp 50.000), admin menyetujui manual
