@@ -35,7 +35,7 @@ const stop = () => {
   document.removeEventListener("visibilitychange", poll);
 };
 
-/** Returns a number that changes whenever data changed anywhere in the jkwEffect ecosystem. */
+/** Returns a number that changes whenever data changed anywhere in the PAGI ecosystem. */
 export const useSync = () => {
   const [v, setV] = useState(version);
   useEffect(() => {

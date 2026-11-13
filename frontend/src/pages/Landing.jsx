@@ -88,7 +88,7 @@ export default function Landing() {
                 </a>
               ) : (
                 <a data-testid="hero-community-button" href={community?.telegram_url || "#"} target="_blank" rel="noreferrer"
-                  onClick={(e) => { if (!community?.telegram_url) { e.preventDefault(); toast.info("Link grup Telegram jkwEffect segera tersedia"); } }}
+                  onClick={(e) => { if (!community?.telegram_url) { e.preventDefault(); toast.info("Link grup Telegram PAGI segera tersedia"); } }}
                   className="h-14 px-6 rounded-2xl ring-1 ring-white/50 text-white font-semibold flex items-center gap-2 hover:bg-white/10 transition-colors">
                   <Send className="h-4 w-4" /> Gabung Komunitas
                 </a>
@@ -131,7 +131,7 @@ export default function Landing() {
       {role === "brand" && (
         <section className="py-8 overflow-hidden" data-testid="brand-ticker">
           <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            Brand yang sudah bergabung di <b className="text-foreground">jkwEffect</b>
+            Brand yang sudah bergabung di <b className="text-foreground">PAGI</b>
           </p>
           <div className="relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="flex w-max animate-marquee gap-4 py-1">
@@ -150,7 +150,7 @@ export default function Landing() {
       {role !== "brand" && ticker.length > 0 && (
         <section className="py-8 overflow-hidden" data-testid="payout-ticker">
           <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            {payouts.length ? "Bayaran terbaru di jkwEffect" : "Rate campaign yang lagi buka"}
+            {payouts.length ? "Bayaran terbaru di PAGI" : "Rate campaign yang lagi buka"}
           </p>
           <div className="flex w-max animate-marquee gap-3 py-1">
             {[...ticker, ...ticker].map(([n, a], i) => (
@@ -214,7 +214,7 @@ export default function Landing() {
           <h2 className="text-3xl font-extrabold tracking-tight mt-2">Pertanyaan yang sering muncul</h2>
         </div>
         <Accordion type="single" collapsible className="lg:col-span-8 bg-card rounded-2xl shadow-soft px-6">
-          {[["Daftarnya bayar?", "Tidak. 100% gratis untuk kreator. Cukup login pakai akun Google."], ["Minimal penarikan berapa?", "Minimal Rp 50.000 ke rekening bank atau e-wallet. Diproses manual oleh tim kami."], ["Berapa lama review video?", "Konten direview Admin jkwEffect. Setelah views tercapai, kamu klaim dengan bukti rekaman layar analitik dan views diverifikasi sebelum saldo masuk."], ["Bagaimana mencegah kecurangan?", "Setiap link video hanya bisa didaftarkan sekali, views diverifikasi manual, dan akun yang memakai bot akan diblokir."]].map(([q, a], i) => (
+          {[["Daftarnya bayar?", "Tidak. 100% gratis untuk kreator. Cukup login pakai akun Google."], ["Minimal penarikan berapa?", "Minimal Rp 50.000 ke rekening bank atau e-wallet. Diproses manual oleh tim kami."], ["Berapa lama review video?", "Konten direview Admin PAGI. Setelah views tercapai, kamu klaim dengan bukti rekaman layar analitik dan views diverifikasi sebelum saldo masuk."], ["Bagaimana mencegah kecurangan?", "Setiap link video hanya bisa didaftarkan sekali, views diverifikasi manual, dan akun yang memakai bot akan diblokir."]].map(([q, a], i) => (
             <AccordionItem key={q} value={`f${i}`} className="border-border/70 last:border-0">
               <AccordionTrigger data-testid={`faq-${i}`} className="text-left text-base font-bold py-5 hover:no-underline hover:text-primary">{q}</AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-[15px]">{a}</AccordionContent>

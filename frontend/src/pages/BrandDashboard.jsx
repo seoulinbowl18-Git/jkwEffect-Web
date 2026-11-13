@@ -42,7 +42,7 @@ export default function BrandDashboard() {
               <StatCard testid="brand-stat-creators" icon={Users} label="Kreator terdaftar" value={num(stats.creators)} sub="Di semua campaign" />
               <StatCard testid="brand-stat-views" icon={TrendingUp} label="Total views" value={num(stats.views)} sub={`${rp(stats.spent)} dibayarkan`} />
             </div>
-            <p className="text-xs text-muted-foreground flex items-center gap-1.5" data-testid="brand-review-by-admin-note"><ShieldCheck className="h-3.5 w-3.5 text-primary" /> Review konten & verifikasi views kreator ditangani Admin Pusat jkwEffect.</p>
+            <p className="text-xs text-muted-foreground flex items-center gap-1.5" data-testid="brand-review-by-admin-note"><ShieldCheck className="h-3.5 w-3.5 text-primary" /> Review konten & verifikasi views kreator ditangani Admin Pusat PAGI.</p>
           </div>
         )}
         <Tabs prefix="brand-tab" value={tab} onChange={setTab} items={[["campaign", "Campaign"], ["topup", "Dompet"], ["profil", "Profil"]]} />

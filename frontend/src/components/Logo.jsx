@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * jkwEffect mark — the letter "b" with a play button in its bowl (video creators).
+ * PAGI mark — the letter "b" with a play button in its bowl (video creators).
  * Same geometry as the Flutter app's BrandLogo (flutter_app/lib/widgets/brand_logo.dart).
  */
 export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) => (

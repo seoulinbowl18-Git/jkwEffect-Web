@@ -38,7 +38,7 @@ export const LoginScreen = ({ next = "/dashboard" }) => {
 
       <section className="px-6 sm:px-10 lg:px-16 py-10 lg:py-16 flex flex-col justify-center">
         <div className="w-full max-w-md mx-auto lg:mx-0" data-testid="login-screen">
-          <h2 className="hidden lg:block text-3xl font-extrabold tracking-tight">Masuk ke jkwEffect</h2>
+          <h2 className="hidden lg:block text-3xl font-extrabold tracking-tight">Masuk ke PAGI</h2>
           <p className="hidden lg:block mt-2 text-muted-foreground">Cukup pakai akun Google kamu, tanpa password.</p>
           <ul className="space-y-4 lg:mt-10">
             {BENEFITS.map(([Icon, text]) => (
@@ -53,7 +53,7 @@ export const LoginScreen = ({ next = "/dashboard" }) => {
             <GoogleG /> {signingIn ? "Membuka Google..." : "Masuk dengan Google"}
           </button>
           <p className="mt-4 text-center text-sm text-muted-foreground">Belum punya akun? Akun dibuat otomatis saat pertama kali masuk.</p>
-          <p className="mt-6 text-center text-xs text-muted-foreground">Dengan masuk, kamu menyetujui Syarat &amp; Ketentuan jkwEffect.</p>
+          <p className="mt-6 text-center text-xs text-muted-foreground">Dengan masuk, kamu menyetujui Syarat &amp; Ketentuan PAGI.</p>
         </div>
       </section>
     </div>

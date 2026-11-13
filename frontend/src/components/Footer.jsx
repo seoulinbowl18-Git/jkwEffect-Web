@@ -5,7 +5,7 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 
 // Konstanta di luar komponen: VaporizeTextCycle menggambar ulang canvas setiap kali
 // referensi `texts`/`font`/`animation` berubah.
-const VAPOUR_TEXTS = ["jkwEffect", "Bikin brand viral", "Posting & cairkan cuan"];
+const VAPOUR_TEXTS = ["PAGI", "Pasukan Gibran Indonesia", "Bikin brand viral", "Posting & cairkan cuan"];
 const VAPOUR_ANIMATION = { vaporizeDuration: 2, fadeInDuration: 1, waitDuration: 1.5 };
 
 const useIsDesktop = () => {
@@ -52,7 +52,7 @@ export const Footer = () => {
             <Link to="/cara-kerja" className="hover:text-primary">Cara Kerja</Link>
             <Link to="/untuk-brand" className="hover:text-primary">Untuk Brand</Link>
           </nav>
-          <p>© {new Date().getFullYear()} jkwEffect</p>
+          <p>© {new Date().getFullYear()} PAGI — Pasukan Gibran Indonesia</p>
         </div>
       </div>
     </footer>

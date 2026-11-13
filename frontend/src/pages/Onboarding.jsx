@@ -32,7 +32,7 @@ export default function Onboarding() {
       <Navbar />
       <div className="max-w-2xl mx-auto px-4 py-16">
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">Halo, {user?.name?.split(" ")[0]}!</h1>
-        <p className="text-muted-foreground mt-2">Kamu mau pakai jkwEffect sebagai apa? Pilihan ini tidak bisa diubah nanti.</p>
+        <p className="text-muted-foreground mt-2">Kamu mau pakai PAGI sebagai apa? Pilihan ini tidak bisa diubah nanti.</p>
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
           {opts.map(([k, t, d, I]) => (
             <button key={k} data-testid={`onboarding-role-${k}`} onClick={() => setRole(k)}
