@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ShieldCheck, Smartphone, KeyRound, ArrowLeft, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { LogoMark } from "@/components/Logo";
+import { LogoMark, BrandWordmark } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 import { api, errMsg } from "@/lib/api";
 
@@ -75,9 +75,9 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] lg:rounded-none px-6 sm:px-10 lg:px-16 pt-10 pb-12 lg:py-16 flex flex-col">
-        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="jkwEffect">
+        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Pasukan Gibran Indonesia (PAGI)">
           <LogoMark size={40} className="text-white" />
-          <span className="font-extrabold text-3xl tracking-tight">jkwEffect</span>
+          <BrandWordmark light large />
         </a>
         <div className="relative mt-10 lg:mt-auto lg:mb-auto max-w-lg">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold"><ShieldCheck className="h-4 w-4" /> Admin Pusat</span>

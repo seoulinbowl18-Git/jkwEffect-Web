@@ -12,9 +12,17 @@ export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) 
   </svg>
 );
 
-export const Logo = ({ light = false, size = 30 }) => (
-  <Link to="/" data-testid="nav-logo" aria-label="jkwEffect" className="flex items-center gap-2 select-none">
-    <LogoMark size={size} className={light ? "text-white" : "text-primary"} />
-    <span className={`font-extrabold text-[22px] tracking-tight leading-none ${light ? "text-white" : "text-foreground"}`}>jkwEffect</span>
+/** Wordmark dua baris: singkatan besar + kepanjangan kecil di bawahnya. */
+export const BrandWordmark = ({ light = false, large = false }) => (
+  <span className="flex flex-col justify-center leading-none">
+    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? "text-white" : "text-foreground"}`}>PAGI</span>
+    <span className={`mt-1 font-semibold whitespace-nowrap ${large ? "text-sm" : "text-[10.5px]"} ${light ? "text-white/85" : "text-muted-foreground"}`}>Pasukan Gibran Indonesia</span>
+  </span>
+);
+
+export const Logo = ({ light = false, size = 34 }) => (
+  <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (PAGI)" className="flex items-center gap-2 select-none shrink-0">
+    <LogoMark size={size} className={`shrink-0 ${light ? "text-white" : "text-primary"}`} />
+    <BrandWordmark light={light} />
   </Link>
 );
