@@ -12,17 +12,21 @@ export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) 
   </svg>
 );
 
-/** Wordmark dua baris: singkatan besar + kepanjangan kecil di bawahnya. */
+/** Merah brand PAGI: #C8102E di latar terang, #F21D43 (lebih terang) di latar gelap agar tetap kontras. */
+export const BRAND_RED = "text-[#C8102E]";
+export const BRAND_RED_ON_DARK = "text-[#F21D43]";
+
+/** Wordmark dua baris: singkatan besar (merah brand) + kepanjangan kecil di bawahnya. `light` = di atas latar gelap. */
 export const BrandWordmark = ({ light = false, large = false }) => (
   <span className="flex flex-col justify-center leading-none">
-    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? "text-white" : "text-foreground"}`}>PAGI</span>
+    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? BRAND_RED_ON_DARK : BRAND_RED}`}>PAGI</span>
     <span className={`mt-1 font-semibold whitespace-nowrap ${large ? "text-sm" : "text-[10.5px]"} ${light ? "text-white/85" : "text-muted-foreground"}`}>Pasukan Gibran Indonesia</span>
   </span>
 );
 
 export const Logo = ({ light = false, size = 34 }) => (
   <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (PAGI)" className="flex items-center gap-2 select-none shrink-0">
-    <LogoMark size={size} className={`shrink-0 ${light ? "text-white" : "text-primary"}`} />
+    <LogoMark size={size} className={`shrink-0 ${light ? BRAND_RED_ON_DARK : BRAND_RED}`} />
     <BrandWordmark light={light} />
   </Link>
 );

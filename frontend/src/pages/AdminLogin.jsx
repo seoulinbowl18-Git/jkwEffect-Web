@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ShieldCheck, Smartphone, KeyRound, ArrowLeft, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { LogoMark, BrandWordmark } from "@/components/Logo";
+import { LogoMark, BrandWordmark, BRAND_RED_ON_DARK } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 import { api, errMsg } from "@/lib/api";
 
@@ -76,7 +76,7 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] lg:rounded-none px-6 sm:px-10 lg:px-16 pt-10 pb-12 lg:py-16 flex flex-col">
         <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Pasukan Gibran Indonesia (PAGI)">
-          <LogoMark size={40} className="text-white" />
+          <LogoMark size={40} className={BRAND_RED_ON_DARK} />
           <BrandWordmark light large />
         </a>
         <div className="relative mt-10 lg:mt-auto lg:mb-auto max-w-lg">
