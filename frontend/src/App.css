@@ -9,11 +9,11 @@ body {
 
 .hero-gradient {
   background-image:
-    radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.16), transparent 55%),
-    radial-gradient(70% 60% at 85% 110%, rgba(247, 161, 177, 0.45), transparent 60%),
-    linear-gradient(135deg, #A50021 0%, #C8102E 40%, #F21D43 80%, #F7A1B1 115%);
+    radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.09), transparent 55%),
+    radial-gradient(70% 60% at 85% 110%, rgba(255, 255, 255, 0.05), transparent 60%),
+    linear-gradient(135deg, #0A0A0A 0%, #121212 50%, #1C1C1C 100%);
 }
-/* Soft decorative arcs on red headers, like the mobile app's wave ornament */
+/* Soft decorative arcs on dark headers, like the mobile app's wave ornament */
 .hero-arcs::before {
   content: "";
   position: absolute;

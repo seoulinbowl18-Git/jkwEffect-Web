@@ -18,33 +18,33 @@ code {
 }
 
 @layer base {
-    /* PAGI "Premium Red" — same tokens as the Flutter app (flutter_app/lib/core/theme.dart) */
+    /* PAGI "Sleek Black" — monokrom; sama dengan token aplikasi Flutter (flutter_app/lib/core/theme.dart) */
     :root {
-        --background: 230 43% 98%;       /* #F8F9FC */
-        --foreground: 229 30% 13%;       /* #171B2B */
+        --background: 0 0% 98%;          /* #FAFAFA */
+        --foreground: 0 0% 7%;           /* #121212 */
         --card: 0 0% 100%;
-        --card-foreground: 229 30% 13%;
+        --card-foreground: 0 0% 7%;
         --popover: 0 0% 100%;
-        --popover-foreground: 229 30% 13%;
-        --primary: 350 85% 42%;          /* #C8102E Primary Red */
-        --primary-dark: 349 100% 32%;    /* #A50021 Deep Red */
-        --primary-accent: 349 89% 53%;   /* #F21D43 Accent Red */
+        --popover-foreground: 0 0% 7%;
+        --primary: 0 0% 7%;              /* #121212 Sleek Black */
+        --primary-dark: 0 0% 4%;         /* #0A0A0A Jet Black */
+        --primary-accent: 0 0% 12%;      /* #1E1E1E Charcoal */
         --primary-foreground: 0 0% 100%;
-        --soft: 347 79% 94%;             /* #FCE5EA soft pink: icon tiles, active pills, badges */
-        --secondary: 210 17% 95%;        /* #F1F3F5 */
-        --secondary-foreground: 229 30% 13%;
-        --muted: 210 17% 95%;
-        --muted-foreground: 225 6% 50%;  /* #777B86 */
-        --accent: 347 79% 94%;
-        --accent-foreground: 349 100% 32%;
+        --soft: 0 0% 94%;                /* #F0F0F0 abu muda: icon tile, pill aktif, badge */
+        --secondary: 0 0% 96%;           /* #F5F5F5 */
+        --secondary-foreground: 0 0% 7%;
+        --muted: 0 0% 96%;
+        --muted-foreground: 0 0% 45%;    /* #737373 */
+        --accent: 0 0% 94%;
+        --accent-foreground: 0 0% 4%;
         --destructive: 0 84% 60%;        /* #EF4444 */
         --destructive-foreground: 0 0% 100%;
         --success: 160 84% 39%;          /* #10B981 */
-        --border: 240 14% 92%;           /* #E9E9EF */
-        --input: 240 14% 92%;
-        --ring: 350 85% 42%;
-        --chart-1: 350 85% 42%;
-        --chart-2: 349 89% 53%;
+        --border: 0 0% 90%;              /* #E5E5E5 */
+        --input: 0 0% 90%;
+        --ring: 0 0% 7%;
+        --chart-1: 0 0% 7%;
+        --chart-2: 0 0% 40%;
         --chart-3: 160 84% 39%;
         --chart-4: 38 92% 50%;
         --chart-5: 199 89% 48%;
@@ -57,25 +57,25 @@ code {
         --card-foreground: 220 14% 96%;
         --popover: 225 13% 10%;
         --popover-foreground: 220 14% 96%;
-        --primary: 350 80% 52%;
-        --primary-dark: 349 100% 38%;
-        --primary-accent: 349 89% 58%;
+        --primary: 0 0% 18%;
+        --primary-dark: 0 0% 10%;
+        --primary-accent: 0 0% 24%;
         --primary-foreground: 0 0% 100%;
-        --soft: 345 64% 18%;
+        --soft: 0 0% 16%;
         --secondary: 220 11% 13%;
         --secondary-foreground: 220 14% 96%;
         --muted: 220 11% 13%;
         --muted-foreground: 240 5% 65%;
-        --accent: 345 64% 18%;
-        --accent-foreground: 351 100% 93%;
+        --accent: 0 0% 16%;
+        --accent-foreground: 0 0% 96%;
         --destructive: 0 84% 60%;
         --destructive-foreground: 0 0% 100%;
         --success: 160 70% 45%;
         --border: 217 12% 21%;
         --input: 217 12% 21%;
-        --ring: 350 80% 52%;
-        --chart-1: 350 80% 52%;
-        --chart-2: 349 89% 58%;
+        --ring: 0 0% 80%;
+        --chart-1: 0 0% 80%;
+        --chart-2: 0 0% 55%;
         --chart-3: 160 70% 45%;
         --chart-4: 38 92% 50%;
         --chart-5: 199 89% 48%;
@@ -98,16 +98,16 @@ code {
     }
 }
 
-/* PAGI buttons & surfaces — soft, rounded, gradient (matches the mobile app) */
+/* PAGI buttons & surfaces — soft, rounded, gradien hitam (sama dengan aplikasi mobile) */
 @layer components {
     .bg-brand-gradient {
-        background-image: linear-gradient(135deg, hsl(var(--primary-dark)) 0%, hsl(var(--primary)) 38%, hsl(var(--primary-accent)) 72%, #F7A1B1 100%);
+        background-image: linear-gradient(135deg, #0A0A0A 0%, #121212 38%, #1C1C1C 72%, #2A2A2A 100%);
     }
     .bg-card-gradient {
-        background-image: linear-gradient(135deg, hsl(var(--primary-dark)) 0%, hsl(var(--primary)) 55%, hsl(var(--primary-accent)) 100%);
+        background-image: linear-gradient(135deg, #0A0A0A 0%, #121212 55%, #1E1E1E 100%);
     }
     .bg-button-gradient {
-        background-image: linear-gradient(135deg, hsl(var(--primary-accent)) 0%, hsl(var(--primary)) 50%, hsl(var(--primary-dark)) 100%);
+        background-image: linear-gradient(135deg, #2A2A2A 0%, #121212 50%, #0A0A0A 100%);
     }
     .surface {
         @apply bg-card rounded-2xl shadow-soft;
@@ -123,7 +123,7 @@ code {
     .btn-primary {
         @apply bg-button-gradient text-white shadow-glow;
     }
-    .btn-primary:hover:not(:disabled) { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 12px 28px -6px hsl(var(--primary) / 0.45); }
+    .btn-primary:hover:not(:disabled) { filter: brightness(1.35); transform: translateY(-1px); box-shadow: 0 12px 28px -6px hsl(var(--primary) / 0.45); }
     .btn-outline {
         @apply bg-card text-primary border-[1.5px] border-primary;
     }
@@ -131,7 +131,7 @@ code {
     .btn-light {
         @apply bg-white text-primary shadow-soft;
     }
-    .btn-light:hover:not(:disabled) { transform: translateY(-1px); }
+    .btn-light:hover:not(:disabled) { transform: translateY(-1px); background-color: #F0F0F0; }
     .btn-ghost {
         @apply text-foreground hover:bg-secondary;
     }

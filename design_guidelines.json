@@ -6,15 +6,15 @@
     "language": "Indonesian UI (Bahasa Indonesia)"
   },
   "design_concept": {
-    "name": "Premium Red (sama dengan aplikasi Flutter)",
-    "description": "Merah premium dengan gradasi halus, kartu putih bersudut lembut dan bayangan tipis di atas latar abu kebiruan. Sumber acuan: ourbuzzer-mobile-app/flutter_app/lib/core/theme.dart. Tidak ada gaya neo-brutalis (garis tebal, bayangan offset keras, sudut tajam)."
+    "name": "Sleek Black (sama dengan aplikasi Flutter)",
+    "description": "Hitam elegan (monokrom) dengan gradasi #0A0A0A–#1C1C1C, kartu putih bersudut lembut dan bayangan tipis di atas latar abu sangat muda. Merah hanya untuk indikator error/peringatan. Sumber acuan: ourbuzzer-mobile-app/flutter_app/lib/core/theme.dart. Tidak ada gaya neo-brutalis (garis tebal, bayangan offset keras, sudut tajam)."
   },
   "color_palette": {
     "source_of_truth": "frontend/src/index.css (:root & .dark). Pakai token Tailwind, jangan hex langsung.",
-    "primary": "#C8102E Primary Red (--primary)",
-    "primary_dark": "#A50021 Deep Red (--primary-dark)",
-    "primary_accent": "#F21D43 Accent Red (--primary-accent)",
-    "soft": "#FCE5EA (--soft / bg-soft): latar ikon, pill tab aktif, badge",
+    "primary": "#121212 Sleek Black (--primary)",
+    "primary_dark": "#0A0A0A Jet Black (--primary-dark)",
+    "primary_accent": "#1E1E1E Charcoal (--primary-accent)",
+    "soft": "#F0F0F0 (--soft / bg-soft): latar ikon, pill tab aktif, badge",
     "background": "#F8F9FC",
     "card": "#FFFFFF",
     "foreground": "#171B2B",
@@ -37,9 +37,9 @@
   },
   "buttons": {
     "classes_defined_in": "frontend/src/index.css @layer components",
-    ".btn-primary": "gradasi merah + glow; aksi utama (Masuk dengan Google, Submit, Klaim, Tarik saldo, Bayar)",
-    ".btn-outline": "putih, garis merah 1.5px, teks merah (Keluar, Cek status, Jelajah campaign)",
-    ".btn-light": "putih, teks merah — aksi di atas header/hero merah",
+    ".btn-primary": "gradasi hitam + bayangan; aksi utama (Masuk dengan Google, Submit, Klaim, Tarik saldo, Bayar)",
+    ".btn-outline": "putih, garis hitam 1.5px, teks hitam (Keluar, Cek status, Jelajah campaign)",
+    ".btn-light": "putih, teks hitam — aksi di atas header/hero hitam",
     ".btn-ghost": "tanpa latar, untuk aksi sekunder di navbar",
     "interaction": "hover sedikit naik (-1px) + glow lebih kuat; active scale .98"
   },
@@ -47,7 +47,7 @@
     "container": "max-w-7xl (marketing/bounty) atau max-w-6xl (dashboard) mx-auto px-4 sm:px-6 lg:px-8",
     "landing": "Hero gradasi melengkung + kartu kalkulator putih, ticker kartu, 3 kartu langkah, trending, FAQ dalam kartu, CTA gradasi",
     "bounty": "Halaman Jelajah: header gradasi berisi search putih + tab pill Public/Exclusive; sidebar kategori di kartu putih (chip di HP)",
-    "dashboards": "PageHeader gradasi merah bersudut bawah membulat + avatar bulat; kartu saldo gradasi (col-span-2 di HP); tab pill; list di kartu putih",
+    "dashboards": "PageHeader gradasi hitam bersudut bawah membulat + avatar bulat; kartu saldo gradasi (col-span-2 di HP); tab pill; list di kartu putih",
     "mobile": "Tidak boleh ada scroll horizontal halaman; grid item berisi overflow-x-auto wajib min-w-0.",
     "login": "/masuk: panel gradasi + headline 'Posting video, cairkan cuan.', 3 manfaat dengan icon-tile, satu tombol besar 'Masuk dengan Google'. Tidak ada form email/password."
   },
@@ -102,11 +102,11 @@
   },
   "testing": "Pertahankan semua data-testid yang ada saat mengubah tata letak.",
   "shape_and_depth": {
-    "radius": "kontrol 12–14px (rounded-xl), kartu 16px (rounded-2xl), kartu hero 24px (rounded-3xl), header merah sudut bawah 28–32px, pill = rounded-full",
+    "radius": "kontrol 12–14px (rounded-xl), kartu 16px (rounded-2xl), kartu hero 24px (rounded-3xl), header hitam sudut bawah 28–32px, pill = rounded-full",
     "shadows": {
       "shadow-soft": "0 8px 24px -4px rgb(23 27 43 / .07) — kartu",
       "shadow-soft-lg": "popover, dialog, kalkulator",
-      "shadow-glow": "pendar merah di bawah elemen merah"
+      "shadow-glow": "bayangan gelap di bawah elemen hitam"
     },
     "borders": "Kartu tanpa garis tepi; pemisah list pakai divide-border/70"
   },

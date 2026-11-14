@@ -38,7 +38,7 @@ export const Footer = () => {
             <VaporizeTextCycle
               texts={VAPOUR_TEXTS}
               font={vapourFont}
-              color="rgb(200, 16, 46)"
+              color="rgb(18, 18, 18)"
               spread={5}
               density={5}
               animation={VAPOUR_ANIMATION}
