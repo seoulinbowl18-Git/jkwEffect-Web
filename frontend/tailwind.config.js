@@ -18,7 +18,8 @@ module.exports = {
         '3xl': '1.5rem'
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        script: ['"Yellowtail"', 'cursive']
       },
       boxShadow: {
         soft: '0 8px 24px -4px rgb(23 27 43 / 0.07)',

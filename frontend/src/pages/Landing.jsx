@@ -60,52 +60,26 @@ export default function Landing() {
       {/* HERO — red brand gradient with rounded bottom (mobile app header), black join CTA (Anggota / Relawan) on the right */}
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3.5 py-1.5 text-sm font-semibold animate-rise">
-              <span className="h-2 w-2 rounded-full bg-white animate-pulse" /> {isBrand ? "Bayar hanya per views" : "Dibayar per views"}
+          <div className="lg:col-span-7" data-testid="hero-brand">
+            {/* Lockup tulisan logo PAGI: PASUKAN / GIBRAN / Indonesia / (PAGI) — PAGI dibuat paling menonjol */}
+            <span className="inline-flex items-center gap-2.5 rounded-full bg-black/15 backdrop-blur px-3.5 py-1.5 text-xs sm:text-sm font-bold tracking-[0.14em] uppercase animate-rise">
+              <span className="flex h-3 w-5 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
+              Komunitas relawan &amp; anggota
             </span>
-            <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.02] animate-rise [animation-delay:80ms]" data-testid="hero-title">
-              {isBrand ? <>Bikin brand kamu<br />viral</> : <>Posting video,<br />cairkan cuan.</>}
+            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Pasukan Gibran Indonesia (PAGI)">
+              <span className="block text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-[0.32em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">PASUKAN</span>
+              <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
+              <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-white/90 max-w-lg leading-relaxed animate-rise [animation-delay:140ms]">
-              {isBrand
-                ? <>Ratusan kreator TikTok, Instagram, YouTube, dan Threads siap posting konten brand kamu. <b>Bayar hanya untuk views</b> yang benar-benar terverifikasi.</>
-                : <>Dapat bayaran dari setiap 1.000 views video TikTok, Instagram, YouTube, dan Threads kamu. <b>100% gratis</b> untuk kreator.</>}
-            </p>
-            <div className="mt-8 inline-flex p-1 rounded-full bg-white/15 animate-rise [animation-delay:200ms]">
-              {[["creator", "Saya Kreator", User], ["brand", "Saya Brand", Building2]].map(([k, l, I]) => (
-                <button key={k} data-testid={`hero-role-${k}`} onClick={() => setRole(k)}
-                  className={`h-11 px-4 sm:px-5 rounded-full whitespace-nowrap flex items-center gap-2 font-semibold transition-colors ${role === k ? "bg-white text-primary shadow-soft" : "text-white hover:bg-white/10"}`}>
-                  <I className="h-4 w-4" /> {l}
-                </button>
-              ))}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-rise [animation-delay:160ms]">
+              <span className="inline-flex items-center rounded-[28px] bg-white px-7 sm:px-9 py-2 sm:py-3 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
+                data-testid="hero-pagi">
+                <span className="text-[#C8102E] font-black tracking-tight leading-none text-7xl sm:text-8xl lg:text-[7.5rem]">PAGI</span>
+              </span>
+              <p className="max-w-[17rem] text-base sm:text-lg text-white/90 leading-snug">
+                <b className="text-white">Pasukan Gibran Indonesia.</b> Satu barisan, bergerak bersama untuk Indonesia.
+              </p>
             </div>
-            <div className="mt-5 flex flex-wrap gap-3 animate-rise [animation-delay:260ms]">
-              <button data-testid="hero-start-button" onClick={start} className="btn-light h-14 px-7 text-base rounded-2xl">
-                {role === "brand" ? "Buat Campaign" : "Mulai Sekarang"} <ArrowRight className="h-4 w-4" />
-              </button>
-              {role === "brand" ? (
-                <a data-testid="hero-contact-button" href={contactUrl || "#"} target="_blank" rel="noreferrer"
-                  onClick={(e) => { if (!contactUrl) { e.preventDefault(); toast.info("Kontak WhatsApp admin segera tersedia"); } }}
-                  className="h-14 px-6 rounded-2xl ring-1 ring-white/50 text-white font-semibold flex items-center gap-2 hover:bg-white/10 transition-colors">
-                  <MessageCircle className="h-4 w-4" /> Hubungi Kami
-                </a>
-              ) : (
-                <a data-testid="hero-community-button" href={community?.telegram_url || "#"} target="_blank" rel="noreferrer"
-                  onClick={(e) => { if (!community?.telegram_url) { e.preventDefault(); toast.info("Link grup Telegram PAGI segera tersedia"); } }}
-                  className="h-14 px-6 rounded-2xl ring-1 ring-white/50 text-white font-semibold flex items-center gap-2 hover:bg-white/10 transition-colors">
-                  <Send className="h-4 w-4" /> Gabung Komunitas
-                </a>
-              )}
-            </div>
-            <dl className="mt-12 grid grid-cols-3 max-w-md gap-3 animate-rise [animation-delay:320ms]">
-              {stats.map(([v, l]) => (
-                <div key={l} className="rounded-2xl bg-white/10 backdrop-blur px-4 py-3">
-                  <dt className="text-xl sm:text-2xl font-extrabold">{v}</dt>
-                  <dd className="text-xs text-white/80 mt-0.5">{l}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           <div className="lg:col-span-5 animate-rise [animation-delay:200ms]">
