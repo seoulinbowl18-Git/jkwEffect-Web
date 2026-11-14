@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, Calculator } from "lucide-react";
+import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CampaignCard } from "@/components/CampaignCard";
 import { InstructionDialog } from "@/components/CampaignDialogs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Slider } from "@/components/ui/slider";
 import { useAuth } from "@/context/AuthContext";
 import { useCommunity } from "@/lib/community";
 import { whatsappLink } from "@/lib/contact";
 import { PARTNER_BRANDS } from "@/lib/brands";
 import { useSync } from "@/lib/useSync";
-import { api, rp, num } from "@/lib/api";
+import { api, rp } from "@/lib/api";
 
 const STEPS = {
   creator: [[Clapperboard, "Pilih campaign", "Cari campaign dengan rate terbaik sesuai niche kamu."], [Upload, "Posting & submit", "Upload video di TikTok, IG, Threads atau YouTube, lalu kirim link-nya."], [Wallet, "Tarik cuan", "Views diverifikasi, saldo masuk. Tarik mulai Rp 50.000."]],
   brand: [[Megaphone, "Buat campaign", "Tulis brief, pilih platform & kategori."], [BadgeDollarSign, "Set rate per 1K views", "Bayar hanya untuk views yang benar-benar terjadi."], [Eye, "Dapat ribuan views", "Ratusan kreator posting konten untuk brand kamu."]],
 };
 
+// Kartu ajakan bergabung di hero (menggantikan kalkulator cuan): [jenis, judul, deskripsi, ikon, tombol utama?]
+const JOIN = [
+  ["anggota", "Daftar Anggota", "Jadi anggota resmi PAGI dengan KTA.", IdCard, true],
+  ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
+];
+
 export default function Landing() {
   const community = useCommunity();
   const [role, setRole] = useState("creator");
   const [sections, setSections] = useState(null);
   const [payouts, setPayouts] = useState([]);
-  const [views, setViews] = useState([100000]);
   const [info, setInfo] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -53,7 +57,7 @@ export default function Landing() {
     <div className="bg-background">
       <Navbar />
 
-      {/* HERO — black gradient with rounded bottom (mobile app header), calculator card on the right */}
+      {/* HERO — black gradient with rounded bottom (mobile app header), join CTA (Anggota / Relawan) on the right */}
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">
@@ -105,23 +109,24 @@ export default function Landing() {
           </div>
 
           <div className="lg:col-span-5 animate-rise [animation-delay:200ms]">
-            <div className="bg-card text-foreground rounded-3xl shadow-soft-lg p-7 sm:p-8" data-testid="earnings-calculator">
-              <div className="flex items-center gap-3">
-                <span className="icon-tile"><Calculator className="h-5 w-5" /></span>
-                <div>
-                  <p className="font-bold">{isBrand ? "Kalkulator budget" : "Kalkulator cuan"}</p>
-                  <p className="text-sm text-muted-foreground">{isBrand ? "Target views campaign kamu" : "Kalau videomu tembus"}</p>
-                </div>
+            <div className="rounded-3xl bg-[#121212]/90 ring-1 ring-white/10 backdrop-blur p-7 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]" data-testid="join-cta">
+              <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>
+              <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">Pasukan Gibran Indonesia</p>
+              <p className="mt-2 text-sm text-white/70 leading-relaxed">Pilih cara kamu ikut berkontribusi. Pendaftaran gratis dan cukup memakai akun Google.</p>
+              <div className="mt-7 grid gap-3">
+                {JOIN.map(([jenis, title, desc, Icon, primary]) => (
+                  <button key={jenis} type="button" data-testid={`join-${jenis}`} onClick={() => navigate(`/daftar/${jenis}`)}
+                    className={`group w-full text-left rounded-2xl p-4 sm:p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${primary ? "bg-white text-[#0A0A0A] hover:bg-[#F0F0F0] shadow-[0_12px_30px_-12px_rgba(255,255,255,0.35)]" : "bg-[#1E1E1E] text-white ring-1 ring-white/15 hover:bg-[#262626]"}`}>
+                    <span className={`grid place-items-center h-12 w-12 shrink-0 rounded-xl ${primary ? "bg-[#0A0A0A] text-white" : "bg-white/10 text-white"}`}><Icon className="h-6 w-6" /></span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-lg font-extrabold leading-tight">{title}</span>
+                      <span className={`block text-sm mt-0.5 ${primary ? "text-[#525252]" : "text-white/65"}`}>{desc}</span>
+                    </span>
+                    <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+                  </button>
+                ))}
               </div>
-              <p className="text-4xl font-extrabold mt-6 tabular-nums tracking-tight" data-testid="calc-views">{num(views[0])} views</p>
-              <Slider data-testid="calc-slider" className="mt-6" min={1000} max={2000000} step={1000} value={views} onValueChange={setViews} />
-              <div className="mt-7 rounded-2xl bg-card-gradient text-white p-5 shadow-glow">
-                <p className="text-white/85 text-sm">{isBrand ? "Estimasi budget" : "Estimasi penghasilan"} (rate rata-rata {rp(avgRate)}/1K)</p>
-                <p className="text-3xl sm:text-4xl font-extrabold mt-1 tabular-nums tracking-tight" data-testid="calc-result">{rp(Math.floor((views[0] / 1000) * avgRate))}</p>
-              </div>
-              {isBrand
-                ? <button data-testid="calc-brand-cta" onClick={start} className="btn-outline w-full mt-5 h-12">Buat campaign sekarang <ArrowRight className="h-4 w-4" /></button>
-                : <button onClick={goSubmit} className="btn-outline w-full mt-5 h-12">Jelajah campaign <ArrowRight className="h-4 w-4" /></button>}
+              <p className="mt-5 text-xs text-white/45 flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Data pribadi kamu disimpan aman dan hanya dipakai untuk keperluan organisasi.</p>
             </div>
           </div>
         </div>
