@@ -10,7 +10,7 @@
       "destination": "https://jkweffect-mobile-app-production.up.railway.app/api/:path*"
     },
     {
-      "source": "/((?!static/|favicon\\.svg).*)",
+      "source": "/((?!static/)(?!.*\\.(?:png|svg|ico|jpg|jpeg|webp|txt|json|webmanifest)$).*)",
       "destination": "/index.html"
     }
   ],

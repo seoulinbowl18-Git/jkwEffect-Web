@@ -24,9 +24,15 @@ export const BrandWordmark = ({ light = false, large = false }) => (
   </span>
 );
 
-export const Logo = ({ light = false, size = 34 }) => (
-  <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (PAGI)" className="flex items-center gap-2 select-none shrink-0">
-    <LogoMark size={size} className={`shrink-0 ${light ? BRAND_RED_ON_DARK : BRAND_RED}`} />
+/** Logo resmi PAGI (lingkaran: foto Gibran + bendera + tulisan). File: public/pagi-logo.png (145 px). */
+export const BrandBadge = ({ size = 40, className = "" }) => (
+  <img src="/pagi-logo.png" alt="Logo Pasukan Gibran Indonesia (PAGI)" width={size} height={size} draggable={false}
+    className={`shrink-0 rounded-full object-cover select-none ${className}`} style={{ width: size, height: size }} />
+);
+
+export const Logo = ({ light = false, size = 42 }) => (
+  <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (PAGI)" className="flex items-center gap-2.5 select-none shrink-0">
+    <BrandBadge size={size} className={light ? "ring-2 ring-white/20" : "shadow-[0_2px_8px_rgba(200,16,46,0.25)]"} />
     <BrandWordmark light={light} />
   </Link>
 );

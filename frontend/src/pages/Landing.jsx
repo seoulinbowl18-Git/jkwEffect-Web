@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+import { BrandBadge } from "@/components/Logo";
 import { Footer } from "@/components/Footer";
 import { CampaignCard } from "@/components/CampaignCard";
 import { InstructionDialog } from "@/components/CampaignDialogs";
@@ -62,10 +63,17 @@ export default function Landing() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
             {/* Lockup tulisan logo PAGI: PASUKAN / GIBRAN / Indonesia / (PAGI) — PAGI dibuat paling menonjol */}
-            <span className="inline-flex items-center gap-2.5 rounded-full bg-black/15 backdrop-blur px-3.5 py-1.5 text-xs sm:text-sm font-bold tracking-[0.14em] uppercase animate-rise">
-              <span className="flex h-3 w-5 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
-              Komunitas relawan &amp; anggota
-            </span>
+            <div className="flex items-center gap-4 sm:gap-5 animate-rise">
+              <BrandBadge size={128} className="hidden sm:block ring-4 ring-white shadow-[0_18px_40px_-10px_rgba(70,0,12,0.7)]" />
+              <BrandBadge size={96} className="sm:hidden ring-[3px] ring-white shadow-[0_14px_30px_-10px_rgba(70,0,12,0.7)]" />
+              <div className="min-w-0">
+                <span className="inline-flex items-center gap-2.5 rounded-full bg-black/15 backdrop-blur px-3.5 py-1.5 text-[11px] sm:text-sm font-bold tracking-[0.14em] uppercase">
+                  <span className="flex h-3 w-5 shrink-0 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
+                  Komunitas relawan &amp; anggota
+                </span>
+                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">Pasukan Gibran Indonesia (PAGI)</p>
+              </div>
+            </div>
             <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Pasukan Gibran Indonesia (PAGI)">
               <span className="block text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-[0.32em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">PASUKAN</span>
               <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
