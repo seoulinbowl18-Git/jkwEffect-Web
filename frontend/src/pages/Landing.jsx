@@ -30,7 +30,7 @@ const JOIN = [
 // Tagline hero di samping kotak PAGI: berganti dengan efek "menguap" (sama seperti footer).
 // Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
 const HERO_TAGLINES = ["Pasukan Gibran Indonesia.", "Satu barisan,", "bergerak bersama", "untuk Indonesia."];
-const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.6, fadeInDuration: 0.9, waitDuration: 1.6 };
+const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
 
 export default function Landing() {
   const community = useCommunity();
