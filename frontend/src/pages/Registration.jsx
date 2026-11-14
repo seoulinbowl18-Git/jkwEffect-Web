@@ -9,7 +9,7 @@ import { api, errMsg, fmtDate } from "@/lib/api";
 import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
-  anggota: { title: "Daftar Anggota", short: "Anggota", icon: IdCard, desc: "Formulir pendaftaran anggota resmi Pasukan Gibran Indonesia (PAGI)." },
+  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Pasukan Gibran Indonesia (PAGI)." },
   relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan Pasukan Gibran Indonesia (PAGI)." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
@@ -372,7 +372,7 @@ export default function Registration() {
             <input {...bind("email")} type="email" autoComplete="email" placeholder="nama@email.com" className={inputCls} />
           </Field>
           <Field id="referral" label="Kode Referral" optional error={errors.referral}>
-            <input {...bind("referral")} maxLength={32} placeholder="Jika diajak oleh anggota lain" className={inputCls} />
+            <input {...bind("referral")} maxLength={32} placeholder="Jika diajak oleh member lain" className={inputCls} />
           </Field>
           <KtpUpload file={ktp} onChange={(f) => { setKtp(f); setErrors((e) => ({ ...e, ktp: undefined })); }} error={errors.ktp} />
         </Section>
@@ -383,7 +383,7 @@ export default function Registration() {
               className="mt-1 h-5 w-5 shrink-0 rounded accent-white" />
             <span className="text-sm text-white/75 leading-relaxed">
               Saya menyatakan bahwa seluruh data yang saya isi adalah <b className="text-white">benar dan dapat dipertanggungjawabkan</b>, bersedia data saya
-              diverifikasi dan diproses untuk keperluan keanggotaan, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Pasukan Gibran Indonesia (PAGI).
+              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Pasukan Gibran Indonesia (PAGI).
             </span>
           </label>
           {errors.setuju && <p className="mt-2 text-xs text-red-400">{errors.setuju}</p>}

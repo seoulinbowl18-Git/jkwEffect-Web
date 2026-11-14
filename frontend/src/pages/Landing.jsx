@@ -22,7 +22,7 @@ const STEPS = {
 
 // Kartu ajakan bergabung di hero (menggantikan kalkulator cuan): [jenis, judul, deskripsi, ikon, tombol utama?]
 const JOIN = [
-  ["anggota", "Daftar Anggota", "Jadi anggota resmi PAGI dengan KTA.", IdCard, true],
+  ["anggota", "Daftar Member", "Jadi member resmi PAGI dengan KTA.", IdCard, true],
   ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
 ];
 
@@ -58,7 +58,7 @@ export default function Landing() {
     <div className="bg-background">
       <Navbar />
 
-      {/* HERO — red brand gradient with rounded bottom (mobile app header), black join CTA (Anggota / Relawan) on the right */}
+      {/* HERO — red brand gradient with rounded bottom (mobile app header), black join CTA (Member / Relawan) on the right */}
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
@@ -69,7 +69,7 @@ export default function Landing() {
               <div className="min-w-0">
                 <span className="inline-flex items-center gap-2.5 rounded-full bg-black/15 backdrop-blur px-3.5 py-1.5 text-[11px] sm:text-sm font-bold tracking-[0.14em] uppercase">
                   <span className="flex h-3 w-5 shrink-0 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
-                  Komunitas relawan &amp; anggota
+                  Komunitas relawan &amp; member
                 </span>
                 <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">Pasukan Gibran Indonesia (PAGI)</p>
               </div>
