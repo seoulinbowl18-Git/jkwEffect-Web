@@ -8,7 +8,7 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 const VAPOUR_TEXTS = ["PAGI", "Pasukan Gibran Indonesia", "Bikin brand viral", "Posting & cairkan cuan"];
 const VAPOUR_ANIMATION = { vaporizeDuration: 2, fadeInDuration: 1, waitDuration: 1.5 };
 
-const useIsDesktop = () => {
+export const useIsDesktop = () => {
   const query = "(min-width: 768px)";
   const [desktop, setDesktop] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
   useEffect(() => {

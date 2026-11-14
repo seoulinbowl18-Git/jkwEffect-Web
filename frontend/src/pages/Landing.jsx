@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { BrandBadge } from "@/components/Logo";
-import { Footer } from "@/components/Footer";
+import { Footer, useIsDesktop } from "@/components/Footer";
+import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { CampaignCard } from "@/components/CampaignCard";
 import { InstructionDialog } from "@/components/CampaignDialogs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -26,6 +27,11 @@ const JOIN = [
   ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
 ];
 
+// Tagline hero di samping kotak PAGI: berganti dengan efek "menguap" (sama seperti footer).
+// Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
+const HERO_TAGLINES = ["Pasukan Gibran Indonesia.", "Satu barisan,", "bergerak bersama", "untuk Indonesia."];
+const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.6, fadeInDuration: 0.9, waitDuration: 1.6 };
+
 export default function Landing() {
   const community = useCommunity();
   const [role, setRole] = useState("creator");
@@ -33,6 +39,11 @@ export default function Landing() {
   const [payouts, setPayouts] = useState([]);
   const [info, setInfo] = useState(null);
   const { user } = useAuth();
+  const desktop = useIsDesktop();
+  const taglineFont = useMemo(
+    () => ({ fontFamily: "Inter, sans-serif", fontSize: desktop ? "26px" : "22px", fontWeight: 800 }),
+    [desktop],
+  );
   const navigate = useNavigate();
 
   const version = useSync();
@@ -84,9 +95,19 @@ export default function Landing() {
                 data-testid="hero-pagi">
                 <span className="text-[#C8102E] font-black tracking-tight leading-none text-7xl sm:text-8xl lg:text-[7.5rem]">PAGI</span>
               </span>
-              <p className="max-w-[17rem] text-base sm:text-lg text-white/90 leading-snug">
-                <b className="text-white">Pasukan Gibran Indonesia.</b> Satu barisan, bergerak bersama untuk Indonesia.
-              </p>
+              <div className="relative h-14 w-full sm:w-auto sm:flex-1 sm:min-w-[280px] sm:max-w-[360px]" data-testid="hero-vapour-text">
+                <VaporizeTextCycle
+                  texts={HERO_TAGLINES}
+                  font={taglineFont}
+                  color="rgb(255, 255, 255)"
+                  spread={5}
+                  density={5}
+                  animation={HERO_TAGLINE_ANIMATION}
+                  direction="left-to-right"
+                  alignment="left"
+                  tag={Tag.P}
+                />
+              </div>
             </div>
           </div>
 
