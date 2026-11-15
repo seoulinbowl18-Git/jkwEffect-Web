@@ -66,7 +66,7 @@ export const Navbar = () => {
                     {user.picture ? <img src={user.picture} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" /> : user.name?.[0]?.toUpperCase()}
                   </Link>
                 )}
-                <button data-testid="logout-button" onClick={logout} className="btn-ghost h-10 px-3 hidden md:inline-flex" title="Keluar">
+                <button data-testid="logout-button" onClick={logout} className="btn-ghost h-10 px-3 hidden lg:inline-flex" title="Keluar">
                   <LogOut className="h-4 w-4" /> Keluar
                 </button>
               </>

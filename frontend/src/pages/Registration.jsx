@@ -9,8 +9,8 @@ import { api, errMsg, fmtDate } from "@/lib/api";
 import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
-  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Pasukan Gibran Indonesia (GIBRAN2029)." },
-  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan Pasukan Gibran Indonesia (GIBRAN2029)." },
+  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi GIBRAN2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
+  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan GIBRAN2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
 const KTP_MAX = 3 * 1024 * 1024; // 3 MB
@@ -412,7 +412,7 @@ export default function Registration() {
               className="mt-1 h-5 w-5 shrink-0 rounded accent-white" />
             <span className="text-sm text-white/75 leading-relaxed">
               Saya menyatakan bahwa seluruh data yang saya isi adalah <b className="text-white">benar dan dapat dipertanggungjawabkan</b>, bersedia data saya
-              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Pasukan Gibran Indonesia (GIBRAN2029).
+              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> GIBRAN2029.
             </span>
           </label>
           {errors.setuju && <p className="mt-2 text-xs text-red-400">{errors.setuju}</p>}

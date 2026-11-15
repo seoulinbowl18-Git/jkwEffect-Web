@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck, BadgeCheck, Network, BellRing, Lightbulb, HeartHandshake, Coins } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
-import { BrandBadge } from "@/components/Logo";
+import { BrandBadge, SLOGAN } from "@/components/Logo";
 import { Footer, useIsDesktop } from "@/components/Footer";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { CampaignCard } from "@/components/CampaignCard";
@@ -29,7 +29,7 @@ const JOIN = [
 
 // Tagline hero di samping kotak GIBRAN2029: berganti dengan efek "menguap" (sama seperti footer).
 // Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
-const HERO_TAGLINES = ["Pasukan Gibran Indonesia.", "Satu barisan,", "bergerak bersama", "untuk Indonesia."];
+const HERO_TAGLINES = ["Bergerak Bersama,", "Menuju Indonesia", "Maju 2029."];
 const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
 
 // Seksi "Keuntungan bergabung" di bawah hero: [jenis, judul, ikon, gelap?, [[ikon, judul, deskripsi], ...]]
@@ -87,7 +87,7 @@ export default function Landing() {
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
-            {/* Lockup tulisan logo GIBRAN2029: PASUKAN / GIBRAN / Indonesia / (GIBRAN2029) — GIBRAN2029 dibuat paling menonjol */}
+            {/* Lockup: BERGERAK BERSAMA / GIBRAN / Indonesia Maju 2029 + kotak GIBRAN2029 yang paling menonjol */}
             <div className="flex items-center gap-4 sm:gap-5 animate-rise">
               <BrandBadge size={128} className="hidden sm:block ring-4 ring-white shadow-[0_18px_40px_-10px_rgba(70,0,12,0.7)]" />
               <BrandBadge size={96} className="sm:hidden ring-[3px] ring-white shadow-[0_14px_30px_-10px_rgba(70,0,12,0.7)]" />
@@ -96,13 +96,13 @@ export default function Landing() {
                   <span className="flex h-3 w-5 shrink-0 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
                   Komunitas relawan &amp; member
                 </span>
-                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">Pasukan Gibran Indonesia (GIBRAN2029)</p>
+                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">{SLOGAN}</p>
               </div>
             </div>
-            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Pasukan Gibran Indonesia (GIBRAN2029)">
-              <span className="block text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-[0.32em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">PASUKAN</span>
+            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="GIBRAN2029 — Bergerak Bersama, Menuju Indonesia Maju 2029">
+              <span className="block text-[1.3rem] sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-[0.2em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">BERGERAK BERSAMA</span>
               <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
-              <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia</span>
+              <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia Maju 2029</span>
             </h1>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-rise [animation-delay:160ms]">
               <span className="inline-flex items-center rounded-[24px] sm:rounded-[28px] bg-white px-5 sm:px-8 py-3 sm:py-4 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
@@ -129,7 +129,7 @@ export default function Landing() {
                 <span className="inline-block rounded-lg bg-[#0A0A0A] px-2.5 py-0.5 text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.7)]">GIBRAN2029</span>.
               </h2>
               <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
-                Barisan akar rumput yang solid, terstruktur, dan siap mengawal agenda perubahan nyata.{" "}
+                <b className="text-white">{SLOGAN}</b> Barisan akar rumput yang solid, terstruktur, dan siap mengawal agenda perubahan nyata.{" "}
                 <a href="#keuntungan" className="font-bold text-white underline decoration-white/50 underline-offset-4 hover:decoration-white">Bergabunglah sekarang.</a>
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function Landing() {
           <div className="lg:col-span-5 animate-rise [animation-delay:200ms]">
             <div className="rounded-3xl bg-[#121212]/90 ring-1 ring-white/10 backdrop-blur p-7 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]" data-testid="join-cta">
               <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>
-              <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">Pasukan Gibran Indonesia</p>
+              <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">GIBRAN2029</p>
               <p className="mt-2 text-sm text-white/70 leading-relaxed">Pilih cara kamu ikut berkontribusi. Pendaftaran gratis dan cukup memakai akun Google.</p>
               <div className="mt-7 grid gap-3">
                 {JOIN.map(([jenis, title, desc, Icon, primary]) => (

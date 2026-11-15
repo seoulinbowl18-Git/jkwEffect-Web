@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Logo } from "@/components/Logo";
+import { Logo, SLOGAN } from "@/components/Logo";
 import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 
 // Konstanta di luar komponen: VaporizeTextCycle menggambar ulang canvas setiap kali
 // referensi `texts`/`font`/`animation` berubah.
-const VAPOUR_TEXTS = ["GIBRAN2029", "Pasukan Gibran Indonesia", "Bikin brand viral", "Posting & cairkan cuan"];
+const VAPOUR_TEXTS = ["GIBRAN2029", "Bergerak Bersama,", "Menuju Indonesia Maju 2029", "Posting & cairkan cuan"];
 const VAPOUR_ANIMATION = { vaporizeDuration: 2, fadeInDuration: 1, waitDuration: 1.5 };
 
 export const useIsDesktop = () => {
@@ -52,7 +52,7 @@ export const Footer = () => {
             <Link to="/cara-kerja" className="hover:text-primary">Cara Kerja</Link>
             <Link to="/untuk-brand" className="hover:text-primary">Untuk Brand</Link>
           </nav>
-          <p>© {new Date().getFullYear()} GIBRAN2029 — Pasukan Gibran Indonesia</p>
+          <p>© {new Date().getFullYear()} GIBRAN2029 — {SLOGAN}</p>
         </div>
       </div>
     </footer>

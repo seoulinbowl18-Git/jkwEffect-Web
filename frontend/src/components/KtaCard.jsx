@@ -1,4 +1,5 @@
 import { fmtDate } from "@/lib/api";
+import { SLOGAN } from "@/components/Logo";
 
 // Kartu Tanda Anggota (KTA) digital GIBRAN2029 — rasio kartu ID standar (85,6 × 54 mm).
 export const KTA_TITLE = { anggota: "Kartu Tanda Anggota", relawan: "Kartu Tanda Relawan" };
@@ -21,7 +22,7 @@ export const KtaCard = ({ reg }) => (
           <img src={LOGO} alt="" className="h-[3.4em] w-[3.4em] rounded-full ring-2 ring-white/80" draggable={false} />
           <div className="leading-tight">
             <p className="font-black tracking-tight text-[1.35em]">GIBRAN2029</p>
-            <p className="text-[0.62em] font-semibold text-white/85">Pasukan Gibran Indonesia</p>
+            <p className="text-[0.56em] font-semibold text-white/85">{SLOGAN}</p>
           </div>
         </div>
         <span className="rounded-full bg-[#0A0A0A] px-[0.8em] py-[0.35em] text-[0.58em] font-bold tracking-[0.14em] uppercase whitespace-nowrap">{KTA_TITLE[reg.jenis]}</span>
@@ -99,10 +100,14 @@ export const downloadKta = async (reg) => {
   }
   ctx.fillStyle = "#fff"; ctx.textBaseline = "alphabetic";
   ctx.font = "900 70px Inter, sans-serif"; ctx.fillText("GIBRAN2029", P + L + 34, P + 92);
-  ctx.font = "600 34px Inter, sans-serif"; ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.fillText("Pasukan Gibran Indonesia", P + L + 36, P + 142);
   const label = KTA_TITLE[reg.jenis].toUpperCase();
   ctx.font = "700 30px Inter, sans-serif";
   const lw = ctx.measureText(label).width + 64;
+  // Slogan di bawah GIBRAN2029: dikecilkan bila perlu agar tidak menabrak label jenis kartu di kanan.
+  ctx.fillStyle = "rgba(255,255,255,0.88)";
+  const sloganMaxW = W - P - lw - 40 - (P + L + 36);
+  ctx.fillText(fitText(ctx, SLOGAN, sloganMaxW, 600, 32, 20), P + L + 36, P + 142);
+  ctx.font = "700 30px Inter, sans-serif";
   ctx.fillStyle = "#0A0A0A"; roundRect(ctx, W - P - lw, P + 18, lw, 64, 32); ctx.fill();
   ctx.fillStyle = "#fff"; ctx.fillText(label, W - P - lw + 32, P + 61);
 

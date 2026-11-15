@@ -75,7 +75,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] lg:rounded-none px-6 sm:px-10 lg:px-16 pt-10 pb-12 lg:py-16 flex flex-col">
-        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Pasukan Gibran Indonesia (GIBRAN2029)">
+        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="GIBRAN2029 — beranda">
           <BrandBadge size={52} className="ring-2 ring-white/25" />
           <BrandWordmark light large />
         </a>
