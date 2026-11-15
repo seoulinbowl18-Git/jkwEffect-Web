@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowLeft, CheckCircle2, HandHeart, IdCard, ImagePlus, Loader2, LogOut, MapPin, Phone, ShieldCheck, Trash2, UserRound } from "lucide-react";
+import { ArrowLeft, CheckCircle2, HandHeart, IdCard, ImagePlus, Loader2, Lock, LogOut, MapPin, Phone, ShieldCheck, Trash2, UserRound } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 import { GoogleG } from "@/pages/Login";
@@ -391,7 +391,14 @@ export default function Registration() {
             className="mt-6 w-full h-14 rounded-2xl bg-white text-[#0A0A0A] text-base font-extrabold flex items-center justify-center gap-2 hover:bg-[#F0F0F0] transition-colors disabled:opacity-60">
             {sending ? <><Loader2 className="h-5 w-5 animate-spin" /> Mengirim…</> : `Kirim pendaftaran ${jenis.short.toLowerCase()}`}
           </button>
-          <p className="mt-3 text-xs text-white/40 text-center flex items-center justify-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> NIK & foto KTP hanya bisa dilihat admin GIBRAN2029 untuk verifikasi.</p>
+          <div className="mt-5 rounded-xl bg-white/[0.04] ring-1 ring-white/10 p-4 flex gap-3.5" data-testid="privacy-note">
+            <span className="grid place-items-center h-10 w-10 shrink-0 rounded-xl bg-[#C8102E] text-white"><Lock className="h-5 w-5" /></span>
+            <p className="text-sm text-white/70 leading-relaxed">
+              <b className="block text-white">Data pribadi Anda dilindungi.</b>
+              Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi GIBRAN2029.
+              NIK &amp; foto KTP hanya dapat dilihat oleh admin untuk verifikasi.
+            </p>
+          </div>
         </section>
       </form>
     </Shell>

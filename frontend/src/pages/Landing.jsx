@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck } from "lucide-react";
+import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck, BadgeCheck, Network, BellRing, Lightbulb, HeartHandshake, Coins } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { BrandBadge } from "@/components/Logo";
 import { Footer, useIsDesktop } from "@/components/Footer";
@@ -31,6 +31,20 @@ const JOIN = [
 // Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
 const HERO_TAGLINES = ["Pasukan Gibran Indonesia.", "Satu barisan,", "bergerak bersama", "untuk Indonesia."];
 const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
+
+// Seksi "Keuntungan bergabung" di bawah hero: [jenis, judul, ikon, gelap?, [[ikon, judul, deskripsi], ...]]
+const BENEFITS = [
+  ["anggota", "Bagi Member", IdCard, true, [
+    [BadgeCheck, "KTA digital resmi", "Kartu Tanda Anggota digital dengan nomor registrasi unik atas namamu."],
+    [Network, "Jaringan koordinasi wilayah", "Terhubung dengan barisan GIBRAN2029 dari provinsi hingga kelurahan tempatmu."],
+    [BellRing, "Akses informasi prioritas", "Kabar agenda, kegiatan, dan arahan resmi kamu terima lebih dulu."],
+  ]],
+  ["relawan", "Bagi Relawan", HandHeart, false, [
+    [Lightbulb, "Ruang gerak berkreasi", "Suarakan gagasan positif lewat karya, konten, dan ide-ide segar."],
+    [HeartHandshake, "Terlibat dalam aksi sosial", "Turun langsung dalam kegiatan sosial yang berdampak di lingkunganmu."],
+    [Coins, "Apresiasi & cuan", "Berkesempatan mendapat apresiasi dan cuan melalui misi konten kreator."],
+  ]],
+];
 
 export default function Landing() {
   const community = useCommunity();
@@ -109,6 +123,16 @@ export default function Landing() {
                 />
               </div>
             </div>
+            <div className="mt-8 max-w-2xl animate-rise [animation-delay:220ms]" data-testid="hero-headline">
+              <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-tight leading-[1.15] [text-shadow:0_2px_10px_rgba(60,0,10,0.35)]">
+                Menatap Indonesia Maju 2029 Bersama{" "}
+                <span className="inline-block rounded-lg bg-[#0A0A0A] px-2.5 py-0.5 text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.7)]">GIBRAN2029</span>.
+              </h2>
+              <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
+                Barisan akar rumput yang solid, terstruktur, dan siap mengawal agenda perubahan nyata.{" "}
+                <a href="#keuntungan" className="font-bold text-white underline decoration-white/50 underline-offset-4 hover:decoration-white">Bergabunglah sekarang.</a>
+              </p>
+            </div>
           </div>
 
           <div className="lg:col-span-5 animate-rise [animation-delay:200ms]">
@@ -132,6 +156,41 @@ export default function Landing() {
               <p className="mt-5 text-xs text-white/45 flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Data pribadi kamu disimpan aman dan hanya dipakai untuk keperluan organisasi.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* KEUNTUNGAN BERGABUNG — Member (hitam) & Relawan (merah) */}
+      <section id="keuntungan" className="scroll-mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20" data-testid="benefits">
+        <div className="max-w-2xl">
+          <p className="text-sm font-bold tracking-[0.16em] uppercase text-[#C8102E]">Keuntungan bergabung</p>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Apa yang kamu dapatkan di <span className="text-[#C8102E]">GIBRAN2029</span>?</h2>
+          <p className="mt-3 text-muted-foreground">Pilih peran yang paling cocok. Keduanya gratis dan cukup mendaftar dengan akun Google.</p>
+        </div>
+        <div className="mt-8 grid md:grid-cols-2 gap-5">
+          {BENEFITS.map(([jenis, title, Icon, dark, items]) => (
+            <article key={jenis} data-testid={`benefit-${jenis}`}
+              className={`relative overflow-hidden rounded-3xl p-7 sm:p-8 text-white flex flex-col shadow-soft-lg ${dark ? "bg-gradient-to-br from-[#0A0A0A] via-[#121212] to-[#1E1E1E] ring-1 ring-black/5" : "hero-gradient-red hero-arcs"}`}>
+              <div className="relative flex items-center gap-3.5">
+                <span className={`grid place-items-center h-12 w-12 rounded-2xl ${dark ? "bg-[#C8102E]" : "bg-[#0A0A0A]"}`}><Icon className="h-6 w-6" /></span>
+                <h3 className="text-2xl font-extrabold tracking-tight">{title}</h3>
+              </div>
+              <ul className="relative mt-6 space-y-4 flex-1">
+                {items.map(([I, t, d]) => (
+                  <li key={t} className="flex gap-3.5">
+                    <span className={`grid place-items-center h-10 w-10 shrink-0 rounded-xl ${dark ? "bg-white/10" : "bg-white/15"}`}><I className="h-5 w-5" /></span>
+                    <span>
+                      <span className="block font-bold">{t}</span>
+                      <span className={`block text-sm mt-0.5 leading-relaxed ${dark ? "text-white/65" : "text-white/85"}`}>{d}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <button type="button" onClick={() => navigate(`/daftar/${jenis}`)} data-testid={`benefit-cta-${jenis}`}
+                className={`relative mt-7 h-12 px-6 rounded-xl font-bold inline-flex items-center justify-center gap-2 self-start transition-all hover:-translate-y-0.5 ${dark ? "bg-white text-[#0A0A0A] hover:bg-[#F0F0F0]" : "bg-[#0A0A0A] text-white hover:bg-[#1E1E1E]"}`}>
+                {jenis === "anggota" ? "Daftar Member" : "Daftar Relawan"} <ArrowRight className="h-4 w-4" />
+              </button>
+            </article>
+          ))}
         </div>
       </section>
 
