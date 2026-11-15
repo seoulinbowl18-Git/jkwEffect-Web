@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { ArrowLeft, CheckCircle2, HandHeart, IdCard, ImagePlus, Loader2, Lock, LogOut, MapPin, Phone, ShieldCheck, Trash2, UserRound } from "lucide-react";
+import { ArrowLeft, BadgeCheck, CheckCircle2, HandHeart, IdCard, XCircle, ImagePlus, Loader2, Lock, LogOut, MapPin, Phone, ShieldCheck, Trash2, UserRound } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 import { GoogleG } from "@/pages/Login";
@@ -24,7 +24,7 @@ const EMPTY = {
 // ---- Gaya gelap (Sleek Black) ----
 const inputCls = "w-full h-12 px-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed [color-scheme:dark]";
 const selectCls = `${inputCls} appearance-none bg-[url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23ffffff99' stroke-width='2'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E")] bg-no-repeat bg-[right_1rem_center] pr-10 [&>option]:bg-[#121212]`;
-const cardCls = "rounded-2xl bg-[#121212] ring-1 ring-white/10 p-5 sm:p-7";
+export const cardCls = "rounded-2xl bg-[#121212] ring-1 ring-white/10 p-5 sm:p-7";
 
 /** Perkecil foto KTP besar (mis. dari kamera HP) agar ≤ 3 MB, tetap tajam untuk dibaca. */
 const shrinkKtp = (file) => new Promise((resolve, reject) => {
@@ -178,7 +178,7 @@ const KtpUpload = ({ file, onChange, error }) => {
   );
 };
 
-const Shell = ({ jenis, children }) => (
+export const Shell = ({ jenis, children }) => (
   <div className="min-h-screen bg-[#0A0A0A] text-white">
     <header className="sticky top-0 z-30 bg-[#0A0A0A]/85 backdrop-blur-xl border-b border-white/10">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
@@ -199,15 +199,15 @@ const Shell = ({ jenis, children }) => (
   </div>
 );
 
-/** Belum masuk: pakai login Google yang sudah ada (Firebase), lalu kembali ke formulir ini. */
-const GoogleGate = ({ jenisKey }) => {
+/** Belum masuk: pakai login Google yang sudah ada (Firebase), lalu kembali ke `next`. */
+export const GoogleGate = ({ next, desc = "Pendaftaran terhubung ke akun Google kamu agar data aman dan status pendaftaran bisa dipantau. Nama & email akan terisi otomatis." }) => {
   const { login, signingIn } = useAuth();
   return (
     <div className={`${cardCls} text-center`} data-testid="registration-google-gate">
       <span className="mx-auto grid place-items-center h-14 w-14 rounded-2xl bg-white text-[#0A0A0A]"><ShieldCheck className="h-7 w-7" /></span>
       <h2 className="mt-4 text-xl font-extrabold">Masuk dulu dengan akun Google</h2>
-      <p className="mt-2 text-sm text-white/60 max-w-md mx-auto">Pendaftaran terhubung ke akun Google kamu agar data aman dan status pendaftaran bisa dipantau. Nama & email akan terisi otomatis.</p>
-      <button type="button" data-testid="registration-google-button" disabled={signingIn} onClick={() => login(`/daftar/${jenisKey}`)}
+      <p className="mt-2 text-sm text-white/60 max-w-md mx-auto">{desc}</p>
+      <button type="button" data-testid="registration-google-button" disabled={signingIn} onClick={() => login(next)}
         className="mt-6 mx-auto w-full max-w-sm h-14 rounded-2xl bg-white text-[#0A0A0A] font-bold flex items-center justify-center gap-3 hover:bg-[#F0F0F0] transition-colors disabled:opacity-60">
         {signingIn ? <Loader2 className="h-5 w-5 animate-spin" /> : <GoogleG />} Lanjutkan dengan Google
       </button>
@@ -215,15 +215,44 @@ const GoogleGate = ({ jenisKey }) => {
   );
 };
 
-const Done = ({ jenis, reg }) => (
-  <div className={`${cardCls} text-center`} data-testid="registration-done">
-    <CheckCircle2 className="mx-auto h-14 w-14 text-white" />
-    <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {jenis.short.toLowerCase()} diterima</h2>
-    <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin GIBRAN2029. Kabar selanjutnya dikirim lewat WhatsApp {reg.telepon}.</p>
-    {reg.created_at && <p className="mt-1 text-xs text-white/40">Dikirim {fmtDate(reg.created_at)}{reg.status ? ` · status: ${reg.status}` : ""}</p>}
-    <Link to="/" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Kembali ke beranda</Link>
-  </div>
-);
+/** Status pendaftaran: menunggu verifikasi / diterima (lihat KTA) / ditolak (boleh kirim ulang). */
+const Done = ({ jenis, reg, onRetry }) => {
+  const short = jenis.short.toLowerCase();
+  if (reg.status === "diterima") {
+    return (
+      <div className={`${cardCls} text-center`} data-testid="registration-approved">
+        <BadgeCheck className="mx-auto h-14 w-14 text-white" />
+        <h2 className="mt-4 text-2xl font-extrabold">Selamat, kamu resmi jadi {short} GIBRAN2029!</h2>
+        <p className="mt-2 text-white/60">Nomor KTA digital kamu</p>
+        <p className="mt-1 inline-block rounded-xl bg-[#C8102E] px-4 py-2 text-xl font-black tracking-wider tabular-nums">{reg.kta_number}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Link to="/kta" data-testid="registration-see-kta" className="inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]"><IdCard className="h-5 w-5" /> Lihat & unduh KTA</Link>
+          <Link to="/" className="inline-flex h-12 px-6 rounded-xl ring-1 ring-white/20 font-bold items-center hover:bg-white/10">Beranda</Link>
+        </div>
+      </div>
+    );
+  }
+  if (reg.status === "ditolak") {
+    return (
+      <div className={`${cardCls} text-center`} data-testid="registration-rejected">
+        <XCircle className="mx-auto h-14 w-14 text-[#F21D43]" />
+        <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {short} perlu diperbaiki</h2>
+        <p className="mt-2 text-white/60 max-w-md mx-auto">Admin GIBRAN2029 belum bisa memverifikasi data kamu.</p>
+        {reg.status_note && <p className="mt-3 mx-auto max-w-md rounded-xl bg-white/[0.06] ring-1 ring-white/10 px-4 py-3 text-sm"><b>Alasan:</b> {reg.status_note}</p>}
+        <button type="button" onClick={onRetry} data-testid="registration-retry" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Perbaiki & kirim ulang</button>
+      </div>
+    );
+  }
+  return (
+    <div className={`${cardCls} text-center`} data-testid="registration-done">
+      <CheckCircle2 className="mx-auto h-14 w-14 text-white" />
+      <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {short} diterima</h2>
+      <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin GIBRAN2029. Setelah disetujui, nomor & kartu KTA digital muncul di halaman KTA.</p>
+      {reg.created_at && <p className="mt-1 text-xs text-white/40">Dikirim {fmtDate(reg.created_at)} · status: menunggu verifikasi</p>}
+      <Link to="/" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Kembali ke beranda</Link>
+    </div>
+  );
+};
 
 export default function Registration() {
   const { jenis: jenisKey } = useParams();
@@ -307,8 +336,8 @@ export default function Registration() {
   if (loading) {
     return <Shell jenis={jenis}><div className="py-16 grid place-items-center"><Loader2 className="h-8 w-8 animate-spin text-white/60" /></div></Shell>;
   }
-  if (!user) return <Shell jenis={jenis}><GoogleGate jenisKey={jenisKey} /></Shell>;
-  if (done) return <Shell jenis={jenis}><Done jenis={jenis} reg={done} /></Shell>;
+  if (!user) return <Shell jenis={jenis}><GoogleGate next={`/daftar/${jenisKey}`} /></Shell>;
+  if (done) return <Shell jenis={jenis}><Done jenis={jenis} reg={done} onRetry={() => setDone(null)} /></Shell>;
 
   return (
     <Shell jenis={jenis}>

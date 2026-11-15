@@ -13,6 +13,7 @@ import AdminLogin from "@/pages/AdminLogin";
 import HowItWorks from "@/pages/HowItWorks";
 import ClaimProof from "@/pages/ClaimProof";
 import Registration from "@/pages/Registration";
+import Kta from "@/pages/Kta";
 
 const Guard = ({ children, roles, needRole = true }) => {
   const { user, loading } = useAuth();
@@ -47,6 +48,7 @@ function AppRouter() {
       <Route path="/bounty" element={<Navigate to="/jelajah" replace />} />
       <Route path="/masuk" element={<Login />} />
       <Route path="/daftar/:jenis" element={<Registration />} />
+      <Route path="/kta" element={<Kta />} />
       <Route path="/cara-kerja" element={<HowItWorks />} />
       <Route path="/untuk-brand" element={<HowItWorks brand />} />
       <Route path="/onboarding" element={<Guard needRole={false}><Onboarding /></Guard>} />

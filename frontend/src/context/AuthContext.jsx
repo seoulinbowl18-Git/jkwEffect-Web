@@ -43,8 +43,8 @@ export const AuthProvider = ({ children }) => {
     // Our own httpOnly session cookie is the source of truth from here on.
     await signOut(firebaseAuth).catch(() => {});
     setUser(data);
-    // Formulir pendaftaran Member/Relawan (/daftar/...) tidak butuh peran kreator/brand: langsung kembali ke sana.
-    const target = next?.startsWith("/daftar/") ? next : !data.role ? "/onboarding" : next && next !== "/onboarding" ? next : "/dashboard";
+    // Formulir pendaftaran Member/Relawan (/daftar/...) & halaman KTA tidak butuh peran kreator/brand: langsung kembali ke sana.
+    const target = next?.startsWith("/daftar/") || next === "/kta" ? next : !data.role ? "/onboarding" : next && next !== "/onboarding" ? next : "/dashboard";
     if (window.location.pathname !== target) window.location.assign(target);
   }, []);
 

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import {
   Users, Megaphone, AlertCircle, Banknote, ShieldCheck, Plus, Pencil, Pause, Play, Lock, Trash2, Search,
   BadgeCheck, Ban, Wallet, History, Radio, Building2, User as UserIcon, Phone, TrendingUp,
+  IdCard, HandHeart, MapPin, Mail, Cake, Image as ImageIcon, Download, X, Check, Loader2,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { StatCard, StatusBadge, Chips, Tabs, PageHeader, Field, inputCls, panelCls, useRouteTab } from "@/components/Shared";
@@ -32,7 +33,7 @@ export default function AdminPanel() {
   useEffect(() => { load(); }, [load, version]);
 
   // Review konten, cek views & verifikasi bukti klaim hanya untuk Owner (Admin Pusat).
-  const tabs = [["campaigns", "Campaign"], ["users", "Pengguna"], ["withdrawals", "Penarikan"]];
+  const tabs = [["registrations", "Pendaftaran"], ["campaigns", "Campaign"], ["users", "Pengguna"], ["withdrawals", "Penarikan"]];
   if (isOwner) tabs.push(["submissions", "Verifikasi konten"], ["audit", "Log aktivitas"]);
 
   return (
@@ -71,6 +72,7 @@ export default function AdminPanel() {
           </div>
         )}
 
+        {tab === "registrations" && <RegistrationsTab version={version} />}
         {tab === "campaigns" && <CampaignsTab isOwner={isOwner} version={version} onEdit={setEditing} onChange={load} />}
         {tab === "users" && <UsersTab isOwner={isOwner} version={version} onChange={load} />}
         {tab === "withdrawals" && <WithdrawalsTab version={version} onChange={load} />}
@@ -512,7 +514,167 @@ const SubmissionsTab = ({ version, onChange }) => {
   );
 };
 
-const AUDIT_LABEL = { "campaign.create": "Membuat campaign", "campaign.edit": "Mengubah campaign", "campaign.delete": "Menghapus campaign",
+// ---------------- Pendaftaran Member / Relawan ----------------
+const REG_LABEL = { anggota: "Member", relawan: "Relawan" };
+const REG_STATUS_CHIPS = [["menunggu verifikasi", "Menunggu"], ["diterima", "Disetujui"], ["ditolak", "Ditolak"], ["", "Semua"]];
+const titleCase = (s = "") => s.toLowerCase().replace(/(^|[\s'-])\S/g, (m) => m.toUpperCase());
+const waLink = (tel) => `https://wa.me/${String(tel || "").replace(/\D/g, "")}`;
+
+const RegistrationsTab = ({ version }) => {
+  const [data, setData] = useState(null);
+  const [status, setStatus] = useState("menunggu verifikasi");
+  const [jenis, setJenis] = useState("");
+  const [q, setQ] = useState("");
+  const [ktp, setKtp] = useState(null); // registrasi yang foto KTP-nya sedang dilihat
+  const [acting, setActing] = useState(null); // { r, status }
+  const load = useCallback(() => {
+    const params = { limit: 200 };
+    if (status) params.status = status;
+    if (jenis) params.jenis = jenis;
+    if (q.trim()) params.q = q.trim();
+    return api.get("/admin/registrations", { params }).then((r) => setData(r.data)).catch((e) => toast.error(errMsg(e)));
+  }, [status, jenis, q]);
+  useEffect(() => { const t = setTimeout(load, q ? 300 : 0); return () => clearTimeout(t); }, [load, version, q]);
+  const c = data?.counts || {};
+  const chips = REG_STATUS_CHIPS.map(([k, l]) => [k, k && c[k] != null ? `${l} (${c[k]})` : l]);
+
+  return (
+    <div className="space-y-4" data-testid="admin-registrations">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+        <Chips prefix="admin-reg-filter" value={status} onChange={setStatus} items={chips} />
+        <div className="flex gap-2 lg:ml-auto">
+          {[["", "Semua jenis"], ["anggota", "Member"], ["relawan", "Relawan"]].map(([k, l]) => (
+            <button key={k} onClick={() => setJenis(k)} data-testid={`admin-reg-jenis-${k || "all"}`}
+              className={`h-9 px-3.5 rounded-xl text-sm font-semibold transition-colors ${jenis === k ? "bg-[#0A0A0A] text-white" : "bg-card shadow-soft text-muted-foreground hover:text-foreground"}`}>{l}</button>
+          ))}
+        </div>
+      </div>
+      <SearchBox value={q} onChange={setQ} placeholder="Cari nama, NIK, telepon, email, atau kab/kota…" testid="admin-reg-search" />
+      {data && !data.items.length && <EmptyRow>Tidak ada pendaftaran di sini.</EmptyRow>}
+      <div className="space-y-3">
+        {(data?.items || []).map((r) => (
+          <article key={r.registration_id} className={`${panelCls} p-5`} data-testid={`admin-reg-row-${r.registration_id}`}>
+            <div className="flex flex-wrap items-start gap-3">
+              <span className={`grid place-items-center h-11 w-11 shrink-0 rounded-xl text-white ${r.jenis === "anggota" ? "bg-[#0A0A0A]" : "bg-[#C8102E]"}`}>
+                {r.jenis === "anggota" ? <IdCard className="h-5 w-5" /> : <HandHeart className="h-5 w-5" />}
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="font-extrabold text-lg leading-tight">{titleCase(r.nama)}
+                  <span className="ml-2 align-middle text-[11px] font-bold px-2 py-0.5 rounded-full bg-secondary">{REG_LABEL[r.jenis]}</span></p>
+                <p className="text-sm text-muted-foreground">Daftar {fmtDate(r.created_at)} · akun {r.account_email || "-"}{r.referral ? ` · referral ${r.referral}` : ""}</p>
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                <StatusBadge s={r.status} />
+                {r.kta_number && <span className="text-xs font-bold tabular-nums text-[#C8102E]" data-testid={`admin-reg-kta-${r.registration_id}`}>{r.kta_number}</span>}
+              </div>
+            </div>
+            <dl className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+              <div><dt className="text-xs font-semibold text-muted-foreground">NIK</dt><dd className="font-semibold tabular-nums tracking-wide">{r.nik}</dd></div>
+              <div><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Cake className="h-3.5 w-3.5" /> Tempat, tanggal lahir</dt>
+                <dd className="font-semibold">{titleCase(r.kota_lahir)}, {r.tanggal_lahir ? fmtDate(r.tanggal_lahir) : "-"}</dd></div>
+              <div><dt className="text-xs font-semibold text-muted-foreground">Jenis kelamin · status</dt><dd className="font-semibold">{r.jenis_kelamin} · {r.status_pernikahan}</dd></div>
+              <div className="sm:col-span-2"><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> Domisili</dt>
+                <dd className="font-semibold">{r.alamat}, Kel. {titleCase(r.kelurahan)}, Kec. {titleCase(r.kecamatan)}, {titleCase(r.kabupaten)}, {titleCase(r.provinsi)}</dd></div>
+              <div><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Phone className="h-3.5 w-3.5" /> WhatsApp</dt>
+                <dd><a href={waLink(r.telepon)} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">+{r.telepon}</a></dd></div>
+              <div className="sm:col-span-2 lg:col-span-1 min-w-0"><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Mail className="h-3.5 w-3.5" /> Email</dt>
+                <dd className="font-semibold truncate">{r.email}</dd></div>
+              {r.status_note && <div className="sm:col-span-2"><dt className="text-xs font-semibold text-muted-foreground">Catatan admin</dt><dd>{r.status_note}</dd></div>}
+            </dl>
+            <div className="mt-4 pt-4 border-t border-border/70 flex flex-wrap gap-2">
+              <button onClick={() => setKtp(r)} disabled={!r.has_ktp} className={neutralBtn} data-testid={`admin-reg-ktp-${r.registration_id}`}><ImageIcon className="h-4 w-4" /> Lihat foto KTP</button>
+              <div className="flex gap-2 ml-auto">
+                {r.status !== "diterima" && (
+                  <button onClick={() => setActing({ r, status: "diterima" })} className="btn-primary h-9 px-4 text-sm" data-testid={`admin-reg-approve-${r.registration_id}`}><Check className="h-4 w-4" /> Setujui</button>
+                )}
+                {r.status !== "ditolak" && (
+                  <button onClick={() => setActing({ r, status: "ditolak" })} className={dangerBtn} data-testid={`admin-reg-reject-${r.registration_id}`}><X className="h-4 w-4" /> Tolak</button>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      {data && data.total > data.items.length && <p className="text-xs text-muted-foreground text-center">Menampilkan {data.items.length} dari {data.total}. Persempit dengan pencarian atau filter.</p>}
+      <KtpDialog reg={ktp} onClose={() => setKtp(null)} />
+      <RegistrationActionDialog acting={acting} onClose={() => setActing(null)} onDone={load} />
+    </div>
+  );
+};
+
+/** Foto KTP diambil lewat endpoint khusus admin (tidak publik), ditampilkan dari blob lokal. */
+const KtpDialog = ({ reg, onClose }) => {
+  const [url, setUrl] = useState(null);
+  const [err, setErr] = useState(null);
+  useEffect(() => {
+    setUrl(null); setErr(null);
+    if (!reg) return undefined;
+    let obj = null;
+    api.get(`/admin/registrations/${reg.registration_id}/ktp`, { responseType: "blob" })
+      .then((r) => { obj = URL.createObjectURL(r.data); setUrl(obj); })
+      .catch(() => setErr("Foto KTP tidak bisa dimuat."));
+    return () => { if (obj) URL.revokeObjectURL(obj); };
+  }, [reg]);
+  return (
+    <Dialog open={!!reg} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Foto KTP · {reg && titleCase(reg.nama)}</DialogTitle>
+          <DialogDescription>NIK {reg?.nik}. Hanya untuk verifikasi, jangan disebarkan.</DialogDescription>
+        </DialogHeader>
+        <div className="min-h-[220px] grid place-items-center rounded-xl bg-secondary overflow-hidden" data-testid="admin-ktp-image">
+          {url ? <img src={url} alt="Foto KTP" className="max-h-[60vh] w-auto object-contain" /> : err ? <p className="text-sm text-muted-foreground">{err}</p> : <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />}
+        </div>
+        {url && reg && <a href={url} download={`KTP-${reg.nik}.jpg`} className={`${neutralBtn} w-fit`}><Download className="h-4 w-4" /> Unduh foto</a>}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const RegistrationActionDialog = ({ acting, onClose, onDone }) => {
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { setNote(""); }, [acting]);
+  if (!acting) return null;
+  const { r, status } = acting;
+  const approve = status === "diterima";
+  const submit = async () => {
+    if (!approve && !note.trim()) return toast.error("Tulis alasan penolakan agar pendaftar bisa memperbaiki data");
+    setBusy(true);
+    try {
+      const { data } = await api.patch(`/admin/registrations/${r.registration_id}`, { status, note: note.trim() });
+      toast.success(approve ? `Disetujui · No. KTA ${data.kta_number}` : "Pendaftaran ditolak");
+      onClose(); onDone();
+    } catch (e) {
+      toast.error(errMsg(e));
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>{approve ? "Setujui pendaftaran" : "Tolak pendaftaran"}</DialogTitle>
+          <DialogDescription>
+            {approve
+              ? <>{titleCase(r.nama)} akan resmi menjadi {REG_LABEL[r.jenis].toLowerCase()}. Nomor KTA digital dibuat otomatis{r.kta_number ? ` (tetap ${r.kta_number})` : ""} dan pendaftar diberi notifikasi.</>
+              : <>Pendaftar diberi notifikasi beserta alasannya dan bisa mengirim ulang data yang sudah diperbaiki.</>}
+          </DialogDescription>
+        </DialogHeader>
+        <Field label={approve ? "Catatan (opsional)" : "Alasan penolakan"}>
+          <textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} rows={3} data-testid="admin-reg-note"
+            placeholder={approve ? "Mis. data sesuai KTP" : "Mis. Foto KTP buram / NIK tidak sesuai"} className={`${inputCls} h-auto py-2.5 resize-none`} />
+        </Field>
+        <button onClick={submit} disabled={busy} data-testid="admin-reg-confirm" className={`${approve ? "btn-primary" : "btn-outline"} w-full h-11`}>
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : approve ? <BadgeCheck className="h-4 w-4" /> : <Ban className="h-4 w-4" />} {approve ? "Setujui & terbitkan KTA" : "Tolak pendaftaran"}
+        </button>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const AUDIT_LABEL = { registration_status: "Mengubah status pendaftaran", "campaign.create": "Membuat campaign", "campaign.edit": "Mengubah campaign", "campaign.delete": "Menghapus campaign",
   "campaign.status": "Mengubah status campaign", "user.edit": "Mengubah akun", "user.balance": "Mengubah saldo",
   "withdrawal.approve": "Menyetujui penarikan", "withdrawal.reject": "Menolak penarikan",
   "submission.review.approve": "Menyetujui konten", "submission.review.reject": "Menolak konten",

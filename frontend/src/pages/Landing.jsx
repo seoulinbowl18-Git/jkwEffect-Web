@@ -189,6 +189,12 @@ export default function Landing() {
                 className={`relative mt-7 h-12 px-6 rounded-xl font-bold inline-flex items-center justify-center gap-2 self-start transition-all hover:-translate-y-0.5 ${dark ? "bg-white text-[#0A0A0A] hover:bg-[#F0F0F0]" : "bg-[#0A0A0A] text-white hover:bg-[#1E1E1E]"}`}>
                 {jenis === "anggota" ? "Daftar Member" : "Daftar Relawan"} <ArrowRight className="h-4 w-4" />
               </button>
+              {jenis === "anggota" && (
+                <button type="button" onClick={() => navigate("/kta")} data-testid="benefit-see-kta"
+                  className="relative mt-3 self-start text-sm font-semibold text-white/70 hover:text-white underline underline-offset-4 decoration-white/30">
+                  Sudah disetujui? Lihat & unduh KTA digitalmu
+                </button>
+              )}
             </article>
           ))}
         </div>
