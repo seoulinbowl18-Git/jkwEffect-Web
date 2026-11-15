@@ -15,7 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useSync } from "@/lib/useSync";
 import { api, rp, num, errMsg, fmtDate, CATEGORIES, PLATFORMS } from "@/lib/api";
 
-const DEFAULT_INSTRUCTIONS = "1. Buat video 15-60 detik yang menampilkan produk secara natural.\n2. Sebutkan nama brand di 3 detik pertama.\n3. Wajib pakai hashtag #PAGI dan tag akun brand.\n4. Dilarang konten SARA, kekerasan, atau beli views/bot.\n5. Video harus tetap tayang minimal 30 hari.";
+const DEFAULT_INSTRUCTIONS = "1. Buat video 15-60 detik yang menampilkan produk secara natural.\n2. Sebutkan nama brand di 3 detik pertama.\n3. Wajib pakai hashtag #GIBRAN2029 dan tag akun brand.\n4. Dilarang konten SARA, kekerasan, atau beli views/bot.\n5. Video harus tetap tayang minimal 30 hari.";
 const ROLE_LABEL = { creator: "Kreator", brand: "Brand", admin: "Admin" };
 const smallBtn = "h-9 px-3 rounded-xl text-sm font-semibold inline-flex items-center gap-1.5 transition-colors";
 const neutralBtn = `${smallBtn} bg-secondary hover:bg-border`;

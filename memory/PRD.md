@@ -1,7 +1,7 @@
-# PAGI — PRD
+# GIBRAN2029 — PRD
 
 ## Ringkasan
-PAGI adalah platform creator marketing berbasis performa (pay-per-views) berbahasa Indonesia. Brand membuat campaign dengan rate per 1.000 views; kreator memposting video, submit link, dan dibayar sesuai views yang terverifikasi.
+GIBRAN2029 adalah platform creator marketing berbasis performa (pay-per-views) berbahasa Indonesia. Brand membuat campaign dengan rate per 1.000 views; kreator memposting video, submit link, dan dibayar sesuai views yang terverifikasi.
 
 ## Keputusan produk
 - Login: Google via Firebase Authentication (project `jkweffect`); backend memverifikasi ID token lalu membuat sesi cookie sendiri. Admin = ADMIN_EMAIL
@@ -11,12 +11,12 @@ PAGI adalah platform creator marketing berbasis performa (pay-per-views) berbaha
 - Ekstra: streak harian, panel admin, notifikasi in-app
 
 ## Arsitektur
-**Backend produksi = backend bersama di repo `PAGI-Mobile-App` (`backend/server.py`, Railway).** Web (Vercel) meneruskan `/api/*` ke sana lewat `frontend/vercel.json`, jadi web dan aplikasi Flutter memakai akun, data, dan endpoint yang sama. Folder `backend/` di repo ini adalah versi lama dan tidak di-deploy; fitur backend baru dibuat di repo mobile.
+**Backend produksi = backend bersama di repo `GIBRAN2029-Mobile-App` (`backend/server.py`, Railway).** Web (Vercel) meneruskan `/api/*` ke sana lewat `frontend/vercel.json`, jadi web dan aplikasi Flutter memakai akun, data, dan endpoint yang sama. Folder `backend/` di repo ini adalah versi lama dan tidak di-deploy; fitur backend baru dibuat di repo mobile.
 
 FastAPI + MongoDB (users, user_sessions, campaigns, submissions, withdrawals, topups, notifications, ledger) + React (Tailwind, shadcn/ui, craco). Operasi saldo atomik via conditional find_one_and_update; setiap pergerakan uang dicatat di ledger.
 
 ## Brand & desain
-- Nama: **PAGI**. Logo & favicon: `frontend/src/components/Logo.jsx`, `frontend/public/favicon.svg`
+- Nama: **GIBRAN2029**. Logo & favicon: `frontend/src/components/Logo.jsx`, `frontend/public/favicon.svg`
 - Sistem desain "Premium Red" yang sama dengan aplikasi Flutter: merah #C8102E + gradasi, kartu putih membulat (12–16px), bayangan lembut
 - Detail lengkap: `design_guidelines.json`; token warna: `frontend/src/index.css`
 
@@ -28,7 +28,7 @@ FastAPI + MongoDB (users, user_sessions, campaigns, submissions, withdrawals, to
 - Panel admin: statistik, verifikasi submission, setujui/tolak penarikan, kelola campaign, user + kredit brand manual
 - Notifikasi; callback Komerce (cek signature + konfirmasi ulang status)
 - Keamanan: tidak ada over-payout setelah campaign ditutup, normalisasi URL untuk dedup, submission terbuka otomatis ditolak saat campaign ditutup
-- Rebranding dari tampilan lama ke PAGI; semua ketergantungan Emergent (auth, overlay, visual-edits, script) dan PostHog dihapus
+- Rebranding dari tampilan lama ke GIBRAN2029; semua ketergantungan Emergent (auth, overlay, visual-edits, script) dan PostHog dihapus
 - Navigasi Beranda · Jelajah · Dompet · Profil (tab bar bawah di HP), halaman login /masuk khusus Google
 - Login Google via Firebase (`/api/auth/firebase`), halaman "Masuk dulu" untuk halaman yang butuh login
 

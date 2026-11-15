@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * PAGI mark — the letter "P" with a play button in its bowl (video creators).
+ * GIBRAN2029 mark — the letter "P" with a play button in its bowl (video creators).
  * Same geometry as the Flutter app's BrandLogo (flutter_app/lib/widgets/brand_logo.dart).
  */
 export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) => (
@@ -12,26 +12,26 @@ export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) 
   </svg>
 );
 
-/** Merah brand PAGI: #C8102E di latar terang, #F21D43 (lebih terang) di latar gelap agar tetap kontras. */
+/** Merah brand GIBRAN2029: #C8102E di latar terang, #F21D43 (lebih terang) di latar gelap agar tetap kontras. */
 export const BRAND_RED = "text-[#C8102E]";
 export const BRAND_RED_ON_DARK = "text-[#F21D43]";
 
 /** Wordmark dua baris: singkatan besar (merah brand) + kepanjangan kecil di bawahnya. `light` = di atas latar gelap. */
 export const BrandWordmark = ({ light = false, large = false }) => (
   <span className="flex flex-col justify-center leading-none">
-    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? BRAND_RED_ON_DARK : BRAND_RED}`}>PAGI</span>
+    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? BRAND_RED_ON_DARK : BRAND_RED}`}>GIBRAN2029</span>
     <span className={`mt-1 font-semibold whitespace-nowrap ${large ? "text-sm" : "text-[10.5px]"} ${light ? "text-white/85" : "text-muted-foreground"}`}>Pasukan Gibran Indonesia</span>
   </span>
 );
 
-/** Logo resmi PAGI (lingkaran: foto Gibran + bendera + tulisan). File: public/pagi-logo.png (145 px). */
+/** Logo resmi GIBRAN2029 (lingkaran: foto Gibran + bendera + tulisan). File: public/pagi-logo.png (145 px). */
 export const BrandBadge = ({ size = 40, className = "" }) => (
-  <img src="/pagi-logo.png" alt="Logo Pasukan Gibran Indonesia (PAGI)" width={size} height={size} draggable={false}
+  <img src="/pagi-logo.png" alt="Logo Pasukan Gibran Indonesia (GIBRAN2029)" width={size} height={size} draggable={false}
     className={`shrink-0 rounded-full object-cover select-none ${className}`} style={{ width: size, height: size }} />
 );
 
 export const Logo = ({ light = false, size = 42 }) => (
-  <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (PAGI)" className="flex items-center gap-2.5 select-none shrink-0">
+  <Link to="/" data-testid="nav-logo" aria-label="Pasukan Gibran Indonesia (GIBRAN2029)" className="flex items-center gap-2.5 select-none shrink-0">
     <BrandBadge size={size} className={light ? "ring-2 ring-white/20" : "shadow-[0_2px_8px_rgba(200,16,46,0.25)]"} />
     <BrandWordmark light={light} />
   </Link>

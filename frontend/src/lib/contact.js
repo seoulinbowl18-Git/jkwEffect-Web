@@ -11,7 +11,7 @@ const normalize = (raw) => {
 export const CONTACT_WHATSAPP = normalize(process.env.REACT_APP_CONTACT_WHATSAPP);
 
 export const BRAND_CONTACT_MESSAGE =
-  "Halo Admin PAGI, saya dari brand ... dan ingin konsultasi untuk membuat campaign di PAGI. Mohon info lebih lanjut, terima kasih!";
+  "Halo Admin GIBRAN2029, saya dari brand ... dan ingin konsultasi untuk membuat campaign di GIBRAN2029. Mohon info lebih lanjut, terima kasih!";
 
 /** Link wa.me dengan pesan otomatis, atau "" bila nomor belum diatur. */
 export const whatsappLink = (message = BRAND_CONTACT_MESSAGE) =>

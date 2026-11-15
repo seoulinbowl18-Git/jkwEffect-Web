@@ -23,11 +23,11 @@ const STEPS = {
 
 // Kartu ajakan bergabung di hero (menggantikan kalkulator cuan): [jenis, judul, deskripsi, ikon, tombol utama?]
 const JOIN = [
-  ["anggota", "Daftar Member", "Jadi member resmi PAGI dengan KTA.", IdCard, true],
+  ["anggota", "Daftar Member", "Jadi member resmi GIBRAN2029 dengan KTA.", IdCard, true],
   ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
 ];
 
-// Tagline hero di samping kotak PAGI: berganti dengan efek "menguap" (sama seperti footer).
+// Tagline hero di samping kotak GIBRAN2029: berganti dengan efek "menguap" (sama seperti footer).
 // Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
 const HERO_TAGLINES = ["Pasukan Gibran Indonesia.", "Satu barisan,", "bergerak bersama", "untuk Indonesia."];
 const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
@@ -73,7 +73,7 @@ export default function Landing() {
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
-            {/* Lockup tulisan logo PAGI: PASUKAN / GIBRAN / Indonesia / (PAGI) — PAGI dibuat paling menonjol */}
+            {/* Lockup tulisan logo GIBRAN2029: PASUKAN / GIBRAN / Indonesia / (GIBRAN2029) — GIBRAN2029 dibuat paling menonjol */}
             <div className="flex items-center gap-4 sm:gap-5 animate-rise">
               <BrandBadge size={128} className="hidden sm:block ring-4 ring-white shadow-[0_18px_40px_-10px_rgba(70,0,12,0.7)]" />
               <BrandBadge size={96} className="sm:hidden ring-[3px] ring-white shadow-[0_14px_30px_-10px_rgba(70,0,12,0.7)]" />
@@ -82,18 +82,18 @@ export default function Landing() {
                   <span className="flex h-3 w-5 shrink-0 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
                   Komunitas relawan &amp; member
                 </span>
-                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">Pasukan Gibran Indonesia (PAGI)</p>
+                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">Pasukan Gibran Indonesia (GIBRAN2029)</p>
               </div>
             </div>
-            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Pasukan Gibran Indonesia (PAGI)">
+            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Pasukan Gibran Indonesia (GIBRAN2029)">
               <span className="block text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-[0.32em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">PASUKAN</span>
               <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
               <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia</span>
             </h1>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-rise [animation-delay:160ms]">
-              <span className="inline-flex items-center rounded-[28px] bg-white px-7 sm:px-9 py-2 sm:py-3 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
-                data-testid="hero-pagi">
-                <span className="text-[#C8102E] font-black tracking-tight leading-none text-7xl sm:text-8xl lg:text-[7.5rem]">PAGI</span>
+              <span className="inline-flex items-center rounded-[24px] sm:rounded-[28px] bg-white px-5 sm:px-8 py-3 sm:py-4 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
+                data-testid="hero-brand-box">
+                <span className="font-black tracking-tight leading-none text-[2.55rem] sm:text-6xl xl:text-[5.25rem]"><span className="text-[#C8102E]">GIBRAN</span><span className="text-[#7A0016]">2029</span></span>
               </span>
               <div className="relative h-14 w-full sm:w-auto sm:flex-1 sm:min-w-[280px] sm:max-w-[360px]" data-testid="hero-vapour-text">
                 <VaporizeTextCycle
@@ -139,7 +139,7 @@ export default function Landing() {
       {role === "brand" && (
         <section className="py-8 overflow-hidden" data-testid="brand-ticker">
           <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            Brand yang sudah bergabung di <b className="text-foreground">PAGI</b>
+            Brand yang sudah bergabung di <b className="text-foreground">GIBRAN2029</b>
           </p>
           <div className="relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="flex w-max animate-marquee gap-4 py-1">
@@ -158,7 +158,7 @@ export default function Landing() {
       {role !== "brand" && ticker.length > 0 && (
         <section className="py-8 overflow-hidden" data-testid="payout-ticker">
           <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            {payouts.length ? "Bayaran terbaru di PAGI" : "Rate campaign yang lagi buka"}
+            {payouts.length ? "Bayaran terbaru di GIBRAN2029" : "Rate campaign yang lagi buka"}
           </p>
           <div className="flex w-max animate-marquee gap-3 py-1">
             {[...ticker, ...ticker].map(([n, a], i) => (
@@ -222,7 +222,7 @@ export default function Landing() {
           <h2 className="text-3xl font-extrabold tracking-tight mt-2">Pertanyaan yang sering muncul</h2>
         </div>
         <Accordion type="single" collapsible className="lg:col-span-8 bg-card rounded-2xl shadow-soft px-6">
-          {[["Daftarnya bayar?", "Tidak. 100% gratis untuk kreator. Cukup login pakai akun Google."], ["Minimal penarikan berapa?", "Minimal Rp 50.000 ke rekening bank atau e-wallet. Diproses manual oleh tim kami."], ["Berapa lama review video?", "Konten direview Admin PAGI. Setelah views tercapai, kamu klaim dengan bukti rekaman layar analitik dan views diverifikasi sebelum saldo masuk."], ["Bagaimana mencegah kecurangan?", "Setiap link video hanya bisa didaftarkan sekali, views diverifikasi manual, dan akun yang memakai bot akan diblokir."]].map(([q, a], i) => (
+          {[["Daftarnya bayar?", "Tidak. 100% gratis untuk kreator. Cukup login pakai akun Google."], ["Minimal penarikan berapa?", "Minimal Rp 50.000 ke rekening bank atau e-wallet. Diproses manual oleh tim kami."], ["Berapa lama review video?", "Konten direview Admin GIBRAN2029. Setelah views tercapai, kamu klaim dengan bukti rekaman layar analitik dan views diverifikasi sebelum saldo masuk."], ["Bagaimana mencegah kecurangan?", "Setiap link video hanya bisa didaftarkan sekali, views diverifikasi manual, dan akun yang memakai bot akan diblokir."]].map(([q, a], i) => (
             <AccordionItem key={q} value={`f${i}`} className="border-border/70 last:border-0">
               <AccordionTrigger data-testid={`faq-${i}`} className="text-left text-base font-bold py-5 hover:no-underline hover:text-primary">{q}</AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-[15px]">{a}</AccordionContent>

@@ -9,8 +9,8 @@ import { api, errMsg, fmtDate } from "@/lib/api";
 import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
-  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Pasukan Gibran Indonesia (PAGI)." },
-  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan Pasukan Gibran Indonesia (PAGI)." },
+  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Pasukan Gibran Indonesia (GIBRAN2029)." },
+  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan Pasukan Gibran Indonesia (GIBRAN2029)." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
 const KTP_MAX = 3 * 1024 * 1024; // 3 MB
@@ -219,7 +219,7 @@ const Done = ({ jenis, reg }) => (
   <div className={`${cardCls} text-center`} data-testid="registration-done">
     <CheckCircle2 className="mx-auto h-14 w-14 text-white" />
     <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {jenis.short.toLowerCase()} diterima</h2>
-    <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin PAGI. Kabar selanjutnya dikirim lewat WhatsApp {reg.telepon}.</p>
+    <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin GIBRAN2029. Kabar selanjutnya dikirim lewat WhatsApp {reg.telepon}.</p>
     {reg.created_at && <p className="mt-1 text-xs text-white/40">Dikirim {fmtDate(reg.created_at)}{reg.status ? ` · status: ${reg.status}` : ""}</p>}
     <Link to="/" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Kembali ke beranda</Link>
   </div>
@@ -298,7 +298,7 @@ export default function Registration() {
       toast.success("Pendaftaran terkirim");
     } catch (err) {
       const s = err?.response?.status;
-      toast.error(s === 404 || s === 405 ? "Layanan pendaftaran belum aktif di server. Hubungi admin PAGI." : errMsg(err));
+      toast.error(s === 404 || s === 405 ? "Layanan pendaftaran belum aktif di server. Hubungi admin GIBRAN2029." : errMsg(err));
     } finally {
       setSending(false);
     }
@@ -383,7 +383,7 @@ export default function Registration() {
               className="mt-1 h-5 w-5 shrink-0 rounded accent-white" />
             <span className="text-sm text-white/75 leading-relaxed">
               Saya menyatakan bahwa seluruh data yang saya isi adalah <b className="text-white">benar dan dapat dipertanggungjawabkan</b>, bersedia data saya
-              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Pasukan Gibran Indonesia (PAGI).
+              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Pasukan Gibran Indonesia (GIBRAN2029).
             </span>
           </label>
           {errors.setuju && <p className="mt-2 text-xs text-red-400">{errors.setuju}</p>}
@@ -391,7 +391,7 @@ export default function Registration() {
             className="mt-6 w-full h-14 rounded-2xl bg-white text-[#0A0A0A] text-base font-extrabold flex items-center justify-center gap-2 hover:bg-[#F0F0F0] transition-colors disabled:opacity-60">
             {sending ? <><Loader2 className="h-5 w-5 animate-spin" /> Mengirim…</> : `Kirim pendaftaran ${jenis.short.toLowerCase()}`}
           </button>
-          <p className="mt-3 text-xs text-white/40 text-center flex items-center justify-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> NIK & foto KTP hanya bisa dilihat admin PAGI untuk verifikasi.</p>
+          <p className="mt-3 text-xs text-white/40 text-center flex items-center justify-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> NIK & foto KTP hanya bisa dilihat admin GIBRAN2029 untuk verifikasi.</p>
         </section>
       </form>
     </Shell>

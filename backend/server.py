@@ -811,12 +811,12 @@ SEED = [
     ("Streetwear Lookbook Challenge", "Fashion", ["instagram", "tiktok"], 4000, 5000, 4000000, "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=800&q=80"),
     ("Unboxing Smartphone Murah Spek Dewa", "Tech", ["youtube", "tiktok"], 12000, 10000, 20000000, "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"),
     ("Tips Aplikasi Produktif", "Edukasi", ["tiktok", "youtube"], 4000, 2000, 3000000, "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80"),
-    ("PAGI Threads Campaign", "Produk", ["threads"], 3000, 5000, 5000000, "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=800&q=80"),
+    ("GIBRAN2029 Threads Campaign", "Produk", ["threads"], 3000, 5000, 5000000, "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=800&q=80"),
     ("Koleksi Sepatu Warna Pastel", "Produk", ["tiktok"], 2000, 5000, 2000000, "https://images.unsplash.com/photo-1689830570678-956587526e75?w=800&q=80"),
     ("Street Food Tour Jakarta", "Hiburan", ["tiktok", "instagram", "youtube"], 5000, 3000, 7000000, "https://images.unsplash.com/photo-1622572771591-6ca7813cc39d?w=800&q=80"),
 ]
 SEED_INSTR = ("1. Buat video 15-60 detik yang menampilkan produk secara natural.\n2. Sebutkan nama brand di 3 detik pertama.\n"
-              "3. Wajib pakai hashtag #PAGI dan tag akun brand.\n4. Dilarang konten SARA, kekerasan, atau beli views/bot.\n"
+              "3. Wajib pakai hashtag #GIBRAN2029 dan tag akun brand.\n4. Dilarang konten SARA, kekerasan, atau beli views/bot.\n"
               "5. Video harus tetap tayang minimal 30 hari.")
 
 

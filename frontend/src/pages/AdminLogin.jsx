@@ -75,14 +75,14 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] lg:rounded-none px-6 sm:px-10 lg:px-16 pt-10 pb-12 lg:py-16 flex flex-col">
-        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Pasukan Gibran Indonesia (PAGI)">
+        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Pasukan Gibran Indonesia (GIBRAN2029)">
           <BrandBadge size={52} className="ring-2 ring-white/25" />
           <BrandWordmark light large />
         </a>
         <div className="relative mt-10 lg:mt-auto lg:mb-auto max-w-lg">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold"><ShieldCheck className="h-4 w-4" /> Admin Pusat</span>
           <h1 className="mt-5 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">Owner<br />Control Center</h1>
-          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Kelola campaign, pengguna, saldo, dan penarikan di seluruh ekosistem PAGI, web dan aplikasi.</p>
+          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Kelola campaign, pengguna, saldo, dan penarikan di seluruh ekosistem GIBRAN2029, web dan aplikasi.</p>
         </div>
       </section>
 

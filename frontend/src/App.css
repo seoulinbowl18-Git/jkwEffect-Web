@@ -13,7 +13,7 @@ body {
     radial-gradient(70% 60% at 85% 110%, rgba(255, 255, 255, 0.05), transparent 60%),
     linear-gradient(135deg, #0A0A0A 0%, #121212 50%, #1C1C1C 100%);
 }
-/* Hero halaman utama: gradasi merah brand PAGI (header lain & form pendaftaran tetap hitam). */
+/* Hero halaman utama: gradasi merah brand GIBRAN2029 (header lain & form pendaftaran tetap hitam). */
 .hero-gradient-red {
   background-image:
     radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.16), transparent 55%),

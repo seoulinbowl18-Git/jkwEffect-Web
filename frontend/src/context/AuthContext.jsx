@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  /** Swap a Firebase ID token for an PAGI session cookie, then go to `next`. */
+  /** Swap a Firebase ID token for an GIBRAN2029 session cookie, then go to `next`. */
   const finishLogin = useCallback(async (fbUser, next) => {
     const idToken = await fbUser.getIdToken();
     const { data } = await api.post("/auth/firebase", { id_token: idToken });
