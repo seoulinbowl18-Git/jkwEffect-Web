@@ -149,7 +149,7 @@ export default function Bounty() {
         </div>
       </main>
       <InstructionDialog c={info} onClose={() => setInfo(null)} onSubmit={onSubmit} />
-      <SubmitDialog c={sub} onClose={() => setSub(null)} onDone={() => navigate("/dashboard")} />
+      <SubmitDialog c={sub} onClose={() => setSub(null)} onDone={() => navigate("/dasbor-lama")} />
       <Footer />
     </div>
   );

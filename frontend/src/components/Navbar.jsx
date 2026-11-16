@@ -1,20 +1,29 @@
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Search, Wallet, User, ShieldCheck, LogOut, BookOpen, IdCard } from "lucide-react";
+import { Home, Search, User, ShieldCheck, LogOut, BookOpen, IdCard } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { NotificationBell } from "@/components/NotificationBell";
 import { useAuth } from "@/context/AuthContext";
 
-/** Main navigation, same labels as the mobile app: Beranda · Jelajah · Dompet · Profil. */
+/** Navigasi utama: tamu · member/relawan (Beranda · Jelajah · KTA Saya · Profil) · admin. */
 export const useNavItems = () => {
   const { user } = useAuth();
   const role = user?.role;
-  if (!role) {
+  if (!user) {
     return [
       { to: "/", label: "Beranda", icon: Home, match: (p) => p === "/" },
       { to: "/jelajah", label: "Jelajah", icon: Search, match: (p) => p === "/jelajah" || p === "/bounty" },
       { to: "/cara-kerja", label: "Cara Bergabung", icon: BookOpen, match: (p) => p === "/cara-kerja" || p === "/untuk-brand" },
       { to: "/kta", label: "KTA Saya", icon: IdCard, match: (p) => p === "/kta" },
+    ];
+  }
+  if (user && role !== "admin") {
+    // Member & relawan (termasuk akun kreator/brand lama): menu gerakan GIBRAN2029.
+    return [
+      { to: "/", label: "Beranda", icon: Home, match: (p) => p === "/" },
+      { to: "/jelajah", label: "Jelajah", icon: Search, match: (p) => p === "/jelajah" || p === "/bounty" },
+      { to: "/kta", label: "KTA Saya", icon: IdCard, match: (p) => p === "/kta" },
+      { to: "/profil", label: "Profil", icon: User, match: (p) => p === "/profil" },
     ];
   }
   if (role === "admin") {
@@ -24,12 +33,7 @@ export const useNavItems = () => {
       { to: "/admin?tab=withdrawals", label: "Penarikan", icon: ShieldCheck, match: () => false },
     ];
   }
-  return [
-    { to: "/dashboard", label: "Beranda", icon: Home, match: (p) => p === "/dashboard" },
-    { to: "/jelajah", label: "Jelajah", icon: Search, match: (p) => p === "/jelajah" || p === "/bounty" },
-    { to: "/dompet", label: "Dompet", icon: Wallet, match: (p) => p === "/dompet" },
-    { to: "/profil", label: "Profil", icon: User, match: (p) => p === "/profil" },
-  ];
+  return [];
 };
 
 export const Navbar = () => {
@@ -37,7 +41,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const items = useNavItems();
-  const showTabBar = Boolean(user?.role);
+  const showTabBar = Boolean(user && user.role !== "admin");
 
   // Reserve room for the fixed bottom tab bar on phones.
   useEffect(() => {
@@ -62,7 +66,7 @@ export const Navbar = () => {
             {user ? (
               <>
                 <NotificationBell />
-                {user.role && user.role !== "admin" && (
+                {user.role !== "admin" && (
                   <Link to="/profil" aria-label="Profil" className="hidden md:grid h-10 w-10 place-items-center rounded-full bg-soft text-primary font-bold overflow-hidden">
                     {user.picture ? <img src={user.picture} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" /> : user.name?.[0]?.toUpperCase()}
                   </Link>

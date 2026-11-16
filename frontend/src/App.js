@@ -13,6 +13,7 @@ import HowItWorks from "@/pages/HowItWorks";
 import ClaimProof from "@/pages/ClaimProof";
 import Registration from "@/pages/Registration";
 import Kta from "@/pages/Kta";
+import Profile from "@/pages/Profile";
 
 const Guard = ({ children, roles, needRole = true }) => {
   const { user, loading } = useAuth();
@@ -21,6 +22,15 @@ const Guard = ({ children, roles, needRole = true }) => {
   // Akun tanpa peran kreator/brand (member & relawan) diarahkan ke halaman KTA / pendaftaran.
   if (needRole && !user.role) return <Navigate to="/kta" replace />;
   if (roles && !roles.includes(user.role)) return <Navigate to="/dashboard" replace />;
+  return children;
+};
+
+// Profil member/relawan: cukup login (tanpa peran kreator/brand); admin ke panel admin.
+const AuthOnly = ({ children }) => {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="min-h-screen grid place-items-center"><div className="h-8 w-8 rounded-full border-4 border-primary/30 border-t-primary animate-spin" /></div>;
+  if (!user) return <LoginScreen next={window.location.pathname + window.location.search} />;
+  if (user.role === "admin") return <Navigate to="/admin" replace />;
   return children;
 };
 
@@ -51,9 +61,11 @@ function AppRouter() {
       <Route path="/cara-kerja" element={<HowItWorks />} />
       <Route path="/untuk-brand" element={<Navigate to="/cara-kerja" replace />} />
       <Route path="/onboarding" element={<Navigate to="/kta" replace />} />
-      <Route path="/dashboard" element={<Guard><Dashboard /></Guard>} />
-      <Route path="/dompet" element={<Guard><Dashboard /></Guard>} />
-      <Route path="/profil" element={<Guard><Dashboard /></Guard>} />
+      <Route path="/profil" element={<AuthOnly><Profile /></AuthOnly>} />
+      <Route path="/dashboard" element={<AuthOnly><Navigate to="/profil" replace /></AuthOnly>} />
+      {/* Dasbor lama kreator/brand (campaign, saldo) — tidak ada di menu; ditautkan dari profil akun lama. */}
+      <Route path="/dasbor-lama" element={<Guard roles={["creator", "brand"]}><Dashboard /></Guard>} />
+      <Route path="/dompet" element={<Navigate to="/dasbor-lama" replace />} />
       <Route path="/klaim/:sid" element={<Guard roles={["creator"]}><ClaimProof /></Guard>} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminGuard><AdminPanel /></AdminGuard>} />

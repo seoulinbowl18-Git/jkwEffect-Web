@@ -17,7 +17,7 @@ import { api, rp, num, errMsg, fmtDate, CATEGORIES, PLATFORMS } from "@/lib/api"
 export default function BrandDashboard() {
   const { user } = useAuth();
   const [stats, setStats] = useState(null);
-  const [tab, setTab] = useRouteTab("campaign", { topup: "/dompet", profil: "/profil" });
+  const [tab, setTab] = useRouteTab("campaign", {}, "/dasbor-lama");
   const [create, setCreate] = useState(false);
   const [topup, setTopup] = useState(false);
   const [key, setKey] = useState(0);

@@ -23,7 +23,7 @@ export default function CreatorDashboard() {
   const { user } = useAuth();
   const fees = useFees();
   const [stats, setStats] = useState(null);
-  const [tab, setTab] = useRouteTab("submission", { saldo: "/dompet", profil: "/profil" });
+  const [tab, setTab] = useRouteTab("submission", {}, "/dasbor-lama");
   const load = useCallback(() => api.get("/creator/stats").then((r) => setStats(r.data)), []);
   const version = useSync();
   useEffect(() => { load(); }, [load, version]);

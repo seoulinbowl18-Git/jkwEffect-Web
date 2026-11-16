@@ -55,7 +55,7 @@ export default function ClaimProof() {
     try {
       await api.post(`/submissions/${sid}/claim-proof`, fd);
       toast.success("Klaim & bukti terkirim. Brand akan mengecek secara manual.");
-      navigate("/dashboard");
+      navigate("/dasbor-lama");
     } catch (err) {
       toast.error(errMsg(err));
     } finally {
@@ -64,7 +64,7 @@ export default function ClaimProof() {
   };
 
   const back = (
-    <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-semibold" data-testid="claim-back">
+    <Link to="/dasbor-lama" className="inline-flex items-center gap-1.5 text-white/90 hover:text-white text-sm font-semibold" data-testid="claim-back">
       <ArrowLeft className="h-4 w-4" /> Konten saya
     </Link>
   );
@@ -76,10 +76,10 @@ export default function ClaimProof() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 -mt-16 pb-16 relative space-y-6">
         {sub === undefined && <div className={`${panelCls} p-8 text-center text-muted-foreground`}>Memuat…</div>}
         {sub === null && (
-          <div className={panelCls}><Empty title="Konten tidak ditemukan" desc="Kembali ke Konten saya lalu pilih konten yang siap diklaim."><Link to="/dashboard" className="btn-primary">Konten saya</Link></Empty></div>
+          <div className={panelCls}><Empty title="Konten tidak ditemukan" desc="Kembali ke Konten saya lalu pilih konten yang siap diklaim."><Link to="/dasbor-lama" className="btn-primary">Konten saya</Link></Empty></div>
         )}
         {sub && sub.status !== "menunggu_views" && (
-          <div className={panelCls} data-testid="claim-not-ready"><Empty title="Konten ini tidak bisa diklaim" desc="Hanya konten berstatus Siap diklaim yang bisa dikirim klaimnya."><Link to="/dashboard" className="btn-primary">Konten saya</Link></Empty></div>
+          <div className={panelCls} data-testid="claim-not-ready"><Empty title="Konten ini tidak bisa diklaim" desc="Hanya konten berstatus Siap diklaim yang bisa dikirim klaimnya."><Link to="/dasbor-lama" className="btn-primary">Konten saya</Link></Empty></div>
         )}
         {sub && sub.status === "menunggu_views" && (
           <form onSubmit={submit} className="space-y-6" data-testid="claim-form">
