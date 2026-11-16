@@ -7,6 +7,8 @@ export const KTA_ROLE = { anggota: "MEMBER", relawan: "RELAWAN" };
 const LOGO = "/pagi-logo.png";
 
 const domisili = (r) => [r.kabupaten, r.provinsi].filter(Boolean).join(", ");
+/** Baris NIK hanya untuk Member; kartu Relawan tidak menampilkan NIK sama sekali. */
+const showNik = (r) => r.jenis === "anggota";
 const titleCase = (s = "") => s.toLowerCase().replace(/(^|[\s'-])\S/g, (m) => m.toUpperCase());
 
 /** Tampilan kartu di halaman (HTML). */
@@ -35,9 +37,9 @@ export const KtaCard = ({ reg }) => (
           <span className="font-black tracking-[0.06em] text-[1.05em] tabular-nums" data-testid="kta-number">{reg.kta_number}</span>
         </div>
       </div>
-      <div className="mt-[0.9em] mb-[0.5em] grid grid-cols-[1.4fr_1fr_0.9fr] gap-[0.8em] text-[0.62em]">
+      <div className={`mt-[0.9em] mb-[0.5em] grid ${showNik(reg) ? "grid-cols-[1.4fr_1fr_0.9fr]" : "grid-cols-[2.4fr_0.9fr]"} gap-[0.8em] text-[0.62em]`}>
         <div className="min-w-0"><p className="text-white/65 font-semibold uppercase tracking-wider text-[0.85em]">Domisili</p><p className="font-bold truncate">{titleCase(domisili(reg)) || "-"}</p></div>
-        <div className="min-w-0"><p className="text-white/65 font-semibold uppercase tracking-wider text-[0.85em]">NIK</p><p className="font-bold tabular-nums">{reg.nik_masked || "-"}</p></div>
+        {showNik(reg) && <div className="min-w-0" data-testid="kta-nik"><p className="text-white/65 font-semibold uppercase tracking-wider text-[0.85em]">NIK</p><p className="font-bold tabular-nums">{reg.nik_masked || "-"}</p></div>}
         <div className="min-w-0 text-right"><p className="text-white/65 font-semibold uppercase tracking-wider text-[0.85em]">Sejak</p><p className="font-bold">{reg.kta_issued_at ? fmtDate(reg.kta_issued_at) : "-"}</p></div>
       </div>
     </div>
@@ -120,8 +122,9 @@ export const downloadKta = async (reg) => {
   ctx.fillStyle = "rgba(255,255,255,0.6)"; ctx.font = "700 28px Inter, sans-serif"; ctx.fillText("NO. KTA", P + 34, H - 238);
   ctx.fillStyle = "#fff"; ctx.font = "900 62px Inter, sans-serif"; ctx.fillText(reg.kta_number, P + 200, H - 227);
 
-  // Baris bawah: domisili, NIK, sejak
-  const cols = [["DOMISILI", titleCase(domisili(reg)) || "-", P, 640, "left"], ["NIK", reg.nik_masked || "-", P + 700, 420, "left"],
+  // Baris bawah: domisili, NIK (khusus Member), sejak
+  const cols = [["DOMISILI", titleCase(domisili(reg)) || "-", P, showNik(reg) ? 640 : 1050, "left"],
+    ...(showNik(reg) ? [["NIK", reg.nik_masked || "-", P + 700, 420, "left"]] : []),
     ["SEJAK", reg.kta_issued_at ? fmtDate(reg.kta_issued_at) : "-", W - P, 330, "right"]];
   cols.forEach(([k, v, x, maxW, align]) => {
     ctx.textAlign = align;
