@@ -49,7 +49,7 @@
     "bounty": "Halaman Jelajah: header gradasi berisi search putih + tab pill Public/Exclusive; sidebar kategori di kartu putih (chip di HP)",
     "dashboards": "PageHeader gradasi hitam bersudut bawah membulat + avatar bulat; kartu saldo gradasi (col-span-2 di HP); tab pill; list di kartu putih",
     "mobile": "Tidak boleh ada scroll horizontal halaman; grid item berisi overflow-x-auto wajib min-w-0.",
-    "login": "/masuk: panel gradasi + headline 'Posting video, cairkan cuan.', 3 manfaat dengan icon-tile, satu tombol besar 'Masuk dengan Google'. Tidak ada form email/password."
+    "login": "/masuk: panel gradasi + headline 'Satukan Barisan, Kawal Masa Depan.', 3 manfaat (KTA digital, koordinasi wilayah, gerakan relawan) dengan icon-tile, satu tombol besar 'Masuk dengan Google'. Tidak ada form email/password."
   },
   "shared_components": {
     "Logo": "components/Logo.jsx — huruf 'P' dengan tombol putar (geometri sama dengan BrandLogo Flutter) + wordmark GIBRAN2029",

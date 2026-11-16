@@ -1,12 +1,13 @@
 import { Navigate, useSearchParams } from "react-router-dom";
-import { Megaphone, Wallet, MonitorSmartphone } from "lucide-react";
+import { IdCard, Network, HandHeart } from "lucide-react";
 import { BrandBadge, BrandWordmark } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 
+// Manfaat masuk: ekosistem member & relawan GIBRAN2029.
 const BENEFITS = [
-  [Megaphone, "Ratusan campaign aktif dari brand"],
-  [Wallet, "Tarik saldo mulai Rp 50.000"],
-  [MonitorSmartphone, "Satu akun untuk aplikasi & versi web"],
+  [IdCard, "Daftar member resmi & dapatkan KTA digital"],
+  [Network, "Terhubung dengan koordinasi wilayah hingga kelurahan"],
+  [HandHeart, "Ikut aksi, kegiatan, dan gerakan relawan"],
 ];
 
 export const GoogleG = () => (
@@ -31,8 +32,8 @@ export const LoginScreen = ({ next = "/dashboard" }) => {
           <BrandWordmark light large />
         </a>
         <div className="relative mt-10 lg:mt-auto lg:mb-auto max-w-lg">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">Posting video,<br />cairkan cuan.</h1>
-          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Dapat bayaran dari setiap 1.000 views video TikTok, Instagram, YouTube, dan Threads kamu.</p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">Satukan Barisan,<br />Kawal Masa Depan.</h1>
+          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Bergabunglah dalam barisan relawan dan member resmi GIBRAN2029. Satu langkah nyata untuk gerakan perubahan Indonesia.</p>
         </div>
       </section>
 

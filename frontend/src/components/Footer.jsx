@@ -5,7 +5,7 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 
 // Konstanta di luar komponen: VaporizeTextCycle menggambar ulang canvas setiap kali
 // referensi `texts`/`font`/`animation` berubah.
-const VAPOUR_TEXTS = ["GIBRAN2029", "Bergerak Bersama,", "Menuju Indonesia Maju 2029", "Posting & cairkan cuan"];
+const VAPOUR_TEXTS = ["GIBRAN2029", "Bergerak Bersama,", "Menuju Indonesia Maju 2029", "Satukan Barisan, Kawal Masa Depan"];
 const VAPOUR_ANIMATION = { vaporizeDuration: 2, fadeInDuration: 1, waitDuration: 1.5 };
 
 export const useIsDesktop = () => {
