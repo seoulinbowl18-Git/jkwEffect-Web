@@ -63,7 +63,7 @@ export default function Landing() {
 
       {/* HERO — red brand gradient with rounded bottom (mobile app header), black join CTA (Member / Relawan) on the right */}
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-12 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-28 sm:pb-32 lg:pt-20 lg:pb-36 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
             {/* Lockup: BERGERAK BERSAMA / GIBRAN / Indonesia Maju 2029 + kotak GIBRAN2029 yang paling menonjol */}
             <div className="flex items-center gap-4 sm:gap-5 animate-rise">
@@ -113,26 +113,38 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 animate-rise [animation-delay:200ms]">
-            <div className="rounded-3xl bg-[#121212]/90 ring-1 ring-white/10 backdrop-blur p-7 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]" data-testid="join-cta">
-              <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>
-              <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">GIBRAN2029</p>
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">Pilih cara kamu ikut berkontribusi. Pendaftaran gratis dan cukup memakai akun Google.</p>
-              <div className="mt-7 grid gap-3">
-                {JOIN.map(([jenis, title, desc, Icon, primary]) => (
-                  <button key={jenis} type="button" data-testid={`join-${jenis}`} onClick={() => navigate(`/daftar/${jenis}`)}
-                    className={`group w-full text-left rounded-2xl p-4 sm:p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${primary ? "bg-white text-[#0A0A0A] hover:bg-[#F0F0F0] shadow-[0_12px_30px_-12px_rgba(255,255,255,0.35)]" : "bg-[#1E1E1E] text-white ring-1 ring-white/15 hover:bg-[#262626]"}`}>
-                    <span className={`grid place-items-center h-12 w-12 shrink-0 rounded-xl ${primary ? "bg-[#0A0A0A] text-white" : "bg-white/10 text-white"}`}><Icon className="h-6 w-6" /></span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-lg font-extrabold leading-tight">{title}</span>
-                      <span className={`block text-sm mt-0.5 ${primary ? "text-[#525252]" : "text-white/65"}`}>{desc}</span>
-                    </span>
-                    <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
-                  </button>
-                ))}
-              </div>
-              <p className="mt-5 text-xs text-white/45 flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Data pribadi kamu disimpan aman dan hanya dipakai untuk keperluan organisasi.</p>
-            </div>
+          <div className="lg:col-span-5 animate-rise [animation-delay:200ms]" data-testid="hero-poster">
+            {/* Poster utama "Terima Kasih, Mas Gibran!" */}
+            <figure className="relative mx-auto max-w-[360px] sm:max-w-[420px] lg:max-w-none lg:rotate-[1.5deg]">
+              <div className="absolute -inset-3 rounded-[34px] bg-white/15 blur-sm" aria-hidden />
+              <img src="/img/gibran-terima-kasih.jpg" alt="Poster: Terima Kasih, Mas Gibran!" width="807" height="1000"
+                className="relative w-full h-auto rounded-[28px] bg-white ring-4 ring-white shadow-[0_30px_60px_-20px_rgba(60,0,10,0.75)]" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      {/* PITA AJAKAN BERGABUNG — menumpang di tepi bawah hero */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20" data-testid="join-cta">
+        <div className="rounded-3xl bg-[#0A0A0A] text-white ring-1 ring-white/10 p-6 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] grid lg:grid-cols-12 gap-6 items-center">
+          <div className="lg:col-span-4">
+            <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>
+            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">GIBRAN2029</p>
+            <p className="mt-2 text-sm text-white/70 leading-relaxed">Pilih cara kamu ikut berkontribusi. Gratis, cukup akun Google.</p>
+          </div>
+          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-3">
+            {JOIN.map(([jenis, title, desc, Icon, primary]) => (
+              <button key={jenis} type="button" data-testid={`join-${jenis}`} onClick={() => navigate(`/daftar/${jenis}`)}
+                className={`group w-full text-left rounded-2xl p-4 sm:p-5 flex items-center gap-4 transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${primary ? "bg-white text-[#0A0A0A] hover:bg-[#F0F0F0]" : "bg-[#C8102E] text-white hover:bg-[#A50021]"}`}>
+                <span className={`grid place-items-center h-12 w-12 shrink-0 rounded-xl ${primary ? "bg-[#0A0A0A] text-white" : "bg-white/15 text-white"}`}><Icon className="h-6 w-6" /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-lg font-extrabold leading-tight">{title}</span>
+                  <span className={`block text-sm mt-0.5 ${primary ? "text-[#525252]" : "text-white/80"}`}>{desc}</span>
+                </span>
+                <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+              </button>
+            ))}
+            <p className="sm:col-span-2 text-xs text-white/45 flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 shrink-0" /> Data pribadi kamu disimpan aman dan hanya dipakai untuk keperluan organisasi.</p>
           </div>
         </div>
       </section>
@@ -175,6 +187,37 @@ export default function Landing() {
               )}
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* TENTANG GERAKAN — potret kepemimpinan */}
+      <section id="tentang" className="scroll-mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20" data-testid="about">
+        <div className="overflow-hidden rounded-3xl bg-[#0A0A0A] text-white grid lg:grid-cols-2 items-stretch shadow-soft-lg">
+          <div className="relative aspect-[750/713] lg:aspect-auto lg:min-h-full">
+            <img src="/img/gibran-jokowi.jpg" alt="Potret Gibran Rakabuming Raka dan Joko Widodo" width="750" height="713" loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover object-top" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-[#0A0A0A]/80" aria-hidden />
+          </div>
+          <div className="relative p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+            <p className="text-sm font-bold tracking-[0.16em] uppercase text-[#F21D43]">Tentang gerakan</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">Meneruskan kerja nyata, menatap Indonesia Maju 2029.</h2>
+            <p className="mt-4 text-white/75 leading-relaxed">
+              GIBRAN2029 adalah wadah member dan relawan yang bergerak dari akar rumput: solid, terstruktur, dan hadir di wilayahnya
+              masing-masing untuk mengawal gagasan dan kerja nyata bagi Indonesia.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[["Gotong royong", "Bergerak bersama dari kelurahan hingga provinsi."], ["Kerja nyata", "Aksi sosial dan kegiatan yang terasa manfaatnya."], ["Generasi muda", "Ruang berkarya dan bersuara untuk anak muda Indonesia."]].map(([t, d]) => (
+                <li key={t} className="flex gap-3">
+                  <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-[#C8102E]" />
+                  <span><b className="text-white">{t}.</b> <span className="text-white/70">{d}</span></span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button type="button" onClick={() => navigate("/daftar/relawan")} className="h-12 px-6 rounded-xl bg-[#C8102E] font-bold inline-flex items-center gap-2 hover:bg-[#A50021] transition-colors">Daftar Relawan <ArrowRight className="h-4 w-4" /></button>
+              <button type="button" onClick={() => navigate("/daftar/anggota")} className="h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold inline-flex items-center gap-2 hover:bg-[#F0F0F0] transition-colors">Daftar Member <ArrowRight className="h-4 w-4" /></button>
+            </div>
+          </div>
         </div>
       </section>
 

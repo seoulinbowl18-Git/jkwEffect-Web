@@ -27,9 +27,9 @@ export const BrandWordmark = ({ light = false, large = false }) => (
   </span>
 );
 
-/** Logo resmi GIBRAN2029 (lingkaran: foto Gibran + bendera + tulisan). File: public/pagi-logo.png (145 px). */
+/** Logo resmi GIBRAN2029 (lingkaran: potret Mas Gibran berbingkai merah). File: public/gibran2029-logo.png (256 px). */
 export const BrandBadge = ({ size = 40, className = "" }) => (
-  <img src="/pagi-logo.png" alt="Logo GIBRAN2029" width={size} height={size} draggable={false}
+  <img src="/gibran2029-logo.png" alt="Logo GIBRAN2029" width={size} height={size} draggable={false}
     className={`shrink-0 rounded-full object-cover select-none ${className}`} style={{ width: size, height: size }} />
 );
 

@@ -4,7 +4,7 @@ import { SLOGAN } from "@/components/Logo";
 // Kartu Tanda Anggota (KTA) digital GIBRAN2029 — rasio kartu ID standar (85,6 × 54 mm).
 export const KTA_TITLE = { anggota: "Kartu Tanda Anggota", relawan: "Kartu Tanda Relawan" };
 export const KTA_ROLE = { anggota: "MEMBER", relawan: "RELAWAN" };
-const LOGO = "/pagi-logo.png";
+const LOGO = "/gibran2029-logo.png";
 
 const domisili = (r) => [r.kabupaten, r.provinsi].filter(Boolean).join(", ");
 /** Baris NIK hanya untuk Member; kartu Relawan tidak menampilkan NIK sama sekali. */
