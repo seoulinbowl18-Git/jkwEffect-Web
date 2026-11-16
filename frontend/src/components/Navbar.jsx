@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Search, Wallet, User, ShieldCheck, LogOut, BookOpen } from "lucide-react";
+import { Home, Search, Wallet, User, ShieldCheck, LogOut, BookOpen, IdCard } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { NotificationBell } from "@/components/NotificationBell";
 import { useAuth } from "@/context/AuthContext";
@@ -13,7 +13,8 @@ export const useNavItems = () => {
     return [
       { to: "/", label: "Beranda", icon: Home, match: (p) => p === "/" },
       { to: "/jelajah", label: "Jelajah", icon: Search, match: (p) => p === "/jelajah" || p === "/bounty" },
-      { to: "/cara-kerja", label: "Cara Kerja", icon: BookOpen, match: (p) => p === "/cara-kerja" || p === "/untuk-brand" },
+      { to: "/cara-kerja", label: "Cara Bergabung", icon: BookOpen, match: (p) => p === "/cara-kerja" || p === "/untuk-brand" },
+      { to: "/kta", label: "KTA Saya", icon: IdCard, match: (p) => p === "/kta" },
     ];
   }
   if (role === "admin") {
@@ -72,10 +73,10 @@ export const Navbar = () => {
               </>
             ) : (
               <>
-                <button data-testid="nav-brand-button" onClick={() => navigate("/untuk-brand")} className="hidden sm:inline-flex btn-ghost h-10">
-                  Untuk Brand
+                <button data-testid="nav-join-button" onClick={() => navigate("/daftar/relawan")} className="hidden lg:inline-flex btn-ghost h-10">
+                  Daftar Relawan
                 </button>
-                <button data-testid="nav-login-button" disabled={signingIn} onClick={() => navigate(`/masuk?next=${encodeURIComponent(pathname === "/" ? "/dashboard" : pathname)}`)} className="btn-primary h-10">
+                <button data-testid="nav-login-button" disabled={signingIn} onClick={() => navigate(`/masuk?next=${encodeURIComponent(pathname === "/" ? "/kta" : pathname)}`)} className="btn-primary h-10">
                   Masuk
                 </button>
               </>

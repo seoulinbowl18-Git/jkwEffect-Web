@@ -22,7 +22,7 @@ export const GoogleG = () => (
 );
 
 /** Google-only sign-in, same layout as the mobile app's login screen. */
-export const LoginScreen = ({ next = "/dashboard" }) => {
+export const LoginScreen = ({ next = "/kta" }) => {
   const { login, signingIn } = useAuth();
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
@@ -64,8 +64,11 @@ export const LoginScreen = ({ next = "/dashboard" }) => {
 export default function Login() {
   const { user, loading } = useAuth();
   const [params] = useSearchParams();
-  const raw = params.get("next") || "/dashboard";
-  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/dashboard";
-  if (!loading && user) return <Navigate to={user.role ? next : "/onboarding"} replace />;
+  const raw = params.get("next") || "/kta";
+  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/kta";
+  if (!loading && user) {
+    const joinPage = next.startsWith("/daftar/") || next === "/kta";
+    return <Navigate to={joinPage || user.role ? next : "/kta"} replace />;
+  }
   return <LoginScreen next={next} />;
 }

@@ -31,7 +31,7 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-8 justify-between">
         <div>
           <Logo />
-          <p className="mt-3 text-sm text-muted-foreground max-w-xs">Platform creator marketing berbasis performa. Brand bayar per view, kreator dibayar per view.</p>
+          <p className="mt-3 text-sm text-muted-foreground max-w-xs">Wadah resmi member & relawan GIBRAN2029 untuk bergerak bersama menuju Indonesia Maju 2029.</p>
         </div>
         <div className="flex flex-col md:items-end gap-3 text-sm text-muted-foreground w-full md:w-auto">
           <div className="relative w-full h-12 md:h-14 md:w-[360px]" data-testid="footer-vapour-text">
@@ -49,8 +49,8 @@ export const Footer = () => {
           </div>
           <nav className="flex gap-5 font-medium">
             <Link to="/jelajah" className="hover:text-primary">Jelajah</Link>
-            <Link to="/cara-kerja" className="hover:text-primary">Cara Kerja</Link>
-            <Link to="/untuk-brand" className="hover:text-primary">Untuk Brand</Link>
+            <Link to="/cara-kerja" className="hover:text-primary">Cara Bergabung</Link>
+            <Link to="/kta" className="hover:text-primary">KTA Saya</Link>
           </nav>
           <p>© {new Date().getFullYear()} GIBRAN2029 — {SLOGAN}</p>
         </div>

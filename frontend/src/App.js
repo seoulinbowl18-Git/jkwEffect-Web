@@ -5,7 +5,6 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import Login, { LoginScreen } from "@/pages/Login";
 import Landing from "@/pages/Landing";
 import Bounty from "@/pages/Bounty";
-import Onboarding from "@/pages/Onboarding";
 import CreatorDashboard from "@/pages/CreatorDashboard";
 import BrandDashboard from "@/pages/BrandDashboard";
 import AdminPanel from "@/pages/AdminPanel";
@@ -19,8 +18,8 @@ const Guard = ({ children, roles, needRole = true }) => {
   const { user, loading } = useAuth();
   if (loading) return <div className="min-h-screen grid place-items-center"><div className="h-8 w-8 rounded-full border-4 border-primary/30 border-t-primary animate-spin" /></div>;
   if (!user) return <LoginScreen next={window.location.pathname + window.location.search} />;
-  if (needRole && !user.role) return <Navigate to="/onboarding" replace />;
-  if (!needRole && user.role) return <Navigate to="/dashboard" replace />;
+  // Akun tanpa peran kreator/brand (member & relawan) diarahkan ke halaman KTA / pendaftaran.
+  if (needRole && !user.role) return <Navigate to="/kta" replace />;
   if (roles && !roles.includes(user.role)) return <Navigate to="/dashboard" replace />;
   return children;
 };
@@ -50,8 +49,8 @@ function AppRouter() {
       <Route path="/daftar/:jenis" element={<Registration />} />
       <Route path="/kta" element={<Kta />} />
       <Route path="/cara-kerja" element={<HowItWorks />} />
-      <Route path="/untuk-brand" element={<HowItWorks brand />} />
-      <Route path="/onboarding" element={<Guard needRole={false}><Onboarding /></Guard>} />
+      <Route path="/untuk-brand" element={<Navigate to="/cara-kerja" replace />} />
+      <Route path="/onboarding" element={<Navigate to="/kta" replace />} />
       <Route path="/dashboard" element={<Guard><Dashboard /></Guard>} />
       <Route path="/dompet" element={<Guard><Dashboard /></Guard>} />
       <Route path="/profil" element={<Guard><Dashboard /></Guard>} />

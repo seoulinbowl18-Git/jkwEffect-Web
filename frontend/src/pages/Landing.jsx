@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { ArrowRight, Building2, User, Send, MessageCircle, Clapperboard, Upload, Wallet, Megaphone, BadgeDollarSign, Eye, IdCard, HandHeart, ShieldCheck, BadgeCheck, Network, BellRing, Lightbulb, HeartHandshake, Coins } from "lucide-react";
+import { ArrowRight, IdCard, HandHeart, ShieldCheck, BadgeCheck, Network, BellRing, Lightbulb, HeartHandshake, Coins } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { BrandBadge, SLOGAN } from "@/components/Logo";
 import { Footer, useIsDesktop } from "@/components/Footer";
@@ -9,17 +8,10 @@ import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
 import { CampaignCard } from "@/components/CampaignCard";
 import { InstructionDialog } from "@/components/CampaignDialogs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useAuth } from "@/context/AuthContext";
-import { useCommunity } from "@/lib/community";
-import { whatsappLink } from "@/lib/contact";
-import { PARTNER_BRANDS } from "@/lib/brands";
 import { useSync } from "@/lib/useSync";
-import { api, rp } from "@/lib/api";
+import { api } from "@/lib/api";
+import { PERAN, PERAN_COPY, FAQ_GERAKAN } from "@/lib/gerakan";
 
-const STEPS = {
-  creator: [[Clapperboard, "Pilih campaign", "Cari campaign dengan rate terbaik sesuai niche kamu."], [Upload, "Posting & submit", "Upload video di TikTok, IG, Threads atau YouTube, lalu kirim link-nya."], [Wallet, "Tarik cuan", "Views diverifikasi, saldo masuk. Tarik mulai Rp 50.000."]],
-  brand: [[Megaphone, "Buat campaign", "Tulis brief, pilih platform & kategori."], [BadgeDollarSign, "Set rate per 1K views", "Bayar hanya untuk views yang benar-benar terjadi."], [Eye, "Dapat ribuan views", "Ratusan kreator posting konten untuk brand kamu."]],
-};
 
 // Kartu ajakan bergabung di hero (menggantikan kalkulator cuan): [jenis, judul, deskripsi, ikon, tombol utama?]
 const JOIN = [
@@ -47,12 +39,9 @@ const BENEFITS = [
 ];
 
 export default function Landing() {
-  const community = useCommunity();
-  const [role, setRole] = useState("creator");
+  const [role, setRole] = useState("relawan");
   const [sections, setSections] = useState(null);
-  const [payouts, setPayouts] = useState([]);
   const [info, setInfo] = useState(null);
-  const { user } = useAuth();
   const desktop = useIsDesktop();
   const taglineFont = useMemo(
     () => ({ fontFamily: "Inter, sans-serif", fontSize: desktop ? "26px" : "22px", fontWeight: 800 }),
@@ -62,22 +51,11 @@ export default function Landing() {
 
   const version = useSync();
   useEffect(() => {
-    api.get("/campaigns/sections").then((r) => setSections(r.data));
-    api.get("/public/payouts").then((r) => setPayouts(r.data));
+    api.get("/campaigns/sections").then((r) => setSections(r.data)).catch(() => {});
   }, [version]);
 
-  const start = () => (user ? navigate(user.role ? "/dashboard" : "/onboarding") : navigate("/masuk?next=/dashboard"));
   const goSubmit = () => navigate("/jelajah");
-  const avgRate = 5000;
-  const ticker = payouts.length ? payouts.map((p) => [p.name, `+${rp(p.amount)}`]) : (sections?.top_rate || []).map((c) => [c.title, `${rp(c.rate_per_1k)}/1K`]);
-
-  const isBrand = role === "brand";
-  const stats = isBrand
-    ? [[sections?.total ?? "—", "Campaign aktif"], [rp(avgRate), "Rate rata-rata/1K"], ["4", "Platform"]]
-    : [[sections?.total ?? "—", "Campaign aktif"], ["Rp 50rb", "Min. penarikan"], ["4", "Platform"]];
-  const contactUrl = whatsappLink();
-  // Diulang agar barisan running text tetap penuh walau brand masih sedikit.
-  const brandRow = Array.from({ length: Math.max(1, Math.ceil(8 / PARTNER_BRANDS.length)) }, () => PARTNER_BRANDS).flat();
+  const copy = PERAN_COPY[role];
 
   return (
     <div className="bg-background">
@@ -200,58 +178,22 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* BRAND TICKER (mode "Saya Brand") */}
-      {role === "brand" && (
-        <section className="py-8 overflow-hidden" data-testid="brand-ticker">
-          <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            Brand yang sudah bergabung di <b className="text-foreground">GIBRAN2029</b>
-          </p>
-          <div className="relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <div className="flex w-max animate-marquee gap-4 py-1">
-              {[...brandRow, ...brandRow].map((name, i) => (
-                <div key={i} className="shrink-0 whitespace-nowrap flex items-center gap-3 bg-card rounded-2xl shadow-soft pl-2 pr-5 py-2" aria-hidden={i >= brandRow.length}>
-                  <span className="h-9 w-9 rounded-xl bg-card-gradient text-white grid place-items-center font-extrabold">{name[0]}</span>
-                  <span className="text-lg font-extrabold tracking-tight" data-testid="brand-name">{name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* PAYOUT TICKER */}
-      {role !== "brand" && ticker.length > 0 && (
-        <section className="py-8 overflow-hidden" data-testid="payout-ticker">
-          <p className="text-center text-sm font-medium text-muted-foreground mb-4">
-            {payouts.length ? "Bayaran terbaru di GIBRAN2029" : "Rate campaign yang lagi buka"}
-          </p>
-          <div className="flex w-max animate-marquee gap-3 py-1">
-            {[...ticker, ...ticker].map(([n, a], i) => (
-              <div key={i} className="shrink-0 whitespace-nowrap flex items-center gap-3 bg-card rounded-2xl shadow-soft pl-2 pr-4 py-2">
-                <span className="h-8 w-8 rounded-full bg-soft text-primary grid place-items-center font-bold text-sm">{n[0]}</span>
-                <span className="text-sm font-semibold max-w-[180px] truncate">{n}</span>
-                <span className="text-sm font-bold text-success tabular-nums">{a}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* HOW IT WORKS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24" id="cara-kerja">
+      {/* CARA BERGABUNG — pilihan peran "Saya Relawan" / "Saya Member" */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24" id="cara-kerja" data-testid="how-to-join">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <p className="text-sm font-semibold text-primary">Cara kerja</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 max-w-xl">{role === "brand" ? "Bayar per performa, bukan per janji." : "Tiga langkah dari konten ke cuan."}</h2>
+            <p className="text-sm font-semibold text-primary">Cara bergabung</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 max-w-xl">{copy.title}</h2>
           </div>
-          <div className="inline-flex p-1 rounded-full bg-card shadow-soft self-start md:self-auto">
-            {[["creator", "Kreator"], ["brand", "Brand"]].map(([k, l]) => (
-              <button key={k} onClick={() => setRole(k)} className={`h-10 px-5 rounded-full text-sm font-semibold transition-colors ${role === k ? "bg-soft text-primary" : "text-muted-foreground hover:text-foreground"}`}>{l}</button>
+          <div className="inline-flex p-1 rounded-full bg-card shadow-soft self-start md:self-auto" role="tablist" aria-label="Pilih peran">
+            {PERAN.map(([k, l]) => (
+              <button key={k} role="tab" aria-selected={role === k} data-testid={`role-${k}`} onClick={() => setRole(k)}
+                className={`h-10 px-5 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${role === k ? "bg-[#C8102E] text-white" : "text-muted-foreground hover:text-foreground"}`}>{l}</button>
             ))}
           </div>
         </div>
         <ol className="mt-10 grid md:grid-cols-3 gap-5">
-          {STEPS[role].map(([I, t, d], i) => (
+          {copy.steps.map(([I, t, d], i) => (
             <li key={t} className="relative bg-card rounded-2xl shadow-soft p-7 hover:shadow-soft-lg transition-shadow">
               <div className="flex items-center justify-between">
                 <span className="icon-tile"><I className="h-5 w-5" /></span>
@@ -264,13 +206,13 @@ export default function Landing() {
         </ol>
       </section>
 
-      {/* TRENDING CAMPAIGNS */}
-      {sections?.trending?.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      {/* MISI KONTEN KREATOR — hanya relevan untuk relawan */}
+      {role === "relawan" && sections?.trending?.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" data-testid="relawan-missions">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold text-primary">Trending</p>
-              <h2 className="text-3xl font-extrabold tracking-tight mt-1">Lagi rame minggu ini</h2>
+              <p className="text-sm font-semibold text-primary">Untuk relawan</p>
+              <h2 className="text-3xl font-extrabold tracking-tight mt-1">Misi konten kreator</h2>
             </div>
             <button data-testid="landing-see-all" onClick={() => navigate("/jelajah")} className="btn-ghost h-10 text-primary">Lihat semua <ArrowRight className="h-4 w-4" /></button>
           </div>
@@ -287,7 +229,7 @@ export default function Landing() {
           <h2 className="text-3xl font-extrabold tracking-tight mt-2">Pertanyaan yang sering muncul</h2>
         </div>
         <Accordion type="single" collapsible className="lg:col-span-8 bg-card rounded-2xl shadow-soft px-6">
-          {[["Daftarnya bayar?", "Tidak. 100% gratis untuk kreator. Cukup login pakai akun Google."], ["Minimal penarikan berapa?", "Minimal Rp 50.000 ke rekening bank atau e-wallet. Diproses manual oleh tim kami."], ["Berapa lama review video?", "Konten direview Admin GIBRAN2029. Setelah views tercapai, kamu klaim dengan bukti rekaman layar analitik dan views diverifikasi sebelum saldo masuk."], ["Bagaimana mencegah kecurangan?", "Setiap link video hanya bisa didaftarkan sekali, views diverifikasi manual, dan akun yang memakai bot akan diblokir."]].map(([q, a], i) => (
+          {FAQ_GERAKAN.map(([q, a], i) => (
             <AccordionItem key={q} value={`f${i}`} className="border-border/70 last:border-0">
               <AccordionTrigger data-testid={`faq-${i}`} className="text-left text-base font-bold py-5 hover:no-underline hover:text-primary">{q}</AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-[15px]">{a}</AccordionContent>
@@ -298,13 +240,13 @@ export default function Landing() {
 
       {/* CLOSING CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-3xl shadow-glow p-8 sm:p-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-3xl shadow-glow p-8 sm:p-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="relative">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{role === "brand" ? "Siap dapat ribuan views?" : "Siap dapat cuan dari kontenmu?"}</h2>
-            <p className="mt-2 text-white/90">Daftar gratis pakai akun Google, langsung mulai hari ini.</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{copy.closing}</h2>
+            <p className="mt-2 text-white/90">{copy.closingDesc}</p>
           </div>
-          <button onClick={start} className="relative btn-light h-14 px-8 text-base rounded-2xl shrink-0">
-            {role === "brand" ? "Buat Campaign" : "Mulai Sekarang"} <ArrowRight className="h-4 w-4" />
+          <button onClick={() => navigate(`/daftar/${role}`)} data-testid="closing-cta" className="relative h-14 px-8 text-base rounded-2xl shrink-0 bg-[#0A0A0A] text-white font-bold inline-flex items-center justify-center gap-2 hover:bg-[#1E1E1E] transition-colors">
+            {copy.cta} <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       </section>

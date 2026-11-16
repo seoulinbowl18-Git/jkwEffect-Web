@@ -44,7 +44,13 @@ export const AuthProvider = ({ children }) => {
     await signOut(firebaseAuth).catch(() => {});
     setUser(data);
     // Formulir pendaftaran Member/Relawan (/daftar/...) & halaman KTA tidak butuh peran kreator/brand: langsung kembali ke sana.
-    const target = next?.startsWith("/daftar/") || next === "/kta" ? next : !data.role ? "/onboarding" : next && next !== "/onboarding" ? next : "/dashboard";
+    // Setelah login: formulir pendaftaran / KTA bila itu tujuannya; admin ke panel admin;
+    // selain itu (termasuk akun baru) ke halaman KTA Saya — bukan lagi ke pilihan kreator/brand.
+    const joinPage = next?.startsWith("/daftar/") || next === "/kta";
+    const generic = !next || ["/dashboard", "/onboarding", "/kta"].includes(next);
+    const target = joinPage ? next
+      : data.role === "admin" ? (generic ? "/admin" : next)
+        : data.role && !generic ? next : "/kta";
     if (window.location.pathname !== target) window.location.assign(target);
   }, []);
 
@@ -55,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => { toast.error(loginError(err)); refresh(); });
   }, [finishLogin, refresh]);
 
-  const login = useCallback(async (path = "/dashboard") => {
+  const login = useCallback(async (path = "/kta") => {
     if (!firebaseReady) return toast.error("Login belum dikonfigurasi. Hubungi admin.");
     if (signingIn) return;
     setSigningIn(true);
