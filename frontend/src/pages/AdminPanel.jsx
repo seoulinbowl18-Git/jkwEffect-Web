@@ -14,9 +14,9 @@ import { PlatformIcon } from "@/components/PlatformIcon";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 import { useSync } from "@/lib/useSync";
-import { api, rp, num, errMsg, fmtDate, CATEGORIES, PLATFORMS } from "@/lib/api";
+import { api, rp, num, errMsg, fmtDate, CATEGORIES, PLATFORMS, GERAKAN_CATEGORIES, TARGET_AKSI, isAksi } from "@/lib/api";
 
-const DEFAULT_INSTRUCTIONS = "1. Buat video 15-60 detik yang menampilkan produk secara natural.\n2. Sebutkan nama brand di 3 detik pertama.\n3. Wajib pakai hashtag #GIBRAN2029 dan tag akun brand.\n4. Dilarang konten SARA, kekerasan, atau beli views/bot.\n5. Video harus tetap tayang minimal 30 hari.";
+const DEFAULT_INSTRUCTIONS = "1. Bagikan konten/narasi resmi GIBRAN2029 ke akun media sosialmu.\n2. Wajib pakai hashtag #GIBRAN2029.\n3. Gunakan bahasa yang santun; dilarang konten SARA, hoaks, atau ujaran kebencian.\n4. Kirim link postingan sebagai bukti partisipasi.\n5. Postingan tetap tayang minimal 30 hari.";
 const ROLE_LABEL = { creator: "Kreator", brand: "Brand", admin: "Admin" };
 const smallBtn = "h-9 px-3 rounded-xl text-sm font-semibold inline-flex items-center gap-1.5 transition-colors";
 const neutralBtn = `${smallBtn} bg-secondary hover:bg-border`;
@@ -108,11 +108,11 @@ const CampaignsTab = ({ isOwner, version, onEdit, onChange }) => {
     try { await fn(); toast.success(ok); load(); onChange(); } catch (e) { toast.error(errMsg(e)); }
   };
   const setStatus = (c, status) => {
-    if (status === "closed" && !window.confirm(`Tutup "${c.title}"? Konten yang belum selesai ditolak dan sisa budget dikembalikan ke brand.`)) return;
+    if (status === "closed" && !window.confirm(`Tutup "${c.title}"? Konten yang belum selesai ditolak${isAksi(c) ? "" : " dan sisa budget dikembalikan ke brand"}.`)) return;
     act(c, () => api.patch(`/campaigns/${c.campaign_id}/status`, { status }), status === "paused" ? "Campaign dijeda" : status === "active" ? "Campaign aktif" : "Campaign ditutup");
   };
   const remove = (c) => {
-    if (!window.confirm(`Hapus "${c.title}"? Campaign ditutup (sisa budget dikembalikan ke brand) lalu disembunyikan dari web dan aplikasi. Riwayat konten tetap tersimpan.`)) return;
+    if (!window.confirm(`Hapus "${c.title}"? Campaign ditutup${isAksi(c) ? "" : " (sisa budget dikembalikan ke brand)"} lalu disembunyikan dari web dan aplikasi. Riwayat konten tetap tersimpan.`)) return;
     act(c, () => api.delete(`/admin/campaigns/${c.campaign_id}`), "Campaign dihapus");
   };
 
@@ -132,19 +132,28 @@ const CampaignsTab = ({ isOwner, version, onEdit, onChange }) => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-bold leading-snug line-clamp-2">{c.title}</p>
-                <p className="text-xs text-muted-foreground mt-0.5 truncate">{c.brand_name} · {c.category}{c.exclusive ? " · Exclusive" : ""}{c.funded_by === "owner" ? " · Dibiayai Owner" : ""}</p>
+                <p className="text-xs text-muted-foreground mt-0.5 truncate">{c.brand_name} · {c.category}{c.exclusive ? " · Exclusive" : ""}{c.funded_by === "owner" && !isAksi(c) ? " · Dibiayai Owner" : ""}</p>
               </div>
               <StatusBadge s={c.status} />
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
-              <div><p className="text-muted-foreground text-xs">Rate</p><p className="font-bold">{rp(c.rate_per_1k)}/1K</p></div>
-              <div><p className="text-muted-foreground text-xs">Terpakai</p><p className="font-bold">{rp(c.spent)}</p></div>
-              <div><p className="text-muted-foreground text-xs">Budget</p><p className="font-bold">{rp(c.budget)}</p></div>
-            </div>
-            <div className="mt-3 h-2 rounded-full bg-secondary overflow-hidden"><div className="h-full bg-button-gradient" style={{ width: `${100 - c.budget_left_pct}%` }} /></div>
+            {isAksi(c) ? (
+              <div className="mt-4 flex flex-wrap gap-1.5 text-xs">
+                <span className="text-muted-foreground self-center mr-1">Target aksi:</span>
+                {(c.target_actions || []).map((a) => <span key={a} className="px-2 py-1 rounded-lg bg-soft text-primary font-semibold">{TARGET_AKSI[a] || a}</span>)}
+              </div>
+            ) : (
+              <>
+                <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
+                  <div><p className="text-muted-foreground text-xs">Rate</p><p className="font-bold">{rp(c.rate_per_1k)}/1K</p></div>
+                  <div><p className="text-muted-foreground text-xs">Terpakai</p><p className="font-bold">{rp(c.spent)}</p></div>
+                  <div><p className="text-muted-foreground text-xs">Budget</p><p className="font-bold">{rp(c.budget)}</p></div>
+                </div>
+                <div className="mt-3 h-2 rounded-full bg-secondary overflow-hidden"><div className="h-full bg-button-gradient" style={{ width: `${100 - c.budget_left_pct}%` }} /></div>
+              </>
+            )}
             <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
               <span className="flex gap-1 text-foreground/70">{c.platforms.map((p) => <PlatformIcon key={p} p={p} />)}</span>
-              <span>· {num(c.submission_count)} video · tutup {fmtDate(c.deadline)}</span>
+              <span>· {num(c.submission_count)} {isAksi(c) ? "bukti aksi" : "video"} · tutup {fmtDate(c.deadline)}</span>
             </div>
             {c.status !== "closed" && (
               <div className="mt-4 pt-4 border-t border-border/70 flex flex-wrap gap-2">
@@ -169,38 +178,42 @@ const CampaignsTab = ({ isOwner, version, onEdit, onChange }) => {
 };
 
 const emptyForm = (c) => ({
-  brand_id: c?.brand_id || "", title: c?.title || "", category: c?.category || "Produk", platforms: c?.platforms || ["tiktok"],
-  rate_per_1k: c?.rate_per_1k ?? 5000, min_views: c?.min_views ?? 1000, budget: c?.budget ?? 1000000,
+  title: c?.title || "", category: c?.category || GERAKAN_CATEGORIES[0], platforms: c?.platforms || ["tiktok"],
+  target_actions: c?.target_actions || ["share"],
   thumbnail: c?.thumbnail || "", instructions: c?.instructions || DEFAULT_INSTRUCTIONS, exclusive: Boolean(c?.exclusive),
-  deadline_days: 30, deadline: c?.deadline ? c.deadline.slice(0, 10) : "", charge_brand: false,
+  deadline_days: 30, deadline: c?.deadline ? c.deadline.slice(0, 10) : "",
 });
+
+const Chip = ({ on, onClick, children, testid }) => (
+  <button type="button" data-testid={testid} aria-pressed={on} onClick={onClick}
+    className={`h-10 px-3 rounded-xl border text-sm font-semibold flex items-center gap-1.5 transition-colors ${on ? "bg-soft text-primary border-primary" : "border-border hover:bg-secondary"}`}>
+    {children}
+  </button>
+);
 
 const CampaignDialog = ({ campaign, onClose, onDone }) => {
   const open = campaign !== null;
   const isNew = open && !campaign.campaign_id;
+  // Campaign brand lama (sebelum mode gerakan) tetap bisa diedit tanpa mengubah budget-nya.
+  const legacy = open && !isNew && !isAksi(campaign);
   const [f, setF] = useState(emptyForm());
-  const [brands, setBrands] = useState([]);
   const [busy, setBusy] = useState(false);
-  useEffect(() => {
-    if (!open) return;
-    setF(emptyForm(campaign));
-    if (isNew) api.get("/admin/users").then((r) => setBrands(r.data.filter((u) => u.role === "brand" && u.status !== "suspended"))).catch(() => {});
-  }, [open, isNew, campaign]);
+  useEffect(() => { if (open) setF(emptyForm(campaign)); }, [open, campaign]);
   const set = (k) => (e) => setF({ ...f, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
-  const togglePlat = (p) => setF({ ...f, platforms: f.platforms.includes(p) ? f.platforms.filter((x) => x !== p) : [...f.platforms, p] });
-  const brand = brands.find((b) => b.user_id === f.brand_id);
+  const toggle = (k, v) => setF({ ...f, [k]: f[k].includes(v) ? f[k].filter((x) => x !== v) : [...f[k], v] });
+  const categories = legacy ? [...GERAKAN_CATEGORIES, ...CATEGORIES] : GERAKAN_CATEGORIES;
 
   const submit = async (e) => {
     e.preventDefault();
     if (!f.platforms.length) return toast.error("Pilih minimal satu platform");
+    if (!legacy && !f.target_actions.length) return toast.error("Pilih minimal satu target aksi");
     setBusy(true);
-    const base = { title: f.title, category: f.category, platforms: f.platforms, rate_per_1k: Number(f.rate_per_1k),
-      min_views: Number(f.min_views), budget: Number(f.budget), thumbnail: f.thumbnail, instructions: f.instructions, exclusive: f.exclusive };
+    const base = { title: f.title, category: f.category, platforms: f.platforms, thumbnail: f.thumbnail,
+      instructions: f.instructions, exclusive: f.exclusive, ...(legacy ? {} : { target_actions: f.target_actions }) };
     try {
       if (isNew) {
-        if (!f.brand_id) throw new Error("Pilih brand pemilik campaign");
-        await api.post("/admin/campaigns", { ...base, brand_id: f.brand_id, charge_brand: f.charge_brand, deadline_days: Number(f.deadline_days) });
-        toast.success("Campaign dibuat dan langsung tampil di web & aplikasi");
+        await api.post("/admin/campaigns", { ...base, deadline_days: Number(f.deadline_days) });
+        toast.success("Campaign gerakan dibuat dan langsung tampil di web & aplikasi");
       } else {
         await api.put(`/admin/campaigns/${campaign.campaign_id}`, { ...base, ...(f.deadline ? { deadline: new Date(`${f.deadline}T23:59:00+07:00`).toISOString() } : {}) });
         toast.success("Perubahan disimpan");
@@ -218,58 +231,49 @@ const CampaignDialog = ({ campaign, onClose, onDone }) => {
       <DialogContent className="rounded-2xl border-0 shadow-soft-lg max-w-2xl max-h-[90vh] overflow-auto" data-testid="owner-campaign-dialog">
         <DialogHeader>
           <DialogTitle>{isNew ? "Buat campaign" : "Edit campaign"}</DialogTitle>
-          <DialogDescription>{isNew ? "Campaign langsung aktif di web dan aplikasi." : `${campaign?.brand_name} · terpakai ${rp(campaign?.spent)}`}</DialogDescription>
+          <DialogDescription>{isNew ? "Aksi gerakan GIBRAN2029 untuk relawan & member. Langsung aktif di web dan aplikasi." : legacy ? `${campaign?.brand_name} · campaign lama (budget tidak diubah)` : "Aksi gerakan GIBRAN2029"}</DialogDescription>
         </DialogHeader>
         <form onSubmit={submit} className="grid sm:grid-cols-2 gap-4">
-          {isNew && (
-            <Field label="Brand">
-              <select data-testid="owner-cc-brand" required value={f.brand_id} onChange={set("brand_id")} className={inputCls}>
-                <option value="">Pilih brand…</option>
-                {brands.map((b) => <option key={b.user_id} value={b.user_id}>{b.profile?.brand_name || b.name} · saldo {rp(b.brand_balance)}</option>)}
-              </select>
-            </Field>
-          )}
-          <div className={isNew ? "" : "sm:col-span-2"}>
-            <Field label="Judul"><input data-testid="owner-cc-title" required minLength={3} maxLength={120} value={f.title} onChange={set("title")} className={inputCls} /></Field>
+          <div className="sm:col-span-2">
+            <Field label="Judul aksi"><input data-testid="owner-cc-title" required minLength={3} maxLength={120} value={f.title} onChange={set("title")} placeholder="Contoh: Sebarkan video kegiatan bakti sosial" className={inputCls} /></Field>
           </div>
-          <Field label="Kategori"><select value={f.category} onChange={set("category")} className={inputCls}>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></Field>
-          <Field label="Rate per 1.000 views (Rp)"><input type="number" min={500} required value={f.rate_per_1k} onChange={set("rate_per_1k")} className={inputCls} /></Field>
-          <Field label="Minimal views"><input type="number" min={100} required value={f.min_views} onChange={set("min_views")} className={inputCls} /></Field>
-          <Field label="Budget (Rp)"><input data-testid="owner-cc-budget" type="number" min={100000} required value={f.budget} onChange={set("budget")} className={inputCls} /></Field>
+          <Field label="Kategori gerakan">
+            <select data-testid="owner-cc-category" value={f.category} onChange={set("category")} className={inputCls}>{categories.map((c) => <option key={c}>{c}</option>)}</select>
+          </Field>
           {isNew
             ? <Field label="Durasi (hari)"><input type="number" min={1} max={180} value={f.deadline_days} onChange={set("deadline_days")} className={inputCls} /></Field>
             : <Field label="Tanggal tutup"><input type="date" value={f.deadline} onChange={set("deadline")} className={inputCls} /></Field>}
           <div className="sm:col-span-2">
-            <Field label="Platform">
+            <Field label="Platform media sosial">
               <div className="flex flex-wrap gap-2">
                 {Object.entries(PLATFORMS).map(([k, l]) => (
-                  <button type="button" key={k} onClick={() => togglePlat(k)}
-                    className={`h-10 px-3 rounded-xl border text-sm font-semibold flex items-center gap-1.5 transition-colors ${f.platforms.includes(k) ? "bg-soft text-primary border-primary" : "border-border hover:bg-secondary"}`}>
-                    <PlatformIcon p={k} /> {l}
-                  </button>
+                  <Chip key={k} on={f.platforms.includes(k)} onClick={() => toggle("platforms", k)} testid={`owner-cc-platform-${k}`}><PlatformIcon p={k} /> {l}</Chip>
                 ))}
               </div>
             </Field>
           </div>
+          {!legacy && (
+            <div className="sm:col-span-2">
+              <Field label="Target aksi relawan">
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(TARGET_AKSI).map(([k, l]) => (
+                    <Chip key={k} on={f.target_actions.includes(k)} onClick={() => toggle("target_actions", k)} testid={`owner-cc-aksi-${k}`}>{l}</Chip>
+                  ))}
+                </div>
+              </Field>
+              <p className="mt-1.5 text-xs text-muted-foreground">Jenis partisipasi yang diminta dari relawan. Tidak ada hitungan views berbayar.</p>
+            </div>
+          )}
           <div className="sm:col-span-2">
             <span className="text-sm font-semibold text-foreground/80">Foto / banner campaign (opsional)</span>
             <div className="mt-1.5"><ImageUpload value={f.thumbnail} onChange={(url) => setF((x) => ({ ...x, thumbnail: url }))} testid="owner-cc-image" /></div>
           </div>
           <div className="sm:col-span-2">
-            <Field label="Instruksi untuk kreator">
+            <Field label="Instruksi untuk relawan">
               <textarea data-testid="owner-cc-instructions" required minLength={10} rows={6} value={f.instructions} onChange={set("instructions")} className={`${inputCls} h-auto py-3 leading-relaxed`} />
             </Field>
           </div>
-          <label className="flex items-center gap-3 text-sm font-medium"><input type="checkbox" checked={f.exclusive} onChange={set("exclusive")} className="h-4 w-4 accent-primary" /> Campaign exclusive</label>
-          {isNew && (
-            <label className="flex items-start gap-3 text-sm font-medium">
-              <input type="checkbox" checked={f.charge_brand} onChange={set("charge_brand")} className="h-4 w-4 mt-0.5 accent-primary" />
-              <span>Potong budget dari saldo brand{brand ? ` (${rp(brand.brand_balance)})` : ""}<span className="block text-xs text-muted-foreground font-normal">Jika tidak dicentang, budget dibiayai Owner dan tidak dikembalikan ke brand saat ditutup.</span></span>
-            </label>
-          )}
-          {!isNew && campaign?.funded_by !== "owner" && (
-            <p className="sm:col-span-2 text-xs text-muted-foreground bg-secondary rounded-xl p-3">Mengubah budget menyesuaikan saldo brand: kenaikan dipotong dari saldo brand, penurunan dikembalikan ke saldo brand.</p>
-          )}
+          <label className="flex items-center gap-3 text-sm font-medium sm:col-span-2"><input type="checkbox" checked={f.exclusive} onChange={set("exclusive")} className="h-4 w-4 accent-primary" /> Khusus relawan/member terpilih (exclusive)</label>
           <button data-testid="owner-cc-submit" disabled={busy} className="btn-primary sm:col-span-2 h-12">{busy ? "Menyimpan..." : isNew ? "Buat campaign" : "Simpan perubahan"}</button>
         </form>
       </DialogContent>

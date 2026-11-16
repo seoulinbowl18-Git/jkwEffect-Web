@@ -20,8 +20,13 @@ export const PLATFORMS = {
   instagram: "Instagram",
   threads: "Threads",
   youtube: "YouTube",
+  facebook: "Facebook",
 };
 export const CATEGORIES = ["Produk", "Beauty", "Lifestyle", "F&B", "Edukasi", "Hiburan", "Fashion", "Tech"];
+// Campaign gerakan GIBRAN2029 (dibuat Admin Pusat) — tanpa brand, rate, budget & minimal views.
+export const GERAKAN_CATEGORIES = ["Agenda", "Sebar Narasi", "Aksi Sosial", "Penggalangan Dukungan"];
+export const TARGET_AKSI = { share: "Share", forward: "Forward", komentar: "Komentar", kehadiran: "Kehadiran Acara" };
+export const isAksi = (c) => c?.kind === "aksi";
 
 export const STATUS = {
   "menunggu verifikasi": { label: "Menunggu verifikasi", cls: "bg-amber-100 text-amber-800" },

@@ -8,7 +8,7 @@ import { InstructionDialog, SubmitDialog } from "@/components/CampaignDialogs";
 import { StreakBanner } from "@/components/StreakBanner";
 import { useAuth } from "@/context/AuthContext";
 import { useSync } from "@/lib/useSync";
-import { api, CATEGORIES } from "@/lib/api";
+import { api, CATEGORIES, GERAKAN_CATEGORIES } from "@/lib/api";
 import { toast } from "sonner";
 
 const Row = ({ title, desc, items, ranked, onInfo, onSubmit, id }) => {
@@ -99,7 +99,7 @@ export default function Bounty() {
         <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
           <p className="hidden lg:block text-sm font-semibold text-muted-foreground mb-3 px-1">Kategori</p>
           <nav className="flex lg:flex-col gap-2 lg:gap-1 overflow-x-auto no-scrollbar -mx-4 px-4 lg:mx-0 lg:p-2 lg:bg-card lg:rounded-2xl lg:shadow-soft pb-1">
-            {["Semua", ...CATEGORIES].map((c) => (
+            {["Semua", ...GERAKAN_CATEGORIES, ...CATEGORIES].map((c) => (
               <button key={c} data-testid={`category-${c}`} onClick={() => setCat(c)}
                 className={`shrink-0 h-9 lg:h-10 px-4 lg:px-3 rounded-full lg:rounded-xl text-sm font-semibold text-left whitespace-nowrap transition-colors ${cat === c ? "bg-primary text-white shadow-glow lg:bg-soft lg:text-primary lg:shadow-none" : "bg-card shadow-soft text-muted-foreground hover:text-foreground lg:bg-transparent lg:shadow-none lg:hover:bg-secondary"}`}>
                 {c}

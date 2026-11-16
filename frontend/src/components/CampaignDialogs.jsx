@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { PlatformIcon } from "@/components/PlatformIcon";
-import { api, rp, num, errMsg, fmtDate, PLATFORMS } from "@/lib/api";
+import { api, rp, num, errMsg, fmtDate, PLATFORMS, TARGET_AKSI, isAksi } from "@/lib/api";
 
 export const InstructionDialog = ({ c, onClose, onSubmit }) => (
   <Dialog open={!!c} onOpenChange={(o) => !o && onClose()}>
@@ -13,11 +13,20 @@ export const InstructionDialog = ({ c, onClose, onSubmit }) => (
             <DialogTitle className="text-xl">{c.title}</DialogTitle>
             <DialogDescription>oleh {c.brand_name} · tutup {fmtDate(c.deadline)}</DialogDescription>
           </DialogHeader>
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <Stat label="Rate" value={`${rp(c.rate_per_1k)}/1K`} />
-            <Stat label="Min. views" value={num(c.min_views)} />
-            <Stat label="Sisa budget" value={`${c.budget_left_pct}%`} />
-          </div>
+          {isAksi(c) ? (
+            <div className="rounded-xl bg-primary/5 p-3" data-testid="instruction-target-aksi">
+              <p className="text-xs text-muted-foreground font-medium">Target aksi · {c.category}</p>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {(c.target_actions || []).map((a) => <span key={a} className="px-2.5 py-1 rounded-lg bg-card text-sm font-bold">{TARGET_AKSI[a] || a}</span>)}
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <Stat label="Rate" value={`${rp(c.rate_per_1k)}/1K`} />
+              <Stat label="Min. views" value={num(c.min_views)} />
+              <Stat label="Sisa budget" value={`${c.budget_left_pct}%`} />
+            </div>
+          )}
           <div className="flex gap-2 flex-wrap">
             {c.platforms.map((p) => (
               <span key={p} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-secondary text-sm"><PlatformIcon p={p} /> {PLATFORMS[p]}</span>
@@ -25,7 +34,7 @@ export const InstructionDialog = ({ c, onClose, onSubmit }) => (
           </div>
           <pre className="whitespace-pre-wrap font-sans text-sm bg-secondary/60 rounded-xl p-4 max-h-64 overflow-auto" data-testid="instruction-text">{c.instructions}</pre>
           <button data-testid="instruction-submit-button" onClick={() => { onClose(); onSubmit(c); }} className="btn-primary">
-            Submit video
+            {isAksi(c) ? "Kirim bukti aksi" : "Submit video"}
           </button>
         </>
       )}
@@ -79,9 +88,11 @@ export const SubmitDialog = ({ c, onClose, onDone }) => {
               ))}
             </div>
             <input data-testid="submit-video-url-input" required value={url} onChange={(e) => setUrl(e.target.value)}
-              placeholder={`https://www.${platform === "youtube" ? "youtube.com/shorts" : platform === "threads" ? "threads.net/@kamu/post" : platform + ".com/@kamu/video"}/...`}
+              placeholder={`https://www.${platform === "youtube" ? "youtube.com/shorts" : platform === "threads" ? "threads.net/@kamu/post" : platform === "facebook" ? "facebook.com/share/p" : platform + ".com/@kamu/video"}/...`}
               className="w-full h-12 px-4 rounded-xl border border-border bg-secondary/60 focus:outline-none focus:ring-2 focus:ring-primary" />
-            <p className="text-xs text-muted-foreground">Video harus publik. Setelah konten disetujui, kamu bisa klaim views saat sudah mencapai minimal {num(c.min_views)} views.</p>
+            <p className="text-xs text-muted-foreground">{isAksi(c)
+              ? "Postingan harus publik. Kirim link postingan/bagikan sebagai bukti aksimu untuk diverifikasi admin."
+              : `Video harus publik. Setelah konten disetujui, kamu bisa klaim views saat sudah mencapai minimal ${num(c.min_views)} views.`}</p>
             <button data-testid="submit-video-confirm-button" disabled={busy} className="btn-primary h-12 w-full">
               {busy ? "Mengirim..." : "Kirim submission"}
             </button>
