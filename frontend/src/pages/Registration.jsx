@@ -10,7 +10,7 @@ import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
   anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi GIBRAN2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
-  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Formulir pendaftaran relawan GIBRAN2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
+  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Cukup 1 menit: nama, WhatsApp, dan kota domisili. Tanpa NIK. Bergerak Bersama, Menuju Indonesia Maju 2029." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
 const KTP_MAX = 3 * 1024 * 1024; // 3 MB
@@ -48,6 +48,19 @@ const shrinkKtp = (file) => new Promise((resolve, reject) => {
   img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("File bukan gambar yang valid")); };
   img.src = url;
 });
+
+// Relawan cukup data esensial (nama, WhatsApp, provinsi & kab/kota); Member wajib data lengkap sesuai KTP.
+const RELAWAN_LEVELS = LEVELS.slice(0, 2);
+
+const validateRelawan = (f, setuju) => {
+  const e = {};
+  if (f.nama.trim().length < 3) e.nama = "Isi nama lengkap";
+  if (!/^(\+62|62|0)8\d{7,12}$/.test(f.telepon.replace(/[\s-]/g, ""))) e.telepon = "Nomor WhatsApp tidak valid (contoh: 081234567890)";
+  RELAWAN_LEVELS.forEach(([k, label]) => { if (!f[k]?.name?.trim()) e[k] = `Pilih ${label.toLowerCase()}`; });
+  if (f.referral && !/^[A-Za-z0-9_-]{3,32}$/.test(f.referral.trim())) e.referral = "Kode referral hanya huruf/angka (3–32 karakter)";
+  if (!setuju) e.setuju = "Centang pernyataan persetujuan untuk melanjutkan";
+  return e;
+};
 
 const validate = (f, ktp, setuju) => {
   const e = {};
@@ -124,7 +137,7 @@ const WilayahField = ({ level, index, form, set, error }) => {
   );
 };
 
-const KtpUpload = ({ file, onChange, error }) => {
+const KtpUpload = ({ file, onChange, error, optional = false }) => {
   const input = useRef(null);
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
@@ -149,7 +162,7 @@ const KtpUpload = ({ file, onChange, error }) => {
 
   return (
     <div className="sm:col-span-2" data-field="ktp">
-      <p className="block text-sm font-semibold text-white/85">Foto KTP</p>
+      <p className="block text-sm font-semibold text-white/85">Foto KTP {optional && <span className="font-normal text-white/40">(opsional — boleh dilewati)</span>}</p>
       <input ref={input} type="file" accept={KTP_TYPES.join(",")} className="hidden" data-testid="ktp-input" onChange={(e) => pick(e.target.files?.[0])} />
       {file ? (
         <div className="mt-1.5 rounded-xl border border-white/10 bg-[#0A0A0A] p-3 flex flex-col sm:flex-row gap-4 sm:items-center">
@@ -257,6 +270,7 @@ const Done = ({ jenis, reg, onRetry }) => {
 export default function Registration() {
   const { jenis: jenisKey } = useParams();
   const jenis = JENIS[jenisKey];
+  const isMember = jenisKey === "anggota";
   const { user, loading, setUser } = useAuth();
   const [form, setForm] = useState(EMPTY);
   const [ktp, setKtp] = useState(null);
@@ -303,7 +317,7 @@ export default function Registration() {
 
   const submit = async (e) => {
     e.preventDefault();
-    const errs = validate(form, ktp, setuju);
+    const errs = isMember ? validate(form, ktp, setuju) : validateRelawan(form, setuju);
     setErrors(errs);
     const first = Object.keys(errs)[0];
     if (first) {
@@ -312,13 +326,18 @@ export default function Registration() {
     }
     const body = new FormData();
     body.append("jenis", jenisKey);
-    Object.entries(form).forEach(([k, v]) => {
-      if (LEVELS.some(([key]) => key === k)) { body.append(k, v.name.trim()); if (v.id) body.append(`${k}_id`, v.id); }
+    const levels = isMember ? LEVELS : RELAWAN_LEVELS;
+    const fields = isMember ? Object.keys(form) : ["nama", "telepon", "referral", ...levels.map(([k]) => k)];
+    fields.forEach((k) => {
+      const v = form[k];
+      if (levels.some(([key]) => key === k)) { body.append(k, v.name.trim()); if (v.id) body.append(`${k}_id`, v.id); }
+      else if (LEVELS.some(([key]) => key === k)) return;
       else body.append(k, typeof v === "string" ? v.trim() : v);
     });
     body.set("telepon", form.telepon.replace(/[\s-]/g, ""));
+    body.set("email", (isMember ? form.email : user.email || form.email).trim());
     body.append("persetujuan", "true");
-    body.append("ktp", ktp);
+    if (ktp) body.append("ktp", ktp);
     setSending(true);
     try {
       const { data } = await api.post("/registrations", body);
@@ -351,6 +370,8 @@ export default function Registration() {
       </div>
 
       <form onSubmit={submit} noValidate className="space-y-5" data-testid="registration-form">
+{isMember ? (
+        <>
         <Section no={1} icon={UserRound} title="Data Pribadi" desc="Isi sesuai yang tertera di KTP.">
           <Field id="nik" label="NIK KTP" error={errors.nik} hint="16 digit angka">
             <input {...bind("nik", (v) => v.replace(/\D/g, "").slice(0, 16))} inputMode="numeric" autoComplete="off" placeholder="3201xxxxxxxxxxxx" className={`${inputCls} tracking-wider tabular-nums`} />
@@ -406,13 +427,35 @@ export default function Registration() {
           <KtpUpload file={ktp} onChange={(f) => { setKtp(f); setErrors((e) => ({ ...e, ktp: undefined })); }} error={errors.ktp} />
         </Section>
 
+        </>
+        ) : (
+        <>
+        <Section no={1} icon={HandHeart} title="Data Relawan" desc="Cukup data singkat ini. Kamu akan dihubungi lewat WhatsApp untuk kegiatan relawan.">
+          <Field id="nama" label="Nama Lengkap" error={errors.nama} hint="Terisi otomatis dari akun Google, boleh diubah">
+            <input {...bind("nama")} maxLength={100} autoComplete="name" placeholder="Nama lengkap" className={inputCls} />
+          </Field>
+          <Field id="telepon" label="No. Telepon (WhatsApp)" error={errors.telepon}>
+            <input {...bind("telepon", (v) => v.replace(/[^\d+\s-]/g, "").slice(0, 18))} type="tel" inputMode="tel" autoComplete="tel" placeholder="081234567890" className={inputCls} />
+          </Field>
+          {RELAWAN_LEVELS.map((lv, i) => <WilayahField key={lv[0]} level={lv} index={i} form={form} set={set} error={errors[lv[0]]} />)}
+          <div className="sm:col-span-2">
+            <Field id="referral" label="Kode Referral" optional error={errors.referral}>
+              <input {...bind("referral")} maxLength={32} placeholder="Jika diajak oleh relawan / member lain" className={inputCls} />
+            </Field>
+          </div>
+          <KtpUpload optional file={ktp} onChange={(f) => { setKtp(f); setErrors((e) => ({ ...e, ktp: undefined })); }} error={errors.ktp} />
+        </Section>
+
+        </>
+        )}
+
         <section className={cardCls} data-field="setuju">
           <label className="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" data-testid="consent" checked={setuju} onChange={(e) => { setSetuju(e.target.checked); setErrors((x) => ({ ...x, setuju: undefined })); }}
               className="mt-1 h-5 w-5 shrink-0 rounded accent-white" />
             <span className="text-sm text-white/75 leading-relaxed">
               Saya menyatakan bahwa seluruh data yang saya isi adalah <b className="text-white">benar dan dapat dipertanggungjawabkan</b>, bersedia data saya
-              diverifikasi dan diproses untuk keperluan member, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> GIBRAN2029.
+              diverifikasi dan diproses untuk keperluan {isMember ? "member" : "relawan"}{isMember ? "" : " (termasuk dihubungi lewat WhatsApp)"}, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> GIBRAN2029.
             </span>
           </label>
           {errors.setuju && <p className="mt-2 text-xs text-red-400">{errors.setuju}</p>}
@@ -424,8 +467,8 @@ export default function Registration() {
             <span className="grid place-items-center h-10 w-10 shrink-0 rounded-xl bg-[#C8102E] text-white"><Lock className="h-5 w-5" /></span>
             <p className="text-sm text-white/70 leading-relaxed">
               <b className="block text-white">Data pribadi Anda dilindungi.</b>
-              Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi GIBRAN2029.
-              NIK &amp; foto KTP hanya dapat dilihat oleh admin untuk verifikasi.
+              Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi GIBRAN2029.{" "}
+              {isMember ? "NIK & foto KTP hanya dapat dilihat oleh admin untuk verifikasi." : "Pendaftaran relawan tidak meminta NIK. Foto KTP (bila diunggah) hanya dapat dilihat admin."}
             </p>
           </div>
         </section>

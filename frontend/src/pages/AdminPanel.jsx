@@ -569,12 +569,12 @@ const RegistrationsTab = ({ version }) => {
               </div>
             </div>
             <dl className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 text-sm">
-              <div><dt className="text-xs font-semibold text-muted-foreground">NIK</dt><dd className="font-semibold tabular-nums tracking-wide">{r.nik}</dd></div>
-              <div><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Cake className="h-3.5 w-3.5" /> Tempat, tanggal lahir</dt>
-                <dd className="font-semibold">{titleCase(r.kota_lahir)}, {r.tanggal_lahir ? fmtDate(r.tanggal_lahir) : "-"}</dd></div>
-              <div><dt className="text-xs font-semibold text-muted-foreground">Jenis kelamin · status</dt><dd className="font-semibold">{r.jenis_kelamin} · {r.status_pernikahan}</dd></div>
+              {r.nik && <div><dt className="text-xs font-semibold text-muted-foreground">NIK</dt><dd className="font-semibold tabular-nums tracking-wide">{r.nik}</dd></div>}
+              {r.tanggal_lahir && <div><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Cake className="h-3.5 w-3.5" /> Tempat, tanggal lahir</dt>
+                <dd className="font-semibold">{titleCase(r.kota_lahir)}, {fmtDate(r.tanggal_lahir)}</dd></div>}
+              {r.jenis_kelamin && <div><dt className="text-xs font-semibold text-muted-foreground">Jenis kelamin · status</dt><dd className="font-semibold">{r.jenis_kelamin} · {r.status_pernikahan}</dd></div>}
               <div className="sm:col-span-2"><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> Domisili</dt>
-                <dd className="font-semibold">{r.alamat}, Kel. {titleCase(r.kelurahan)}, Kec. {titleCase(r.kecamatan)}, {titleCase(r.kabupaten)}, {titleCase(r.provinsi)}</dd></div>
+                <dd className="font-semibold">{[r.alamat, r.kelurahan && `Kel. ${titleCase(r.kelurahan)}`, r.kecamatan && `Kec. ${titleCase(r.kecamatan)}`, titleCase(r.kabupaten), titleCase(r.provinsi)].filter(Boolean).join(", ")}</dd></div>
               <div><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Phone className="h-3.5 w-3.5" /> WhatsApp</dt>
                 <dd><a href={waLink(r.telepon)} target="_blank" rel="noreferrer" className="font-semibold text-primary hover:underline">+{r.telepon}</a></dd></div>
               <div className="sm:col-span-2 lg:col-span-1 min-w-0"><dt className="text-xs font-semibold text-muted-foreground flex items-center gap-1"><Mail className="h-3.5 w-3.5" /> Email</dt>
@@ -582,7 +582,7 @@ const RegistrationsTab = ({ version }) => {
               {r.status_note && <div className="sm:col-span-2"><dt className="text-xs font-semibold text-muted-foreground">Catatan admin</dt><dd>{r.status_note}</dd></div>}
             </dl>
             <div className="mt-4 pt-4 border-t border-border/70 flex flex-wrap gap-2">
-              <button onClick={() => setKtp(r)} disabled={!r.has_ktp} className={neutralBtn} data-testid={`admin-reg-ktp-${r.registration_id}`}><ImageIcon className="h-4 w-4" /> Lihat foto KTP</button>
+              <button onClick={() => setKtp(r)} disabled={!r.has_ktp} className={`${neutralBtn} disabled:opacity-50 disabled:cursor-not-allowed`} data-testid={`admin-reg-ktp-${r.registration_id}`}><ImageIcon className="h-4 w-4" /> {r.has_ktp ? "Lihat foto KTP" : "Tanpa foto KTP"}</button>
               <div className="flex gap-2 ml-auto">
                 {r.status !== "diterima" && (
                   <button onClick={() => setActing({ r, status: "diterima" })} className="btn-primary h-9 px-4 text-sm" data-testid={`admin-reg-approve-${r.registration_id}`}><Check className="h-4 w-4" /> Setujui</button>
@@ -620,12 +620,12 @@ const KtpDialog = ({ reg, onClose }) => {
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Foto KTP · {reg && titleCase(reg.nama)}</DialogTitle>
-          <DialogDescription>NIK {reg?.nik}. Hanya untuk verifikasi, jangan disebarkan.</DialogDescription>
+          <DialogDescription>{reg?.nik ? `NIK ${reg.nik}. ` : ""}Hanya untuk verifikasi, jangan disebarkan.</DialogDescription>
         </DialogHeader>
         <div className="min-h-[220px] grid place-items-center rounded-xl bg-secondary overflow-hidden" data-testid="admin-ktp-image">
           {url ? <img src={url} alt="Foto KTP" className="max-h-[60vh] w-auto object-contain" /> : err ? <p className="text-sm text-muted-foreground">{err}</p> : <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />}
         </div>
-        {url && reg && <a href={url} download={`KTP-${reg.nik}.jpg`} className={`${neutralBtn} w-fit`}><Download className="h-4 w-4" /> Unduh foto</a>}
+        {url && reg && <a href={url} download={`KTP-${reg.nik || reg.registration_id}.jpg`} className={`${neutralBtn} w-fit`}><Download className="h-4 w-4" /> Unduh foto</a>}
       </DialogContent>
     </Dialog>
   );
