@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import JsBarcode from "jsbarcode";
 import { fmtDate } from "@/lib/api";
 import { SLOGAN } from "@/components/Logo";
 
@@ -10,6 +12,24 @@ const domisili = (r) => [r.kabupaten, r.provinsi].filter(Boolean).join(", ");
 /** Baris NIK hanya untuk Member; kartu Relawan tidak menampilkan NIK sama sekali. */
 const showNik = (r) => r.jenis === "anggota";
 const titleCase = (s = "") => s.toLowerCase().replace(/(^|[\s'-])\S/g, (m) => m.toUpperCase());
+
+// Barcode KTA: Code 128 berisi nomor KTA, dibuat otomatis untuk setiap pendaftaran yang sudah punya nomor.
+const BARCODE_OPTS = { format: "CODE128", displayValue: false, margin: 0, background: "#ffffff", lineColor: "#0A0A0A" };
+
+export const KtaBarcode = ({ value, className = "", testid = "kta-barcode" }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current || !value) return;
+    try { JsBarcode(ref.current, value, { ...BARCODE_OPTS, width: 2, height: 60 }); } catch { /* nomor tidak valid: barcode dikosongkan */ }
+  }, [value]);
+  if (!value) return null;
+  return (
+    <div className={`rounded-[0.45em] bg-white px-[0.55em] pt-[0.45em] pb-[0.3em] text-[#0A0A0A] ${className}`} data-testid={testid}>
+      <svg ref={ref} className="block h-[2.3em] w-full" preserveAspectRatio="none" aria-label={`Barcode ${value}`} />
+      <p className="mt-[0.2em] text-center text-[0.42em] font-bold tracking-[0.2em] tabular-nums">{value}</p>
+    </div>
+  );
+};
 
 /** Tampilan kartu di halaman (HTML). */
 export const KtaCard = ({ reg }) => (
@@ -27,7 +47,10 @@ export const KtaCard = ({ reg }) => (
             <p className="text-[0.56em] font-semibold text-white/85">{SLOGAN}</p>
           </div>
         </div>
-        <span className="rounded-full bg-[#0A0A0A] px-[0.8em] py-[0.35em] text-[0.58em] font-bold tracking-[0.14em] uppercase whitespace-nowrap">{KTA_TITLE[reg.jenis]}</span>
+        <div className="flex flex-col items-end gap-[0.7em] shrink-0">
+          <span className="rounded-full bg-[#0A0A0A] px-[0.8em] py-[0.35em] text-[0.58em] font-bold tracking-[0.14em] uppercase whitespace-nowrap">{KTA_TITLE[reg.jenis]}</span>
+          <KtaBarcode value={reg.kta_number} className="w-[9.5em]" />
+        </div>
       </div>
       <div className="mt-auto">
         <p className="text-[0.6em] font-semibold tracking-[0.16em] uppercase text-white/70">Nama</p>
@@ -127,6 +150,20 @@ export const downloadKta = async (reg) => {
   const cols = [["DOMISILI", titleCase(domisili(reg)) || "-", P, showNik(reg) ? 640 : 1050, "left"],
     ...(showNik(reg) ? [["NIK", reg.nik_masked || "-", P + 700, 420, "left"]] : []),
     ["SEJAK", reg.kta_issued_at ? fmtDate(reg.kta_issued_at) : "-", W - P, 330, "right"]];
+  // Barcode Code 128 (nomor KTA) di kanan, di bawah label jenis kartu.
+  if (reg.kta_number) {
+    const bc = document.createElement("canvas");
+    try {
+      JsBarcode(bc, reg.kta_number, { ...BARCODE_OPTS, width: 2, height: 130 });
+      const bw = Math.max(bc.width + 56, 420), bh = bc.height + 92, bx = W - P - bw, by = P + 118;
+      ctx.fillStyle = "#FFFFFF"; roundRect(ctx, bx, by, bw, bh, 22); ctx.fill();
+      ctx.drawImage(bc, Math.round(bx + (bw - bc.width) / 2), by + 24);
+      ctx.fillStyle = "#0A0A0A"; ctx.font = "700 26px Inter, sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(reg.kta_number.split("").join(String.fromCharCode(8202)), bx + bw / 2, by + bh - 24);
+      ctx.textAlign = "left";
+    } catch { /* nomor tidak valid: kartu tetap diunduh tanpa barcode */ }
+  }
+
   cols.forEach(([k, v, x, maxW, align]) => {
     ctx.textAlign = align;
     ctx.fillStyle = "rgba(255,255,255,0.65)"; ctx.font = "600 26px Inter, sans-serif"; ctx.fillText(k, x, H - 140);

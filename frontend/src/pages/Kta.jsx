@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Clock, Download, HandHeart, IdCard, Loader2, XCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { api, errMsg } from "@/lib/api";
-import { KtaCard, downloadKta, KTA_TITLE } from "@/components/KtaCard";
+import { KtaCard, KtaBarcode, downloadKta, KTA_TITLE } from "@/components/KtaCard";
 import { Shell, GoogleGate, cardCls } from "@/pages/Registration";
 
 const LABEL = { anggota: "Member", relawan: "Relawan" };
@@ -49,6 +49,11 @@ export default function Kta() {
               </button>
             </div>
             <div className="mx-auto max-w-[560px]"><KtaCard reg={r} /></div>
+            {/* Barcode besar agar mudah dipindai langsung dari layar HP saat kegiatan. */}
+            <div className="mx-auto mt-5 max-w-[420px] text-center">
+              <p className="text-xs font-semibold tracking-[0.16em] uppercase text-white/45 mb-2">Barcode KTA · pindai saat kegiatan</p>
+              <KtaBarcode value={r.kta_number} testid={`kta-barcode-scan-${r.jenis}`} className="w-full text-[22px] !px-4 !pt-3" />
+            </div>
             <p className="mt-4 text-xs text-white/40 text-center">Tunjukkan kartu ini saat kegiatan resmi Gibran for 2029. Jangan bagikan foto KTP-mu ke siapa pun.</p>
           </section>
         ))}
