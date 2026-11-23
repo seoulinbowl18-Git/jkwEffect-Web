@@ -9,7 +9,7 @@ import { api, errMsg, fmtDate } from "@/lib/api";
 import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
-  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi GIBRAN2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
+  anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Gibran for 2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
   relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Cukup 1 menit: nama, WhatsApp, dan kota domisili. Tanpa NIK. Bergerak Bersama, Menuju Indonesia Maju 2029." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
@@ -235,7 +235,7 @@ const Done = ({ jenis, reg, onRetry }) => {
     return (
       <div className={`${cardCls} text-center`} data-testid="registration-approved">
         <BadgeCheck className="mx-auto h-14 w-14 text-white" />
-        <h2 className="mt-4 text-2xl font-extrabold">Selamat, kamu resmi jadi {short} GIBRAN2029!</h2>
+        <h2 className="mt-4 text-2xl font-extrabold">Selamat, kamu resmi jadi {short} Gibran for 2029!</h2>
         <p className="mt-2 text-white/60">Nomor KTA digital kamu</p>
         <p className="mt-1 inline-block rounded-xl bg-[#C8102E] px-4 py-2 text-xl font-black tracking-wider tabular-nums">{reg.kta_number}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -250,7 +250,7 @@ const Done = ({ jenis, reg, onRetry }) => {
       <div className={`${cardCls} text-center`} data-testid="registration-rejected">
         <XCircle className="mx-auto h-14 w-14 text-[#F21D43]" />
         <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {short} perlu diperbaiki</h2>
-        <p className="mt-2 text-white/60 max-w-md mx-auto">Admin GIBRAN2029 belum bisa memverifikasi data kamu.</p>
+        <p className="mt-2 text-white/60 max-w-md mx-auto">Admin Gibran for 2029 belum bisa memverifikasi data kamu.</p>
         {reg.status_note && <p className="mt-3 mx-auto max-w-md rounded-xl bg-white/[0.06] ring-1 ring-white/10 px-4 py-3 text-sm"><b>Alasan:</b> {reg.status_note}</p>}
         <button type="button" onClick={onRetry} data-testid="registration-retry" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Perbaiki & kirim ulang</button>
       </div>
@@ -260,7 +260,7 @@ const Done = ({ jenis, reg, onRetry }) => {
     <div className={`${cardCls} text-center`} data-testid="registration-done">
       <CheckCircle2 className="mx-auto h-14 w-14 text-white" />
       <h2 className="mt-4 text-2xl font-extrabold">Pendaftaran {short} diterima</h2>
-      <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin GIBRAN2029. Setelah disetujui, nomor & kartu KTA digital muncul di halaman KTA.</p>
+      <p className="mt-2 text-white/60 max-w-md mx-auto">Terima kasih, {reg.nama}. Data kamu sedang diverifikasi oleh admin Gibran for 2029. Setelah disetujui, nomor & kartu KTA digital muncul di halaman KTA.</p>
       {reg.created_at && <p className="mt-1 text-xs text-white/40">Dikirim {fmtDate(reg.created_at)} · status: menunggu verifikasi</p>}
       <Link to="/" className="mt-6 inline-flex h-12 px-6 rounded-xl bg-white text-[#0A0A0A] font-bold items-center gap-2 hover:bg-[#F0F0F0]">Kembali ke beranda</Link>
     </div>
@@ -346,7 +346,7 @@ export default function Registration() {
       toast.success("Pendaftaran terkirim");
     } catch (err) {
       const s = err?.response?.status;
-      toast.error(s === 404 || s === 405 ? "Layanan pendaftaran belum aktif di server. Hubungi admin GIBRAN2029." : errMsg(err));
+      toast.error(s === 404 || s === 405 ? "Layanan pendaftaran belum aktif di server. Hubungi admin Gibran for 2029." : errMsg(err));
     } finally {
       setSending(false);
     }
@@ -455,7 +455,7 @@ export default function Registration() {
               className="mt-1 h-5 w-5 shrink-0 rounded accent-white" />
             <span className="text-sm text-white/75 leading-relaxed">
               Saya menyatakan bahwa seluruh data yang saya isi adalah <b className="text-white">benar dan dapat dipertanggungjawabkan</b>, bersedia data saya
-              diverifikasi dan diproses untuk keperluan {isMember ? "member" : "relawan"}{isMember ? "" : " (termasuk dihubungi lewat WhatsApp)"}, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> GIBRAN2029.
+              diverifikasi dan diproses untuk keperluan {isMember ? "member" : "relawan"}{isMember ? "" : " (termasuk dihubungi lewat WhatsApp)"}, serta bersedia <b className="text-white">tunduk pada AD/ART dan peraturan organisasi</b> Gibran for 2029.
             </span>
           </label>
           {errors.setuju && <p className="mt-2 text-xs text-red-400">{errors.setuju}</p>}
@@ -467,7 +467,7 @@ export default function Registration() {
             <span className="grid place-items-center h-10 w-10 shrink-0 rounded-xl bg-[#C8102E] text-white"><Lock className="h-5 w-5" /></span>
             <p className="text-sm text-white/70 leading-relaxed">
               <b className="block text-white">Data pribadi Anda dilindungi.</b>
-              Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi GIBRAN2029.{" "}
+              Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi Gibran for 2029.{" "}
               {isMember ? "NIK & foto KTP hanya dapat dilihat oleh admin untuk verifikasi." : "Pendaftaran relawan tidak meminta NIK. Foto KTP (bila diunggah) hanya dapat dilihat admin."}
             </p>
           </div>

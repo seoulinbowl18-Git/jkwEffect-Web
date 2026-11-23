@@ -13,14 +13,14 @@ import { api, errMsg, fmtDate, rp } from "@/lib/api";
 
 const JENIS = {
   anggota: { label: "Member", badge: "Member Resmi", icon: IdCard, daftar: "/daftar/anggota" },
-  relawan: { label: "Relawan", badge: "Relawan GIBRAN2029", icon: HandHeart, daftar: "/daftar/relawan" },
+  relawan: { label: "Relawan", badge: "Relawan Gibran for 2029", icon: HandHeart, daftar: "/daftar/relawan" },
 };
 const STATUS_TEXT = { "menunggu verifikasi": "Menunggu", diterima: "Disetujui", ditolak: "Ditolak" };
 const titleCase = (s = "") => s.toLowerCase().replace(/(^|[\s'-])\S/g, (m) => m.toUpperCase());
 const fmtWa = (t) => (t ? `+${String(t).replace(/\D/g, "")}` : "-");
 const fmtDateTime = (s) => new Date(s).toLocaleString("id-ID", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
-/** /profil — profil member & relawan GIBRAN2029: status keanggotaan, KTA digital, data diri, dan riwayat. */
+/** /profil — profil member & relawan Gibran for 2029: status keanggotaan, KTA digital, data diri, dan riwayat. */
 export default function Profile() {
   const { user, logout } = useAuth();
   const [tab, setTab] = useRouteTab("keanggotaan", {}, "/profil");
@@ -42,7 +42,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageHeader eyebrow="Profil GIBRAN2029" title={titleCase(latest?.nama || user.name || "")} testid="profile-title" avatar={<HeaderAvatar user={user} />}
+      <PageHeader eyebrow="Profil Gibran for 2029" title={titleCase(latest?.nama || user.name || "")} testid="profile-title" avatar={<HeaderAvatar user={user} />}
         desc={since ? `Bergabung sejak ${fmtDate(since)}` : "Bergerak Bersama, Menuju Indonesia Maju 2029."}
         actions={
           <div className="flex flex-wrap gap-2" data-testid="profile-badges">
@@ -135,7 +135,7 @@ const Membership = ({ byJenis }) => {
               )}
               {r?.status === "menunggu verifikasi" && (
                 <div className="rounded-xl bg-amber-50 text-amber-900 p-4 flex gap-3 text-sm"><Clock className="h-5 w-5 shrink-0" />
-                  <p>Data kamu sedang diverifikasi admin GIBRAN2029. Nomor & kartu KTA muncul di sini setelah disetujui.</p></div>
+                  <p>Data kamu sedang diverifikasi admin Gibran for 2029. Nomor & kartu KTA muncul di sini setelah disetujui.</p></div>
               )}
               {r?.status === "ditolak" && (
                 <div className="rounded-xl bg-red-50 text-red-900 p-4 text-sm">

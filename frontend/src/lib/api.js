@@ -23,7 +23,7 @@ export const PLATFORMS = {
   facebook: "Facebook",
 };
 export const CATEGORIES = ["Produk", "Beauty", "Lifestyle", "F&B", "Edukasi", "Hiburan", "Fashion", "Tech"];
-// Campaign gerakan GIBRAN2029 (dibuat Admin Pusat) — tanpa brand, rate, budget & minimal views.
+// Campaign gerakan Gibran for 2029 (dibuat Admin Pusat) — tanpa brand, rate, budget & minimal views.
 export const GERAKAN_CATEGORIES = ["Agenda", "Sebar Narasi", "Aksi Sosial", "Penggalangan Dukungan"];
 export const TARGET_AKSI = { share: "Share", forward: "Forward", komentar: "Komentar", kehadiran: "Kehadiran Acara" };
 export const isAksi = (c) => c?.kind === "aksi";

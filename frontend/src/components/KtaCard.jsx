@@ -1,7 +1,7 @@
 import { fmtDate } from "@/lib/api";
 import { SLOGAN } from "@/components/Logo";
 
-// Kartu Tanda Anggota (KTA) digital GIBRAN2029 — rasio kartu ID standar (85,6 × 54 mm).
+// Kartu Tanda Anggota (KTA) digital Gibran for 2029 — rasio kartu ID standar (85,6 × 54 mm).
 export const KTA_TITLE = { anggota: "Kartu Tanda Anggota", relawan: "Kartu Tanda Relawan" };
 export const KTA_ROLE = { anggota: "MEMBER", relawan: "RELAWAN" };
 const LOGO = "/gibran2029-logo.png";
@@ -23,7 +23,7 @@ export const KtaCard = ({ reg }) => (
         <div className="flex items-center gap-[0.6em]">
           <img src={LOGO} alt="" className="h-[3.4em] w-[3.4em] rounded-full ring-2 ring-white/80" draggable={false} />
           <div className="leading-tight">
-            <p className="font-black tracking-tight text-[1.35em]">GIBRAN2029</p>
+            <p className="font-black tracking-tight text-[1.35em] whitespace-nowrap">Gibran for 2029</p>
             <p className="text-[0.56em] font-semibold text-white/85">{SLOGAN}</p>
           </div>
         </div>
@@ -92,7 +92,7 @@ export const downloadKta = async (reg) => {
   ctx.fillStyle = "#E11D2E"; ctx.fillRect(0, H - 46, W / 2, 46);
   ctx.fillStyle = "#FFFFFF"; ctx.fillRect(W / 2, H - 46, W / 2, 46);
 
-  // Kepala kartu: logo + GIBRAN2029 + label jenis
+  // Kepala kartu: logo + Gibran for 2029 + label jenis
   const L = 170;
   if (logo) {
     ctx.save(); ctx.beginPath(); ctx.arc(P + L / 2, P + L / 2, L / 2, 0, Math.PI * 2); ctx.clip();
@@ -101,11 +101,12 @@ export const downloadKta = async (reg) => {
     ctx.beginPath(); ctx.arc(P + L / 2, P + L / 2, L / 2, 0, Math.PI * 2); ctx.stroke();
   }
   ctx.fillStyle = "#fff"; ctx.textBaseline = "alphabetic";
-  ctx.font = "900 70px Inter, sans-serif"; ctx.fillText("GIBRAN2029", P + L + 34, P + 92);
   const label = KTA_TITLE[reg.jenis].toUpperCase();
   ctx.font = "700 30px Inter, sans-serif";
   const lw = ctx.measureText(label).width + 64;
-  // Slogan di bawah GIBRAN2029: dikecilkan bila perlu agar tidak menabrak label jenis kartu di kanan.
+  // Nama gerakan: dikecilkan bila perlu agar tidak menabrak label jenis kartu di kanan.
+  ctx.fillText(fitText(ctx, "Gibran for 2029", W - P - lw - 40 - (P + L + 34), 900, 70, 40), P + L + 34, P + 92);
+  // Slogan di bawah Gibran for 2029: dikecilkan bila perlu agar tidak menabrak label jenis kartu di kanan.
   ctx.fillStyle = "rgba(255,255,255,0.88)";
   const sloganMaxW = W - P - lw - 40 - (P + L + 36);
   ctx.fillText(fitText(ctx, SLOGAN, sloganMaxW, 600, 32, 20), P + L + 36, P + 142);

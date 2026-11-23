@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PERAN, PERAN_COPY } from "@/lib/gerakan";
 
-/** /cara-kerja: cara bergabung sebagai Relawan atau Member GIBRAN2029. */
+/** /cara-kerja: cara bergabung sebagai Relawan atau Member Gibran for 2029. */
 export default function HowItWorks() {
   const navigate = useNavigate();
   const [role, setRole] = useState("relawan");

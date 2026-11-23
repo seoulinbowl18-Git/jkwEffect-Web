@@ -15,7 +15,7 @@ const PLATFORMS = [
 const TELEGRAM_BLUE = "bg-[#229ED9]";
 const linkBtn = "text-sm font-semibold inline-flex items-center gap-1 whitespace-nowrap";
 
-/** Kelola akun TikTok / Instagram / Threads dan hubungkan Telegram komunitas GIBRAN2029. */
+/** Kelola akun TikTok / Instagram / Threads dan hubungkan Telegram komunitas Gibran for 2029. */
 export const SocialAccounts = () => {
   const version = useSync();
   const community = useCommunity();
@@ -48,7 +48,7 @@ export const SocialAccounts = () => {
     try {
       const { data } = await api.post("/users/social/telegram/link");
       if (tab) tab.location.href = data.url; else window.location.href = data.url;
-      toast.success("Lanjutkan di Telegram: ketuk START pada bot GIBRAN2029");
+      toast.success("Lanjutkan di Telegram: ketuk START pada bot Gibran for 2029");
     } catch (e) {
       if (tab) tab.close();
       toast.error(errMsg(e));
@@ -123,7 +123,7 @@ export const SocialAccounts = () => {
             <button type="button" disabled className={`mt-4 h-12 w-full rounded-2xl ${TELEGRAM_BLUE} text-white font-bold opacity-60`}>Hubungkan Telegram (segera hadir)</button>
           )}
           <p className="mt-3 text-sm text-muted-foreground">
-            {tg ? "Info campaign baru dan pengumuman GIBRAN2029 dikirim lewat Telegram." : "Kamu otomatis diarahkan ke grup komunitas Telegram GIBRAN2029 lewat bot resmi kami."}
+            {tg ? "Info campaign baru dan pengumuman Gibran for 2029 dikirim lewat Telegram." : "Kamu otomatis diarahkan ke grup komunitas Telegram Gibran for 2029 lewat bot resmi kami."}
           </p>
         </div>
       </div>

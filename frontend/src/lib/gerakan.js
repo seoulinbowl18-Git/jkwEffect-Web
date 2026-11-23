@@ -1,6 +1,6 @@
 import { UserPlus, BadgeCheck, HeartHandshake, IdCard, Download } from "lucide-react";
 
-// Peran di ekosistem GIBRAN2029 (pengganti "Saya Kreator / Saya Brand").
+// Peran di ekosistem Gibran for 2029 (pengganti "Saya Kreator / Saya Brand").
 // Nilai `anggota` dipakai oleh URL & backend (/daftar/anggota); labelnya "Member".
 export const PERAN = [
   ["relawan", "Saya Relawan"],
@@ -9,20 +9,20 @@ export const PERAN = [
 
 export const PERAN_COPY = {
   relawan: {
-    title: "Tiga langkah jadi relawan GIBRAN2029.",
+    title: "Tiga langkah jadi relawan Gibran for 2029.",
     cta: "Daftar Relawan",
     closing: "Siap bergerak bersama?",
     closingDesc: "Daftar relawan gratis pakai akun Google. Satu langkah nyata untuk Indonesia Maju 2029.",
     steps: [
       [UserPlus, "Daftar relawan", "Isi formulir relawan & unggah foto KTP. Gratis, cukup pakai akun Google."],
-      [BadgeCheck, "Diverifikasi admin", "Tim GIBRAN2029 memverifikasi data dan domisilimu, lalu kamu diberi notifikasi."],
+      [BadgeCheck, "Diverifikasi admin", "Tim Gibran for 2029 memverifikasi data dan domisilimu, lalu kamu diberi notifikasi."],
       [HeartHandshake, "Bergerak & berkarya", "Ikut aksi sosial, kegiatan wilayah, dan misi konten kreator untuk meraih apresiasi."],
     ],
   },
   anggota: {
     title: "Tiga langkah jadi member resmi.",
     cta: "Daftar Member",
-    closing: "Siap jadi member resmi GIBRAN2029?",
+    closing: "Siap jadi member resmi Gibran for 2029?",
     closingDesc: "Daftar member gratis pakai akun Google dan dapatkan KTA digital bernomor unik.",
     steps: [
       [IdCard, "Isi data sesuai KTP", "Lengkapi data pribadi, alamat domisili, dan unggah foto KTP (maks. 3 MB)."],
@@ -33,7 +33,7 @@ export const PERAN_COPY = {
 };
 
 export const FAQ_GERAKAN = [
-  ["Apakah pendaftarannya bayar?", "Tidak. Pendaftaran member dan relawan GIBRAN2029 gratis. Cukup masuk dengan akun Google."],
+  ["Apakah pendaftarannya bayar?", "Tidak. Pendaftaran member dan relawan Gibran for 2029 gratis. Cukup masuk dengan akun Google."],
   ["Apa beda Member dan Relawan?", "Member adalah anggota resmi dengan KTA digital bernomor unik dan terhubung ke koordinasi wilayah. Relawan bergerak di aksi sosial, kegiatan, dan misi konten kreator."],
   ["Boleh daftar Member sekaligus Relawan?", "Boleh. Masing-masing bisa didaftarkan satu kali per akun Google dan per NIK."],
   ["Kapan nomor KTA saya terbit?", "Setelah admin memverifikasi dan menyetujui pendaftaranmu. Nomor & kartu KTA langsung muncul di halaman KTA Saya."],

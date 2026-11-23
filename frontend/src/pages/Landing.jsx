@@ -15,11 +15,11 @@ import { PERAN, PERAN_COPY, FAQ_GERAKAN } from "@/lib/gerakan";
 
 // Kartu ajakan bergabung di hero (menggantikan kalkulator cuan): [jenis, judul, deskripsi, ikon, tombol utama?]
 const JOIN = [
-  ["anggota", "Daftar Member", "Jadi member resmi GIBRAN2029 dengan KTA.", IdCard, true],
+  ["anggota", "Daftar Member", "Jadi member resmi Gibran for 2029 dengan KTA.", IdCard, true],
   ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
 ];
 
-// Tagline hero di samping kotak GIBRAN2029: berganti dengan efek "menguap" (sama seperti footer).
+// Tagline hero di samping kotak Gibran for 2029: berganti dengan efek "menguap" (sama seperti footer).
 // Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
 const HERO_TAGLINES = ["Bergerak Bersama,", "Menuju Indonesia", "Maju 2029."];
 const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
@@ -28,7 +28,7 @@ const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, wai
 const BENEFITS = [
   ["anggota", "Bagi Member", IdCard, true, [
     [BadgeCheck, "KTA digital resmi", "Kartu Tanda Anggota digital dengan nomor registrasi unik atas namamu."],
-    [Network, "Jaringan koordinasi wilayah", "Terhubung dengan barisan GIBRAN2029 dari provinsi hingga kelurahan tempatmu."],
+    [Network, "Jaringan koordinasi wilayah", "Terhubung dengan barisan Gibran for 2029 dari provinsi hingga kelurahan tempatmu."],
     [BellRing, "Akses informasi prioritas", "Kabar agenda, kegiatan, dan arahan resmi kamu terima lebih dulu."],
   ]],
   ["relawan", "Bagi Relawan", HandHeart, false, [
@@ -65,7 +65,7 @@ export default function Landing() {
       <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-28 sm:pb-32 lg:pt-20 lg:pb-36 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <div className="lg:col-span-7" data-testid="hero-brand">
-            {/* Lockup: BERGERAK BERSAMA / GIBRAN / Indonesia Maju 2029 + kotak GIBRAN2029 yang paling menonjol */}
+            {/* Lockup: BERGERAK BERSAMA / GIBRAN / Indonesia Maju 2029 + kotak Gibran for 2029 yang paling menonjol */}
             <div className="flex items-center gap-4 sm:gap-5 animate-rise">
               <BrandBadge size={128} className="hidden sm:block ring-4 ring-white shadow-[0_18px_40px_-10px_rgba(70,0,12,0.7)]" />
               <BrandBadge size={96} className="sm:hidden ring-[3px] ring-white shadow-[0_14px_30px_-10px_rgba(70,0,12,0.7)]" />
@@ -77,7 +77,7 @@ export default function Landing() {
                 <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">{SLOGAN}</p>
               </div>
             </div>
-            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="GIBRAN2029 — Bergerak Bersama, Menuju Indonesia Maju 2029">
+            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Gibran for 2029 — Bergerak Bersama, Menuju Indonesia Maju 2029">
               <span className="block text-[1.3rem] sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-[0.2em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">BERGERAK BERSAMA</span>
               <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
               <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia Maju 2029</span>
@@ -85,7 +85,7 @@ export default function Landing() {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-rise [animation-delay:160ms]">
               <span className="inline-flex items-center rounded-[24px] sm:rounded-[28px] bg-white px-5 sm:px-8 py-3 sm:py-4 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
                 data-testid="hero-brand-box">
-                <span className="font-black tracking-tight leading-none text-[2.55rem] sm:text-6xl xl:text-[5.25rem]"><span className="text-[#C8102E]">GIBRAN</span><span className="text-[#7A0016]">2029</span></span>
+                <span className="font-black tracking-tight leading-none text-[1.85rem] sm:text-5xl xl:text-[4.25rem] whitespace-nowrap"><span className="text-[#C8102E]">Gibran for </span><span className="text-[#7A0016]">2029</span></span>
               </span>
               <div className="relative h-14 w-full sm:w-auto sm:flex-1 sm:min-w-[280px] sm:max-w-[360px]" data-testid="hero-vapour-text">
                 <VaporizeTextCycle
@@ -104,7 +104,7 @@ export default function Landing() {
             <div className="mt-8 max-w-2xl animate-rise [animation-delay:220ms]" data-testid="hero-headline">
               <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-tight leading-[1.15] [text-shadow:0_2px_10px_rgba(60,0,10,0.35)]">
                 Menatap Indonesia Maju 2029 Bersama{" "}
-                <span className="inline-block rounded-lg bg-[#0A0A0A] px-2.5 py-0.5 text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.7)]">GIBRAN2029</span>.
+                <span className="inline-block rounded-lg bg-[#0A0A0A] px-2.5 py-0.5 text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.7)]">Gibran for 2029</span>.
               </h2>
               <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
                 <b className="text-white">{SLOGAN}</b> Barisan akar rumput yang solid, terstruktur, dan siap mengawal agenda perubahan nyata.{" "}
@@ -129,7 +129,7 @@ export default function Landing() {
         <div className="rounded-3xl bg-[#0A0A0A] text-white ring-1 ring-white/10 p-6 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] grid lg:grid-cols-12 gap-6 items-center">
           <div className="lg:col-span-4">
             <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>
-            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">GIBRAN2029</p>
+            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">Gibran for 2029</p>
             <p className="mt-2 text-sm text-white/70 leading-relaxed">Pilih cara kamu ikut berkontribusi. Gratis, cukup akun Google.</p>
           </div>
           <div className="lg:col-span-8 grid sm:grid-cols-2 gap-3">
@@ -153,7 +153,7 @@ export default function Landing() {
       <section id="keuntungan" className="scroll-mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20" data-testid="benefits">
         <div className="max-w-2xl">
           <p className="text-sm font-bold tracking-[0.16em] uppercase text-[#C8102E]">Keuntungan bergabung</p>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Apa yang kamu dapatkan di <span className="text-[#C8102E]">GIBRAN2029</span>?</h2>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Apa yang kamu dapatkan di <span className="text-[#C8102E]">Gibran for 2029</span>?</h2>
           <p className="mt-3 text-muted-foreground">Pilih peran yang paling cocok. Keduanya gratis dan cukup mendaftar dengan akun Google.</p>
         </div>
         <div className="mt-8 grid md:grid-cols-2 gap-5">
@@ -202,7 +202,7 @@ export default function Landing() {
             <p className="text-sm font-bold tracking-[0.16em] uppercase text-[#F21D43]">Tentang gerakan</p>
             <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">Meneruskan kerja nyata, menatap Indonesia Maju 2029.</h2>
             <p className="mt-4 text-white/75 leading-relaxed">
-              GIBRAN2029 adalah wadah member dan relawan yang bergerak dari akar rumput: solid, terstruktur, dan hadir di wilayahnya
+              Gibran for 2029 adalah wadah member dan relawan yang bergerak dari akar rumput: solid, terstruktur, dan hadir di wilayahnya
               masing-masing untuk mengawal gagasan dan kerja nyata bagi Indonesia.
             </p>
             <ul className="mt-6 space-y-3">

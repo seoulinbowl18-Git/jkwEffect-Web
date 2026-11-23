@@ -3,7 +3,7 @@ import { IdCard, Network, HandHeart } from "lucide-react";
 import { BrandBadge, BrandWordmark } from "@/components/Logo";
 import { useAuth } from "@/context/AuthContext";
 
-// Manfaat masuk: ekosistem member & relawan GIBRAN2029.
+// Manfaat masuk: ekosistem member & relawan Gibran for 2029.
 const BENEFITS = [
   [IdCard, "Daftar member resmi & dapatkan KTA digital"],
   [Network, "Terhubung dengan koordinasi wilayah hingga kelurahan"],
@@ -27,19 +27,19 @@ export const LoginScreen = ({ next = "/kta" }) => {
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
       <section className="relative overflow-hidden hero-gradient hero-arcs text-white rounded-b-[32px] lg:rounded-none px-6 sm:px-10 lg:px-16 pt-10 pb-12 lg:py-16 flex flex-col">
-        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="GIBRAN2029 — beranda">
+        <a href="/" className="flex items-center gap-2.5 w-fit" aria-label="Gibran for 2029 — beranda">
           <BrandBadge size={52} className="ring-2 ring-white/25" />
           <BrandWordmark light large />
         </a>
         <div className="relative mt-10 lg:mt-auto lg:mb-auto max-w-lg">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05]">Satukan Barisan,<br />Kawal Masa Depan.</h1>
-          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Bergabunglah dalam barisan relawan dan member resmi GIBRAN2029. Satu langkah nyata untuk gerakan perubahan Indonesia.</p>
+          <p className="mt-5 text-white/90 text-base sm:text-lg leading-relaxed">Bergabunglah dalam barisan relawan dan member resmi Gibran for 2029. Satu langkah nyata untuk gerakan perubahan Indonesia.</p>
         </div>
       </section>
 
       <section className="px-6 sm:px-10 lg:px-16 py-10 lg:py-16 flex flex-col justify-center">
         <div className="w-full max-w-md mx-auto lg:mx-0" data-testid="login-screen">
-          <h2 className="hidden lg:block text-3xl font-extrabold tracking-tight">Masuk ke GIBRAN2029</h2>
+          <h2 className="hidden lg:block text-3xl font-extrabold tracking-tight">Masuk ke Gibran for 2029</h2>
           <p className="hidden lg:block mt-2 text-muted-foreground">Cukup pakai akun Google kamu, tanpa password.</p>
           <ul className="space-y-4 lg:mt-10">
             {BENEFITS.map(([Icon, text]) => (
@@ -54,7 +54,7 @@ export const LoginScreen = ({ next = "/kta" }) => {
             <GoogleG /> {signingIn ? "Membuka Google..." : "Masuk dengan Google"}
           </button>
           <p className="mt-4 text-center text-sm text-muted-foreground">Belum punya akun? Akun dibuat otomatis saat pertama kali masuk.</p>
-          <p className="mt-6 text-center text-xs text-muted-foreground">Dengan masuk, kamu menyetujui Syarat &amp; Ketentuan GIBRAN2029.</p>
+          <p className="mt-6 text-center text-xs text-muted-foreground">Dengan masuk, kamu menyetujui Syarat &amp; Ketentuan Gibran for 2029.</p>
         </div>
       </section>
     </div>

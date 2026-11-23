@@ -18,7 +18,7 @@ export const useNavItems = () => {
     ];
   }
   if (user && role !== "admin") {
-    // Member & relawan (termasuk akun kreator/brand lama): menu gerakan GIBRAN2029.
+    // Member & relawan (termasuk akun kreator/brand lama): menu gerakan Gibran for 2029.
     return [
       { to: "/", label: "Beranda", icon: Home, match: (p) => p === "/" },
       { to: "/jelajah", label: "Jelajah", icon: Search, match: (p) => p === "/jelajah" || p === "/bounty" },

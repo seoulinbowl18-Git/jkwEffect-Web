@@ -16,7 +16,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useSync } from "@/lib/useSync";
 import { api, rp, num, errMsg, fmtDate, CATEGORIES, PLATFORMS, GERAKAN_CATEGORIES, TARGET_AKSI, isAksi } from "@/lib/api";
 
-const DEFAULT_INSTRUCTIONS = "1. Bagikan konten/narasi resmi GIBRAN2029 ke akun media sosialmu.\n2. Wajib pakai hashtag #GIBRAN2029.\n3. Gunakan bahasa yang santun; dilarang konten SARA, hoaks, atau ujaran kebencian.\n4. Kirim link postingan sebagai bukti partisipasi.\n5. Postingan tetap tayang minimal 30 hari.";
+const DEFAULT_INSTRUCTIONS = "1. Bagikan konten/narasi resmi Gibran for 2029 ke akun media sosialmu.\n2. Wajib pakai hashtag #GibranFor2029.\n3. Gunakan bahasa yang santun; dilarang konten SARA, hoaks, atau ujaran kebencian.\n4. Kirim link postingan sebagai bukti partisipasi.\n5. Postingan tetap tayang minimal 30 hari.";
 const ROLE_LABEL = { creator: "Kreator", brand: "Brand", admin: "Admin" };
 const smallBtn = "h-9 px-3 rounded-xl text-sm font-semibold inline-flex items-center gap-1.5 transition-colors";
 const neutralBtn = `${smallBtn} bg-secondary hover:bg-border`;
@@ -231,7 +231,7 @@ const CampaignDialog = ({ campaign, onClose, onDone }) => {
       <DialogContent className="rounded-2xl border-0 shadow-soft-lg max-w-2xl max-h-[90vh] overflow-auto" data-testid="owner-campaign-dialog">
         <DialogHeader>
           <DialogTitle>{isNew ? "Buat campaign" : "Edit campaign"}</DialogTitle>
-          <DialogDescription>{isNew ? "Aksi gerakan GIBRAN2029 untuk relawan & member. Langsung aktif di web dan aplikasi." : legacy ? `${campaign?.brand_name} · campaign lama (budget tidak diubah)` : "Aksi gerakan GIBRAN2029"}</DialogDescription>
+          <DialogDescription>{isNew ? "Aksi gerakan Gibran for 2029 untuk relawan & member. Langsung aktif di web dan aplikasi." : legacy ? `${campaign?.brand_name} · campaign lama (budget tidak diubah)` : "Aksi gerakan Gibran for 2029"}</DialogDescription>
         </DialogHeader>
         <form onSubmit={submit} className="grid sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">

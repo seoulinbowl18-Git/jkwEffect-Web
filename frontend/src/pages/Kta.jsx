@@ -8,7 +8,7 @@ import { KtaCard, downloadKta, KTA_TITLE } from "@/components/KtaCard";
 import { Shell, GoogleGate, cardCls } from "@/pages/Registration";
 
 const LABEL = { anggota: "Member", relawan: "Relawan" };
-const KTA_HEADER = { title: "KTA Digital", short: "KTA", icon: IdCard, desc: "Kartu Tanda Anggota digital resmi GIBRAN2029 milikmu." };
+const KTA_HEADER = { title: "KTA Digital", short: "KTA", icon: IdCard, desc: "Kartu Tanda Anggota digital resmi Gibran for 2029 milikmu." };
 
 /** Halaman /kta: kartu digital untuk pendaftaran yang sudah disetujui admin, bisa diunduh sebagai PNG. */
 export default function Kta() {
@@ -49,7 +49,7 @@ export default function Kta() {
               </button>
             </div>
             <div className="mx-auto max-w-[560px]"><KtaCard reg={r} /></div>
-            <p className="mt-4 text-xs text-white/40 text-center">Tunjukkan kartu ini saat kegiatan resmi GIBRAN2029. Jangan bagikan foto KTP-mu ke siapa pun.</p>
+            <p className="mt-4 text-xs text-white/40 text-center">Tunjukkan kartu ini saat kegiatan resmi Gibran for 2029. Jangan bagikan foto KTP-mu ke siapa pun.</p>
           </section>
         ))}
 

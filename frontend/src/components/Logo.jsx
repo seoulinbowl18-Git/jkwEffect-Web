@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * GIBRAN2029 mark — the letter "P" with a play button in its bowl (video creators).
+ * Gibran for 2029 mark — the letter "P" with a play button in its bowl (video creators).
  * Same geometry as the Flutter app's BrandLogo (flutter_app/lib/widgets/brand_logo.dart).
  */
 export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) => (
@@ -12,29 +12,29 @@ export const LogoMark = ({ size = 32, className = "", color = "currentColor" }) 
   </svg>
 );
 
-/** Merah brand GIBRAN2029: #C8102E di latar terang, #F21D43 (lebih terang) di latar gelap agar tetap kontras. */
+/** Merah brand Gibran for 2029: #C8102E di latar terang, #F21D43 (lebih terang) di latar gelap agar tetap kontras. */
 export const BRAND_RED = "text-[#C8102E]";
 export const BRAND_RED_ON_DARK = "text-[#F21D43]";
 
-/** Slogan resmi GIBRAN2029 (dipakai di wordmark, hero, footer, dan kartu KTA). */
+/** Slogan resmi Gibran for 2029 (dipakai di wordmark, hero, footer, dan kartu KTA). */
 export const SLOGAN = "Bergerak Bersama, Menuju Indonesia Maju 2029.";
 
-/** Wordmark dua baris: GIBRAN2029 (merah brand) + slogan kecil di bawahnya. `light` = di atas latar gelap. */
+/** Wordmark dua baris: Gibran for 2029 (merah brand) + slogan kecil di bawahnya. `light` = di atas latar gelap. */
 export const BrandWordmark = ({ light = false, large = false }) => (
   <span className="flex flex-col justify-center leading-none">
-    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? BRAND_RED_ON_DARK : BRAND_RED}`}>GIBRAN2029</span>
+    <span className={`font-extrabold tracking-tight ${large ? "text-3xl" : "text-[20px]"} ${light ? BRAND_RED_ON_DARK : BRAND_RED}`}>Gibran for 2029</span>
     <span className={`mt-1 font-semibold whitespace-nowrap ${large ? "text-sm" : "hidden lg:block text-[10.5px]"} ${light ? "text-white/85" : "text-muted-foreground"}`}>{SLOGAN}</span>
   </span>
 );
 
-/** Logo resmi GIBRAN2029 (lingkaran: potret Mas Gibran berbingkai merah). File: public/gibran2029-logo.png (256 px). */
+/** Logo resmi Gibran for 2029 (lingkaran: potret Mas Gibran berbingkai merah). File: public/gibran2029-logo.png (256 px). */
 export const BrandBadge = ({ size = 40, className = "" }) => (
-  <img src="/gibran2029-logo.png" alt="Logo GIBRAN2029" width={size} height={size} draggable={false}
+  <img src="/gibran2029-logo.png" alt="Logo Gibran for 2029" width={size} height={size} draggable={false}
     className={`shrink-0 rounded-full object-cover select-none ${className}`} style={{ width: size, height: size }} />
 );
 
 export const Logo = ({ light = false, size = 42 }) => (
-  <Link to="/" data-testid="nav-logo" aria-label="GIBRAN2029 — beranda" className="flex items-center gap-2.5 select-none shrink-0">
+  <Link to="/" data-testid="nav-logo" aria-label="Gibran for 2029 — beranda" className="flex items-center gap-2.5 select-none shrink-0">
     <BrandBadge size={size} className={light ? "ring-2 ring-white/20" : "shadow-[0_2px_8px_rgba(200,16,46,0.25)]"} />
     <BrandWordmark light={light} />
   </Link>
