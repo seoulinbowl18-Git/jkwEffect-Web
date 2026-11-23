@@ -42,6 +42,7 @@
     "embla-carousel-react": "8.6.0",
     "firebase": "10.14.1",
     "framer-motion": "11.18.0",
+    "@zxing/library": "0.21.3",
     "input-otp": "1.4.2",
     "jsbarcode": "3.11.6",
     "lodash": "4.18.1",

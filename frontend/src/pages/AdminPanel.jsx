@@ -10,6 +10,7 @@ import { Navbar } from "@/components/Navbar";
 import { StatCard, StatusBadge, Chips, Tabs, PageHeader, Field, inputCls, panelCls, useRouteTab } from "@/components/Shared";
 import { ReviewList } from "@/components/ReviewList";
 import { ImageUpload } from "@/components/ImageUpload";
+import { AttendanceTab } from "@/components/AttendanceTab";
 import { PlatformIcon } from "@/components/PlatformIcon";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
@@ -33,7 +34,7 @@ export default function AdminPanel() {
   useEffect(() => { load(); }, [load, version]);
 
   // Review konten, cek views & verifikasi bukti klaim hanya untuk Owner (Admin Pusat).
-  const tabs = [["registrations", "Pendaftaran"], ["campaigns", "Campaign"], ["users", "Pengguna"], ["withdrawals", "Penarikan"]];
+  const tabs = [["registrations", "Pendaftaran"], ["attendance", "Kehadiran"], ["campaigns", "Campaign"], ["users", "Pengguna"], ["withdrawals", "Penarikan"]];
   if (isOwner) tabs.push(["submissions", "Verifikasi konten"], ["audit", "Log aktivitas"]);
 
   return (
@@ -73,6 +74,7 @@ export default function AdminPanel() {
         )}
 
         {tab === "registrations" && <RegistrationsTab version={version} />}
+        {tab === "attendance" && <AttendanceTab version={version} />}
         {tab === "campaigns" && <CampaignsTab isOwner={isOwner} version={version} onEdit={setEditing} onChange={load} />}
         {tab === "users" && <UsersTab isOwner={isOwner} version={version} onChange={load} />}
         {tab === "withdrawals" && <WithdrawalsTab version={version} onChange={load} />}
