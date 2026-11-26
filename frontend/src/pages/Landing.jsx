@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, IdCard, HandHeart, ShieldCheck, BadgeCheck, Network, BellRing, Lightbulb, HeartHandshake, Coins } from "lucide-react";
-import { Navbar } from "@/components/Navbar";
-import { BrandBadge, SLOGAN } from "@/components/Logo";
-import { Footer, useIsDesktop } from "@/components/Footer";
-import VaporizeTextCycle, { Tag } from "@/components/ui/vapour-text-effect";
+import { Footer } from "@/components/Footer";
+import { GibranEditorialHero } from "@/pages/GibranHero";
 import { CampaignCard } from "@/components/CampaignCard";
 import { InstructionDialog } from "@/components/CampaignDialogs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -18,11 +16,6 @@ const JOIN = [
   ["anggota", "Daftar Member", "Jadi member resmi Gibran for 2029 dengan KTA.", IdCard, true],
   ["relawan", "Daftar Relawan", "Ikut bergerak & berkegiatan bersama relawan.", HandHeart, false],
 ];
-
-// Tagline hero di samping kotak Gibran for 2029: berganti dengan efek "menguap" (sama seperti footer).
-// Konstanta di luar komponen agar canvas tidak digambar ulang tiap render.
-const HERO_TAGLINES = ["Bergerak Bersama,", "Menuju Indonesia", "Maju 2029."];
-const HERO_TAGLINE_ANIMATION = { vaporizeDuration: 1.1, fadeInDuration: 0.6, waitDuration: 1.1 };
 
 // Seksi "Keuntungan bergabung" di bawah hero: [jenis, judul, ikon, gelap?, [[ikon, judul, deskripsi], ...]]
 const BENEFITS = [
@@ -42,11 +35,6 @@ export default function Landing() {
   const [role, setRole] = useState("relawan");
   const [sections, setSections] = useState(null);
   const [info, setInfo] = useState(null);
-  const desktop = useIsDesktop();
-  const taglineFont = useMemo(
-    () => ({ fontFamily: "Inter, sans-serif", fontSize: desktop ? "26px" : "22px", fontWeight: 800 }),
-    [desktop],
-  );
   const navigate = useNavigate();
 
   const version = useSync();
@@ -59,73 +47,11 @@ export default function Landing() {
 
   return (
     <div className="bg-background">
-      <Navbar />
+      {/* HERO — editorial "Gibran for 2029" (komponen Elias): navbar, nama raksasa, potret, surat untuk 2029 */}
+      <GibranEditorialHero />
 
-      {/* HERO — red brand gradient with rounded bottom (mobile app header), black join CTA (Member / Relawan) on the right */}
-      <section className="relative overflow-hidden hero-gradient-red hero-arcs text-white rounded-b-[32px] sm:rounded-b-[48px]">
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-28 sm:pb-32 lg:pt-20 lg:pb-36 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7" data-testid="hero-brand">
-            {/* Lockup: BERGERAK BERSAMA / GIBRAN / Indonesia Maju 2029 + kotak Gibran for 2029 yang paling menonjol */}
-            <div className="flex items-center gap-4 sm:gap-5 animate-rise">
-              <BrandBadge size={128} className="hidden sm:block ring-4 ring-white shadow-[0_18px_40px_-10px_rgba(70,0,12,0.7)]" />
-              <BrandBadge size={96} className="sm:hidden ring-[3px] ring-white shadow-[0_14px_30px_-10px_rgba(70,0,12,0.7)]" />
-              <div className="min-w-0">
-                <span className="inline-flex items-center gap-2.5 rounded-full bg-black/15 backdrop-blur px-3.5 py-1.5 text-[11px] sm:text-sm font-bold tracking-[0.14em] uppercase">
-                  <span className="flex h-3 w-5 shrink-0 flex-col overflow-hidden rounded-[3px] ring-1 ring-white/40" aria-hidden><span className="h-1/2 bg-[#E11D2E]" /><span className="h-1/2 bg-white" /></span>
-                  Komunitas relawan &amp; member
-                </span>
-                <p className="mt-2 text-sm sm:text-base font-semibold text-white/85">{SLOGAN}</p>
-              </div>
-            </div>
-            <h1 className="mt-6 leading-none animate-rise [animation-delay:80ms]" aria-label="Gibran for 2029 — Bergerak Bersama, Menuju Indonesia Maju 2029">
-              <span className="block text-[1.3rem] sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-[0.2em] text-white/95 [text-shadow:0_3px_0_rgba(90,0,15,0.45)]">BERGERAK BERSAMA</span>
-              <span className="mt-1 block text-[4.3rem] sm:text-8xl lg:text-[8.5rem] font-black italic tracking-tight -skew-x-6 text-white leading-[0.9] [text-shadow:0_5px_0_#7A0016,0_14px_30px_rgba(60,0,10,0.45)]">GIBRAN</span>
-              <span className="mt-1 block font-script text-4xl sm:text-5xl lg:text-6xl text-white [text-shadow:0_3px_12px_rgba(60,0,10,0.4)] pl-2">Indonesia Maju 2029</span>
-            </h1>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 animate-rise [animation-delay:160ms]">
-              <span className="inline-flex items-center rounded-[24px] sm:rounded-[28px] bg-white px-5 sm:px-8 py-3 sm:py-4 shadow-[0_18px_40px_-12px_rgba(70,0,12,0.65)] ring-4 ring-white/25"
-                data-testid="hero-brand-box">
-                <span className="font-black tracking-tight leading-none text-[1.85rem] sm:text-5xl xl:text-[4.25rem] whitespace-nowrap"><span className="text-[#C8102E]">Gibran for </span><span className="text-[#7A0016]">2029</span></span>
-              </span>
-              <div className="relative h-14 w-full sm:w-auto sm:flex-1 sm:min-w-[280px] sm:max-w-[360px]" data-testid="hero-vapour-text">
-                <VaporizeTextCycle
-                  texts={HERO_TAGLINES}
-                  font={taglineFont}
-                  color="rgb(255, 255, 255)"
-                  spread={5}
-                  density={5}
-                  animation={HERO_TAGLINE_ANIMATION}
-                  direction="left-to-right"
-                  alignment="left"
-                  tag={Tag.P}
-                />
-              </div>
-            </div>
-            <div className="mt-8 max-w-2xl animate-rise [animation-delay:220ms]" data-testid="hero-headline">
-              <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-extrabold tracking-tight leading-[1.15] [text-shadow:0_2px_10px_rgba(60,0,10,0.35)]">
-                Menatap Indonesia Maju 2029 Bersama{" "}
-                <span className="inline-block rounded-lg bg-[#0A0A0A] px-2.5 py-0.5 text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.7)]">Gibran for 2029</span>.
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
-                <b className="text-white">{SLOGAN}</b> Barisan akar rumput yang solid, terstruktur, dan siap mengawal agenda perubahan nyata.{" "}
-                <a href="#keuntungan" className="font-bold text-white underline decoration-white/50 underline-offset-4 hover:decoration-white">Bergabunglah sekarang.</a>
-              </p>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 animate-rise [animation-delay:200ms]" data-testid="hero-poster">
-            {/* Poster utama "Terima Kasih, Mas Gibran!" */}
-            <figure className="relative mx-auto max-w-[360px] sm:max-w-[420px] lg:max-w-none lg:rotate-[1.5deg]">
-              <div className="absolute -inset-3 rounded-[34px] bg-white/15 blur-sm" aria-hidden />
-              <img src="/img/gibran-terima-kasih.jpg" alt="Poster: Terima Kasih, Mas Gibran!" width="807" height="1000"
-                className="relative w-full h-auto rounded-[28px] bg-white ring-4 ring-white shadow-[0_30px_60px_-20px_rgba(60,0,10,0.75)]" />
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      {/* PITA AJAKAN BERGABUNG — menumpang di tepi bawah hero */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20" data-testid="join-cta">
+      {/* PITA AJAKAN BERGABUNG — tepat di bawah hero */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14" data-testid="join-cta">
         <div className="rounded-3xl bg-[#0A0A0A] text-white ring-1 ring-white/10 p-6 sm:p-8 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] grid lg:grid-cols-12 gap-6 items-center">
           <div className="lg:col-span-4">
             <p className="text-xs font-semibold tracking-[0.18em] uppercase text-white/50">Bergabung bersama</p>

@@ -14,7 +14,6 @@ import ClaimProof from "@/pages/ClaimProof";
 import Registration from "@/pages/Registration";
 import Kta from "@/pages/Kta";
 import Profile from "@/pages/Profile";
-import GibranHero from "@/pages/GibranHero";
 
 const Guard = ({ children, roles, needRole = true }) => {
   const { user, loading } = useAuth();
@@ -60,7 +59,7 @@ function AppRouter() {
       <Route path="/daftar/:jenis" element={<Registration />} />
       <Route path="/kta" element={<Kta />} />
       <Route path="/cara-kerja" element={<HowItWorks />} />
-      <Route path="/gerakan" element={<GibranHero />} />
+      <Route path="/gerakan" element={<Navigate to="/" replace />} />
       <Route path="/untuk-brand" element={<Navigate to="/cara-kerja" replace />} />
       <Route path="/onboarding" element={<Navigate to="/kta" replace />} />
       <Route path="/profil" element={<AuthOnly><Profile /></AuthOnly>} />

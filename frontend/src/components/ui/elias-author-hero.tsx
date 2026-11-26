@@ -19,6 +19,12 @@ import type { PointerEvent as ReactPointerEvent, SVGProps } from 'react'
 import { animate, AnimatePresence, domAnimation, LazyMotion, m, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 import type { MotionStyle, Transition } from 'motion/react'
 import { ArrowRightIcon, ArrowUpRightIcon } from 'lucide-react'
+import type { FC, ReactNode } from 'react'
+import type { AnimatePresenceProps } from 'motion/react'
+
+// Some motion releases type AnimatePresence as returning `Element | undefined`, which TypeScript 4.9 rejects as a JSX
+// component; this alias keeps the same runtime component with a JSX-compatible type
+const Presence = AnimatePresence as unknown as FC< AnimatePresenceProps & { children?: ReactNode } >
 
 // Joins the truthy class names; the block's classes are passed through untouched
 const cn = (...classes: Array< string | false | null | undefined >) => classes.filter(Boolean).join(' ')
@@ -1199,7 +1205,7 @@ const TomorrowLetter = () => {
       <p className='sr-only'>{`${LETTER.greeting} ${LETTER.messages[0]}`}</p>
 
       <div aria-hidden className='ea-pad-inner'>
-        <AnimatePresence mode='wait' initial={false}>
+        <Presence mode='wait' initial={false}>
           {stage !== 'sealing' ? (
             <m.div
               key={`sheet-${index}`}
@@ -1237,7 +1243,7 @@ const TomorrowLetter = () => {
               <Envelope date={tomorrowLabel()} />
             </m.div>
           )}
-        </AnimatePresence>
+        </Presence>
       </div>
     </m.section>
   )
@@ -1459,7 +1465,7 @@ const FeaturedBook = () => {
           <m.span className='ea-book-shadow' style={{ scaleX: shadowScale }} />
 
           {/* A carousel: the book glides out to the left while the next glides in from the right, side by side */}
-          <AnimatePresence initial={false}>
+          <Presence initial={false}>
             <m.span
               key={index}
               className='ea-book-slot'
@@ -1509,7 +1515,7 @@ const FeaturedBook = () => {
                 </span>
               </m.span>
             </m.span>
-          </AnimatePresence>
+          </Presence>
         </span>
       </m.button>
       <p className='sr-only' aria-live='polite'>

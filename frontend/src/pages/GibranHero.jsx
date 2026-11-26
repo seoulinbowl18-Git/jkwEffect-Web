@@ -1,7 +1,8 @@
 import Elias from "@/components/ui/elias-author-hero";
+import { useAuth } from "@/context/AuthContext";
 
 /**
- * /gerakan — hero editorial "Gibran for 2029" memakai komponen Elias (src/components/ui/elias-author-hero.tsx).
+ * Hero beranda (/) — hero editorial "Gibran for 2029" memakai komponen Elias (src/components/ui/elias-author-hero.tsx).
  * Warna aksen diganti merah brand; ukuran nama raksasa di HP disesuaikan untuk "GIBRAN" / "FOR 2029".
  */
 const THEME_CSS = `
@@ -17,6 +18,8 @@ const THEME_CSS = `
 /* Desktop: potret sedikit ke kanan agar tidak menyentuh teks pengantar di kiri. */
 @media (min-width: 1024px) and (min-aspect-ratio: 5/4) {
   .gibran-hero .ea-canvas { --ea-portrait-left: max(100cqw - 1040 * var(--ea-u), 250px); }
+  /* "FOR 2029" sedikit lebih kecil dari baris kedua bawaan agar tidak menabrak teks pengantar di kiri. */
+  .gibran-hero .ea-name-last { font-size: calc(208 * var(--ea-u)); }
 }
 `;
 
@@ -36,7 +39,9 @@ const LETTER = {
   ],
 };
 
-export default function GibranHero() {
+/** Hero beranda; menu kanan mengikuti status login (Masuk → Profil). */
+export function GibranEditorialHero() {
+  const { user } = useAuth();
   return (
     <div className="gibran-hero">
       <style>{THEME_CSS}</style>
@@ -49,7 +54,7 @@ export default function GibranHero() {
           ],
           right: [
             { label: "KTA Saya", href: "/kta" },
-            { label: "Masuk", href: "/masuk" },
+            user ? { label: "Profil", href: "/profil" } : { label: "Masuk", href: "/masuk" },
           ],
         }}
         navCta={{ label: "Daftar", href: "/daftar/relawan" }}
@@ -73,3 +78,5 @@ export default function GibranHero() {
     </div>
   );
 }
+
+export default GibranEditorialHero;
