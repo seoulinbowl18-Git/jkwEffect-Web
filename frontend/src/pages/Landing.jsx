@@ -221,6 +221,21 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* FOTO — di antara "Tentang gerakan" dan "Cara bergabung" */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12" data-testid="photo-berdoa">
+        <figure className="overflow-hidden rounded-3xl bg-[#0A0A0A] text-white grid lg:grid-cols-[1fr_1.15fr] items-stretch shadow-soft-lg">
+          <figcaption className="order-2 lg:order-1 p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+            <p className="text-sm font-bold tracking-[0.16em] uppercase text-[#F21D43]">Gibran for 2029</p>
+            <p className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">Bekerja dengan hati, berdoa untuk negeri.</p>
+          </figcaption>
+          <div className="order-1 lg:order-2 relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[1104/1000]">
+            <img src="/img/gibran-berdoa.jpg" alt="Gibran Rakabuming Raka menangkupkan tangan sambil berdoa" width="1104" height="1440" loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover object-[50%_30%]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-[#0A0A0A]/70" aria-hidden />
+          </div>
+        </figure>
+      </section>
+
       {/* CARA BERGABUNG — pilihan peran "Saya Relawan" / "Saya Member" */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24" id="cara-kerja" data-testid="how-to-join">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
