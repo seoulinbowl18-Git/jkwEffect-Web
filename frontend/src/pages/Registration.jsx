@@ -10,7 +10,7 @@ import { LEVELS, useWilayah } from "@/lib/wilayah";
 
 const JENIS = {
   anggota: { title: "Daftar Member", short: "Member", icon: IdCard, desc: "Formulir pendaftaran member resmi Gibran for 2029. Bergerak Bersama, Menuju Indonesia Maju 2029." },
-  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Cukup 1 menit: nama, WhatsApp, dan kota domisili. Tanpa NIK. Bergerak Bersama, Menuju Indonesia Maju 2029." },
+  relawan: { title: "Daftar Relawan", short: "Relawan", icon: HandHeart, desc: "Cukup 1 menit: nama, WhatsApp, dan kota domisili. Tanpa NIK & tanpa KTP. Bergerak Bersama, Menuju Indonesia Maju 2029." },
 };
 const STATUS_NIKAH = ["Belum Kawin", "Kawin", "Cerai Hidup", "Cerai Mati"];
 const KTP_MAX = 3 * 1024 * 1024; // 3 MB
@@ -137,7 +137,7 @@ const WilayahField = ({ level, index, form, set, error }) => {
   );
 };
 
-const KtpUpload = ({ file, onChange, error, optional = false }) => {
+const KtpUpload = ({ file, onChange, error }) => {
   const input = useRef(null);
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
@@ -162,7 +162,7 @@ const KtpUpload = ({ file, onChange, error, optional = false }) => {
 
   return (
     <div className="sm:col-span-2" data-field="ktp">
-      <p className="block text-sm font-semibold text-white/85">Foto KTP {optional && <span className="font-normal text-white/40">(opsional — boleh dilewati)</span>}</p>
+      <p className="block text-sm font-semibold text-white/85">Foto KTP</p>
       <input ref={input} type="file" accept={KTP_TYPES.join(",")} className="hidden" data-testid="ktp-input" onChange={(e) => pick(e.target.files?.[0])} />
       {file ? (
         <div className="mt-1.5 rounded-xl border border-white/10 bg-[#0A0A0A] p-3 flex flex-col sm:flex-row gap-4 sm:items-center">
@@ -337,7 +337,7 @@ export default function Registration() {
     body.set("telepon", form.telepon.replace(/[\s-]/g, ""));
     body.set("email", (isMember ? form.email : user.email || form.email).trim());
     body.append("persetujuan", "true");
-    if (ktp) body.append("ktp", ktp);
+    if (isMember && ktp) body.append("ktp", ktp); // relawan tidak mengunggah KTP
     setSending(true);
     try {
       const { data } = await api.post("/registrations", body);
@@ -443,7 +443,6 @@ export default function Registration() {
               <input {...bind("referral")} maxLength={32} placeholder="Jika diajak oleh relawan / member lain" className={inputCls} />
             </Field>
           </div>
-          <KtpUpload optional file={ktp} onChange={(f) => { setKtp(f); setErrors((e) => ({ ...e, ktp: undefined })); }} error={errors.ktp} />
         </Section>
 
         </>
@@ -468,7 +467,7 @@ export default function Registration() {
             <p className="text-sm text-white/70 leading-relaxed">
               <b className="block text-white">Data pribadi Anda dilindungi.</b>
               Data dikirim melalui koneksi terenkripsi (HTTPS) dan hanya digunakan untuk keperluan verifikasi keanggotaan resmi Gibran for 2029.{" "}
-              {isMember ? "NIK & foto KTP hanya dapat dilihat oleh admin untuk verifikasi." : "Pendaftaran relawan tidak meminta NIK. Foto KTP (bila diunggah) hanya dapat dilihat admin."}
+              {isMember ? "NIK & foto KTP hanya dapat dilihat oleh admin untuk verifikasi." : "Pendaftaran relawan tidak meminta NIK maupun foto KTP."}
             </p>
           </div>
         </section>
